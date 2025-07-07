@@ -37,7 +37,7 @@ DB_CLIENT_SECRET = os.getenv('DB_CLIENT_SECRET')
 # 2. Station Configuration
 # HSTM is the short name (DS100), but the API works best with the EVA number.
 STATION_DS100 = "HSTM"  # Short name for "Steinheim (Westf)"
-STATION_EVA_ID = "8005708"  # EVA Number for "Steinheim (Westf)"
+STATION_EVA_ID = "8005708" #"8005708" #"8002549"  # EVA Number for "Steinheim (Westf)"
 STATION_DISPLAY_NAME = "Steinheim"
 
 if (not STATION_EVA_ID):
@@ -65,8 +65,8 @@ options.show_refresh_rate = True  # Show the refresh rate on the matrix
 
 # 4. Display & Data Configuration
 FONT_PATH = '5x8.bdf' # Place this font file in the same directory
-REFRESH_INTERVAL_SECONDS = 20 # Refresh data every 60 seconds
-MAX_DEPARTURES_TO_SHOW = 5 # How many departures to show on the 64x64 screen
+REFRESH_INTERVAL_SECONDS = 15
+MAX_DEPARTURES_TO_SHOW = 5
 
 # --- API HANDLING ---
 
@@ -85,11 +85,8 @@ def get_db_departures(station_id, client_id, client_secret):
         ]
 
     # Construct the API URL
-    date = '250703'
-    time_now = '08'
-    #TODO get date and time in the correct format
-    # date format: YYMMDD (e.g., 250703 for 03.07.2025)
-    # time format: HH (e.g., 08 for 08:00)
+    date = datetime.now().strftime('%y%m%d')      # Get today's date in YYMMDD format
+    time_now = format_time(datetime.now().strftime('%H:%M'))  # Get current time in HH format
 
     api_url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{station_id}/{date}/{time_now}"
     print(f"Fetching data from: {api_url}")
@@ -104,9 +101,10 @@ def get_db_departures(station_id, client_id, client_secret):
         response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
         
         print(f"API response status: {response.status_code}")
+        print(response.text)  # Print the raw response for debugging
 
         # Parse the XML response
-        api_data = schema.to_dict(response.content)
+        api_data = None
         departures = []
 
         for item in api_data.get('timetable', {}).get('departures', []):
@@ -150,6 +148,99 @@ def get_db_departures(station_id, client_id, client_secret):
         print(f"An unexpected error occurred: {e}")
         return None
 
+def get_db_departures_iris(station_id):
+    options = {
+        "datum": "2025-07-05",
+        "zeit": "14:42:00",
+        "ortExtId": station_id,
+        "ortId": station_id,
+        "mitVias": "true",
+        "maxVias": 8,
+        "verkehrsmittel": ["ICE", "EC_IC", "IR", "REGIONAL", "SBAHN"] 
+        # ["ICE", "EC_IC", "IR", "REGIONAL", "SBAHN", "BUS", "SCHIFF", "UBAHN", "TRAM", "ANRUFPFLICHTIG"]
+    }
+
+    options["datum"] = datetime.now().strftime('%Y-%m-%d')
+    options["zeit"] = datetime.now().strftime('%H:%M:%S')
+
+
+    base_api_url = "https://www.bahn.de/web/api/reiseloesung/abfahrten"
+    params = "&".join([f"{key}={value}" for key, value in options.items()])
+    api_url = f"{base_api_url}?{params}"
+    api_url = f"https://www.bahn.de/web/api/reiseloesung/abfahrten?datum=2025-07-05&zeit=14:42:00&ortExtId=8005708&ortId=8005708&mitVias=true&maxVias=8&verkehrsmittel[]=ICE&verkehrsmittel[]=EC_IC&verkehrsmittel[]=IR&verkehrsmittel[]=REGIONAL&verkehrsmittel[]=SBAHN&verkehrsmittel[]=BUS&verkehrsmittel[]=SCHIFF&verkehrsmittel[]=UBAHN&verkehrsmittel[]=TRAM&verkehrsmittel[]=ANRUFPFLICHTIG"
+
+
+def get_db_departures_bahnhofde(station_id):
+    options = {
+        "evaNumbers": station_id,
+        "filterTransports": ["HIGH_SPEED_TRAIN", "INTERCITY_TRAIN", "INTER_REGIONAL_TRAIN", "REGIONAL_TRAIN", "CITY_TRAIN"],
+        "duration": 15,       # Lookahead in minutes
+        "stationCategory": 1,  # catergory 1 for main stations, 2 for all other stations eg. wiki article
+        "locale": "de",
+        "sortBy": "TIME_SCHEDULE" 
+    }
+
+    # Construct the API URL
+    base_api_url = "https://www.bahnhof.de/api/boards/departures"
+    params = ""
+    for key, value in options.items():
+        if isinstance(value, list):
+            for item in value:
+                params += f"&{key}={item}"
+        else:
+            params += f"&{key}={value}"
+    api_url = f"{base_api_url}?{params}"
+    headers = {"accept": "application/json"}
+    
+    print(f"Fetching data from: {api_url}")
+    
+
+    try:
+        response = requests.get(url=api_url, headers=headers)
+        response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+        print(f"API response status: {response.status_code}")
+        # Parse the JSON response
+        api_data = response.json()
+        departures = []
+
+        for item in api_data.get('entries', []):
+            for train in item:
+                # Extract train line identifier
+                line = train.get('lineName', '')
+
+                # Extract destination
+                direction = train.get('destination', {}).get('name', '')
+
+                # Extract and format time
+                scheduled_time_str = train.get('timeSchedule', '')
+                actual_time_str = train.get('timeDelayed', '')
+
+                if not scheduled_time_str:
+                    continue
+
+                scheduled_dt = datetime.fromisoformat(scheduled_time_str)
+                actual_dt = datetime.fromisoformat(actual_time_str)
+                
+                departure_time_formatted = actual_dt.strftime('%H:%M')
+                
+                # Calculate delay
+                delay_seconds = (actual_dt - scheduled_dt).total_seconds()
+                delay_minutes = int(delay_seconds / 60)
+
+                departures.append({
+                    'line': str(line).strip().replace('\u202f', ''),
+                    'direction': direction,
+                    'departure_time': departure_time_formatted,
+                    'delay_minutes': delay_minutes
+                })
+        print(f"Fetched {len(departures)} departures.")
+        print(departures)  # Debugging output
+        return departures
+            
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data from DB API: {e}")
+        return None
+
 
 # --- DISPLAY LOGIC ---
 
@@ -184,7 +275,7 @@ def draw_to_matrix(matrix, departures_data):
 
     # --- Draw Header ---
     graphics.DrawLine(offscreen_canvas, 0, 8, MATRIX_COLS, 8, gray)
-    graphics.DrawText(offscreen_canvas, font, 1, 7, white, f"{STATION_DISPLAY_NAME} Abf.")
+    graphics.DrawText(offscreen_canvas, font, 1, 7, white, f"{STATION_DISPLAY_NAME}")
     
     # --- Handle No Data ---
     if departures_data is None:
@@ -227,6 +318,50 @@ def draw_to_matrix(matrix, departures_data):
     # Send the finished image to the matrix
     matrix.SwapOnVSync(offscreen_canvas)
 
+class TextBox:
+    '''
+    A simple text box, that starts scrolling if the text is too long.
+    '''
+
+    def __init__(self, matrix, text, font, x=0, y=0, width=None, height=None):
+        self.matrix = matrix
+        self.text = text
+        self.font = font
+        self.x = x
+        self.y = y
+        self.width = width if width else matrix.width
+        self.height = height if height else matrix.height
+        self.scroll_pos = 0
+
+    def draw(self):
+        """
+        Draws the text box on the matrix, scrolling if necessary.
+        """
+        offscreen_canvas = self.matrix.CreateFrameCanvas()
+        offscreen_canvas.Clear()
+
+        # Draw the text
+        text_width, text_height = graphics.DrawText(offscreen_canvas, self.font, self.x - self.scroll_pos, self.y, graphics.Color(255, 255, 255), self.text)
+
+        # If the text is wider than the box, start scrolling
+        if text_width > self.width:
+            self.scroll_pos += 1
+            if self.scroll_pos > text_width:
+                self.scroll_pos = 0
+
+        # Swap the canvas to display it
+        self.matrix.SwapOnVSync(offscreen_canvas)
+
+
+
+def format_time(time):
+    """
+    Formats a time string from 'HH:MM' or 'HH:MM:SS' to 'HH'.
+    """
+    if len(time) < 5:
+        raise ValueError("Time must be in 'HH:MM' or 'HH:MM:SS' format.")
+    return time[:2]  # Return only the hour part
+
 
 # --- MAIN EXECUTION ---
 
@@ -240,16 +375,18 @@ def main():
     # Initialize the matrix
     matrix = RGBMatrix(options=options)
     
+    i = 0
     try:
-        while True:
+        while i < 150:
             print(f"[{datetime.now().strftime('%H:%M:%S')}] Fetching new departure data...")
-            departures = get_db_departures(STATION_EVA_ID, DB_CLIENT_ID, DB_CLIENT_SECRET)
+            departures = get_db_departures_bahnhofde(STATION_EVA_ID)
             
             print(f"[{datetime.now().strftime('%H:%M:%S')}] Drawing to matrix...")
             draw_to_matrix(matrix, departures)
             
             print(f"[{datetime.now().strftime('%H:%M:%S')}] Waiting for {REFRESH_INTERVAL_SECONDS} seconds...")
             time.sleep(REFRESH_INTERVAL_SECONDS)
+            i += 1
 
     except KeyboardInterrupt:
         print("\nExiting. Clearing matrix...")

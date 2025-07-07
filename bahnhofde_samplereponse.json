@@ -1,0 +1,711 @@
+{
+    "globalMessages": [],
+    "entries": [
+        [
+            {
+                "canceledStopsAfterActualDestination": [],
+                "direction": "departure",
+                "id": "8005708_D_1",
+                "timeSchedule": "2025-07-06T21:20:00+02:00",
+                "timeDelayed": "2025-07-06T21:20:00+02:00",
+                "delayed": false,
+                "platform": "3",
+                "platformSchedule": "3",
+                "timeType": "PREVIEW",
+                "canceled": false,
+                "administrationID": "TDHS",
+                "virtual": false,
+                "lineName": "S 5",
+                "type": "CITY_TRAIN",
+                "kind": "default",
+                "journeyID": "20250706-9328a996-9e95-3d3d-895a-529fe0e3651c",
+                "stopPlace": {
+                    "evaNumber": "8005708",
+                    "name": "Steinheim(Westf)",
+                    "canceled": false
+                },
+                "arrivalOrDepartureId": "8005708_D_1",
+                "destination": {
+                    "evaNumber": "8000297",
+                    "name": "Paderborn Hbf",
+                    "canceled": false,
+                    "slug": "paderborn-hbf",
+                    "nameParts": [
+                        {
+                            "type": "default",
+                            "value": "Paderborn Hbf",
+                            "valueSpeech": "Paderborn Hauptbahnhof"
+                        }
+                    ]
+                },
+                "viaStops": [
+                    {
+                        "evaNumber": "8000004",
+                        "name": "Altenbeken",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 1,
+                        "separation": false,
+                        "slug": "altenbeken",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Altenbeken"
+                            }
+                        ]
+                    }
+                ],
+                "additionalStops": [],
+                "canceledStops": [],
+                "messages": {
+                    "common": [
+                        {
+                            "text": "Fahrradmitnahme begrenzt möglich",
+                            "locale": "de",
+                            "type": "bicycle-transport",
+                            "change": false,
+                            "important": false,
+                            "open": false,
+                            "links": []
+                        }
+                    ],
+                    "delay": [],
+                    "cancelation": [],
+                    "destination": [],
+                    "via": []
+                },
+                "providesVehicleSequence": false
+            }
+        ],
+        [
+            {
+                "canceledStopsAfterActualDestination": [],
+                "direction": "departure",
+                "id": "8005708_D_1",
+                "timeSchedule": "2025-07-06T21:44:00+02:00",
+                "timeDelayed": "2025-07-06T21:44:00+02:00",
+                "delayed": false,
+                "platform": "1",
+                "platformSchedule": "1",
+                "timeType": "PREVIEW",
+                "canceled": false,
+                "administrationID": "TDHS",
+                "virtual": false,
+                "lineName": "S 5",
+                "type": "CITY_TRAIN",
+                "kind": "default",
+                "journeyID": "20250706-a455646c-0023-32e8-8546-51a4ef352dfd",
+                "stopPlace": {
+                    "evaNumber": "8005708",
+                    "name": "Steinheim(Westf)",
+                    "canceled": false
+                },
+                "arrivalOrDepartureId": "8005708_D_1",
+                "destination": {
+                    "evaNumber": "8002586",
+                    "name": "Hannover-Linden/Fischerhof",
+                    "canceled": false,
+                    "slug": "hannover-linden-fischerhof",
+                    "nameParts": [
+                        {
+                            "type": "city",
+                            "value": "Hannover"
+                        },
+                        {
+                            "type": "city-separator",
+                            "value": "-"
+                        },
+                        {
+                            "type": "default",
+                            "value": "Linden/​Fischerhof"
+                        }
+                    ]
+                },
+                "viaStops": [
+                    {
+                        "evaNumber": "8005340",
+                        "name": "Schieder",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 9,
+                        "separation": false,
+                        "slug": "schieder",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Schieder"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8003784",
+                        "name": "Lügde",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 10,
+                        "separation": false,
+                        "slug": "luegde",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Lügde"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000735",
+                        "name": "Bad Pyrmont",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 4,
+                        "separation": false,
+                        "slug": "bad-pyrmont",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Bad Pyrmont",
+                                "valueSpeech": "Ba​d Pyrmont"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8001777",
+                        "name": "Emmerthal",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 5,
+                        "separation": false,
+                        "slug": "emmerthal",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Emmerthal"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000148",
+                        "name": "Hameln",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 1,
+                        "separation": false,
+                        "slug": "hameln",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Hameln"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000725",
+                        "name": "Bad Münder(Deister)",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 6,
+                        "separation": false,
+                        "slug": "bad-muender-deister",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Bad Münder ",
+                                "valueSpeech": "Ba​d Münder "
+                            },
+                            {
+                                "type": "region",
+                                "value": "(Deister)"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8005638",
+                        "name": "Springe",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 2,
+                        "separation": false,
+                        "slug": "springe",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Springe"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8001741",
+                        "name": "Völksen/Eldagsen",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 7,
+                        "separation": false,
+                        "slug": "voelksen-eldagsen",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Völksen-Eldagsen"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000872",
+                        "name": "Bennigsen",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 8,
+                        "separation": false,
+                        "slug": "bennigsen",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Bennigsen"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8002969",
+                        "name": "Holtensen/Linderte",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 11,
+                        "separation": false,
+                        "slug": "holtensen-linderte",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Holtensen/​Linderte"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000342",
+                        "name": "Weetzen",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 3,
+                        "separation": false,
+                        "slug": "weetzen",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Weetzen"
+                            }
+                        ]
+                    }
+                ],
+                "additionalStops": [],
+                "canceledStops": [],
+                "messages": {
+                    "common": [
+                        {
+                            "text": "Fahrradmitnahme begrenzt möglich",
+                            "locale": "de",
+                            "type": "bicycle-transport",
+                            "change": false,
+                            "important": false,
+                            "open": false,
+                            "links": []
+                        }
+                    ],
+                    "delay": [],
+                    "cancelation": [],
+                    "destination": [],
+                    "via": []
+                },
+                "providesVehicleSequence": false
+            }
+        ],
+        [
+            {
+                "canceledStopsAfterActualDestination": [],
+                "direction": "departure",
+                "id": "8005708_D_1",
+                "timeSchedule": "2025-07-06T22:17:00+02:00",
+                "timeDelayed": "2025-07-06T22:17:00+02:00",
+                "delayed": false,
+                "platform": "3",
+                "platformSchedule": "3",
+                "timeType": "PREVIEW",
+                "canceled": false,
+                "administrationID": "TDHS",
+                "virtual": false,
+                "lineName": "S 5",
+                "type": "CITY_TRAIN",
+                "kind": "default",
+                "journeyID": "20250706-33c37510-59a4-32b3-bea5-4d820ba60b68",
+                "stopPlace": {
+                    "evaNumber": "8005708",
+                    "name": "Steinheim(Westf)",
+                    "canceled": false
+                },
+                "arrivalOrDepartureId": "8005708_D_1",
+                "destination": {
+                    "evaNumber": "8000297",
+                    "name": "Paderborn Hbf",
+                    "canceled": false,
+                    "slug": "paderborn-hbf",
+                    "nameParts": [
+                        {
+                            "type": "default",
+                            "value": "Paderborn Hbf",
+                            "valueSpeech": "Paderborn Hauptbahnhof"
+                        }
+                    ]
+                },
+                "viaStops": [
+                    {
+                        "evaNumber": "8000004",
+                        "name": "Altenbeken",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 1,
+                        "separation": false,
+                        "slug": "altenbeken",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Altenbeken"
+                            }
+                        ]
+                    }
+                ],
+                "additionalStops": [],
+                "canceledStops": [],
+                "messages": {
+                    "common": [
+                        {
+                            "text": "Fahrradmitnahme begrenzt möglich",
+                            "locale": "de",
+                            "type": "bicycle-transport",
+                            "change": false,
+                            "important": false,
+                            "open": false,
+                            "links": []
+                        }
+                    ],
+                    "delay": [],
+                    "cancelation": [],
+                    "destination": [],
+                    "via": []
+                },
+                "providesVehicleSequence": false
+            }
+        ],
+        [
+            {
+                "canceledStopsAfterActualDestination": [],
+                "direction": "departure",
+                "id": "8005708_D_1",
+                "timeSchedule": "2025-07-06T22:44:00+02:00",
+                "timeDelayed": "2025-07-06T22:44:00+02:00",
+                "delayed": false,
+                "platform": "1",
+                "platformSchedule": "1",
+                "timeType": "PREVIEW",
+                "canceled": false,
+                "administrationID": "TDHS",
+                "virtual": false,
+                "lineName": "S 5",
+                "type": "CITY_TRAIN",
+                "kind": "default",
+                "journeyID": "20250706-2718811b-d91e-3c15-998e-4e139e627d3b",
+                "stopPlace": {
+                    "evaNumber": "8005708",
+                    "name": "Steinheim(Westf)",
+                    "canceled": false
+                },
+                "arrivalOrDepartureId": "8005708_D_1",
+                "destination": {
+                    "evaNumber": "8002586",
+                    "name": "Hannover-Linden/Fischerhof",
+                    "canceled": false,
+                    "slug": "hannover-linden-fischerhof",
+                    "nameParts": [
+                        {
+                            "type": "city",
+                            "value": "Hannover"
+                        },
+                        {
+                            "type": "city-separator",
+                            "value": "-"
+                        },
+                        {
+                            "type": "default",
+                            "value": "Linden/​Fischerhof"
+                        }
+                    ]
+                },
+                "viaStops": [
+                    {
+                        "evaNumber": "8005340",
+                        "name": "Schieder",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 9,
+                        "separation": false,
+                        "slug": "schieder",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Schieder"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8003784",
+                        "name": "Lügde",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 10,
+                        "separation": false,
+                        "slug": "luegde",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Lügde"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000735",
+                        "name": "Bad Pyrmont",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 4,
+                        "separation": false,
+                        "slug": "bad-pyrmont",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Bad Pyrmont",
+                                "valueSpeech": "Ba​d Pyrmont"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8001777",
+                        "name": "Emmerthal",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 5,
+                        "separation": false,
+                        "slug": "emmerthal",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Emmerthal"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000148",
+                        "name": "Hameln",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 1,
+                        "separation": false,
+                        "slug": "hameln",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Hameln"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000725",
+                        "name": "Bad Münder(Deister)",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 6,
+                        "separation": false,
+                        "slug": "bad-muender-deister",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Bad Münder ",
+                                "valueSpeech": "Ba​d Münder "
+                            },
+                            {
+                                "type": "region",
+                                "value": "(Deister)"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8005638",
+                        "name": "Springe",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 2,
+                        "separation": false,
+                        "slug": "springe",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Springe"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8001741",
+                        "name": "Völksen/Eldagsen",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 7,
+                        "separation": false,
+                        "slug": "voelksen-eldagsen",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Völksen-Eldagsen"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000872",
+                        "name": "Bennigsen",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 8,
+                        "separation": false,
+                        "slug": "bennigsen",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Bennigsen"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8002969",
+                        "name": "Holtensen/Linderte",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 11,
+                        "separation": false,
+                        "slug": "holtensen-linderte",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Holtensen/​Linderte"
+                            }
+                        ]
+                    },
+                    {
+                        "evaNumber": "8000342",
+                        "name": "Weetzen",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 3,
+                        "separation": false,
+                        "slug": "weetzen",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Weetzen"
+                            }
+                        ]
+                    }
+                ],
+                "additionalStops": [],
+                "canceledStops": [],
+                "messages": {
+                    "common": [
+                        {
+                            "text": "Fahrradmitnahme begrenzt möglich",
+                            "locale": "de",
+                            "type": "bicycle-transport",
+                            "change": false,
+                            "important": false,
+                            "open": false,
+                            "links": []
+                        }
+                    ],
+                    "delay": [],
+                    "cancelation": [],
+                    "destination": [],
+                    "via": []
+                },
+                "providesVehicleSequence": false
+            }
+        ],
+        [
+            {
+                "canceledStopsAfterActualDestination": [],
+                "direction": "departure",
+                "id": "8005708_D_1",
+                "timeSchedule": "2025-07-06T23:20:00+02:00",
+                "timeDelayed": "2025-07-06T23:20:00+02:00",
+                "delayed": false,
+                "platform": "3",
+                "platformSchedule": "3",
+                "timeType": "PREVIEW",
+                "canceled": false,
+                "administrationID": "TDHS",
+                "virtual": false,
+                "lineName": "S 5",
+                "type": "CITY_TRAIN",
+                "kind": "default",
+                "journeyID": "20250706-ef690c73-4a75-3367-ba8a-8d5aa0a2830e",
+                "stopPlace": {
+                    "evaNumber": "8005708",
+                    "name": "Steinheim(Westf)",
+                    "canceled": false
+                },
+                "arrivalOrDepartureId": "8005708_D_1",
+                "destination": {
+                    "evaNumber": "8000297",
+                    "name": "Paderborn Hbf",
+                    "canceled": false,
+                    "slug": "paderborn-hbf",
+                    "nameParts": [
+                        {
+                            "type": "default",
+                            "value": "Paderborn Hbf",
+                            "valueSpeech": "Paderborn Hauptbahnhof"
+                        }
+                    ]
+                },
+                "viaStops": [
+                    {
+                        "evaNumber": "8000004",
+                        "name": "Altenbeken",
+                        "canceled": false,
+                        "additional": false,
+                        "displayPriority": 1,
+                        "separation": false,
+                        "slug": "altenbeken",
+                        "nameParts": [
+                            {
+                                "type": "default",
+                                "value": "Altenbeken"
+                            }
+                        ]
+                    }
+                ],
+                "additionalStops": [],
+                "canceledStops": [],
+                "messages": {
+                    "common": [
+                        {
+                            "text": "Fahrradmitnahme begrenzt möglich",
+                            "locale": "de",
+                            "type": "bicycle-transport",
+                            "change": false,
+                            "important": false,
+                            "open": false,
+                            "links": []
+                        }
+                    ],
+                    "delay": [],
+                    "cancelation": [],
+                    "destination": [],
+                    "via": []
+                },
+                "providesVehicleSequence": false
+            }
+        ]
+    ]
+}

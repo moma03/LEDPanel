@@ -174,7 +174,7 @@ def get_db_departures_bahnhofde(station_id):
     options = {
         "evaNumbers": station_id,
         "filterTransports": ["HIGH_SPEED_TRAIN", "INTERCITY_TRAIN", "INTER_REGIONAL_TRAIN", "REGIONAL_TRAIN", "CITY_TRAIN"],
-        "duration": 15,       # Lookahead in minutes
+        "duration": 100,       # Lookahead in minutes
         "stationCategory": 1,  # catergory 1 for main stations, 2 for all other stations eg. wiki article
         "locale": "de",
         "sortBy": "TIME_SCHEDULE" 
@@ -231,7 +231,8 @@ def get_db_departures_bahnhofde(station_id):
                     'line': str(line).strip().replace('\u202f', ''),
                     'direction': direction,
                     'departure_time': departure_time_formatted,
-                    'delay_minutes': delay_minutes
+                    'delay_minutes': delay_minutes,
+                    'is_cancelled': train.get('canceled', False) or train.get('stopPlace', {}).get('canceled', False)
                 })
         print(f"Fetched {len(departures)} departures.")
         print(departures)  # Debugging output
@@ -296,20 +297,28 @@ def draw_to_matrix(matrix, departures_data):
         direction = dep['direction']
         dep_time = dep['departure_time']
         delay = dep['delay_minutes']
+        is_cancelled = dep['is_cancelled']
 
         # Line Number (e.g., S5)
         len = graphics.DrawText(offscreen_canvas, font, 1, y_pos, yellow, f"{line:<4}")
         
         # Destination (truncated to fit)
-        graphics.DrawText(offscreen_canvas, font, 15, y_pos, white, f"{direction[:10]:<10}")
+        if (is_cancelled):
+            graphics.DrawText(offscreen_canvas, font, 15, y_pos, red, f"x {direction[:10]:<10}")
+
+            # Draw cancellation notice
+            graphics.DrawText(offscreen_canvas, font, 1, y_pos + 8, red, "Zug entfällt")
+
+        else:
+            graphics.DrawText(offscreen_canvas, font, 15, y_pos, white, f"{direction[:10]:<10}")
         
-        # Departure Time
-        time_color = green if delay <= 0 else red
-        graphics.DrawText(offscreen_canvas, font, 1, y_pos + 8, time_color, dep_time)
+            # Departure Time
+            time_color = green if delay <= 0 else red
+            graphics.DrawText(offscreen_canvas, font, 1, y_pos + 8, time_color, dep_time)
         
-        # Delay
-        if delay > 0:
-            graphics.DrawText(offscreen_canvas, font, 30, y_pos + 8, red, f"+{delay} min")
+            # Delay
+            if delay > 0:
+                graphics.DrawText(offscreen_canvas, font, 30, y_pos + 8, red, f"+{delay} min")
 
         y_pos += 18 # Move to the next line
         if y_pos > MATRIX_ROWS - 10:

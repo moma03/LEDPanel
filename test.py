@@ -23,6 +23,8 @@ except ImportError:
     print("https://github.com/hzeller/rpi-rgb-led-matrix")
     sys.exit(1)
 
+debug = False  # Set to True for debugging output
+
 # Read the schema file as a string
 with open('db_timetables_schema.json', 'r') as f:
   schema_str = f.read()
@@ -37,8 +39,8 @@ DB_CLIENT_SECRET = os.getenv('DB_CLIENT_SECRET')
 # 2. Station Configuration
 # HSTM is the short name (DS100), but the API works best with the EVA number.
 STATION_DS100 = "HSTM"  # Short name for "Steinheim (Westf)"
-STATION_EVA_ID = "8005708" #"8005708" #"8002549"  # EVA Number for "Steinheim (Westf)"
-STATION_DISPLAY_NAME = "Steinheim"
+STATION_EVA_ID = 8005708 # HSTM=8005708 AH=8002549  
+STATION_DISPLAY_NAME = "Steinheim Westf"
 
 if (not STATION_EVA_ID):
   if (STATION_DS100):
@@ -65,7 +67,7 @@ options.show_refresh_rate = True  # Show the refresh rate on the matrix
 
 # 4. Display & Data Configuration
 FONT_PATH = '5x8.bdf' # Place this font file in the same directory
-REFRESH_INTERVAL_SECONDS = 15
+REFRESH_INTERVAL_SECONDS = 30
 MAX_DEPARTURES_TO_SHOW = 5
 
 # --- API HANDLING ---
@@ -170,7 +172,140 @@ def get_db_departures_iris(station_id):
     api_url = f"https://www.bahn.de/web/api/reiseloesung/abfahrten?datum=2025-07-05&zeit=14:42:00&ortExtId=8005708&ortId=8005708&mitVias=true&maxVias=8&verkehrsmittel[]=ICE&verkehrsmittel[]=EC_IC&verkehrsmittel[]=IR&verkehrsmittel[]=REGIONAL&verkehrsmittel[]=SBAHN&verkehrsmittel[]=BUS&verkehrsmittel[]=SCHIFF&verkehrsmittel[]=UBAHN&verkehrsmittel[]=TRAM&verkehrsmittel[]=ANRUFPFLICHTIG"
 
 
-def get_db_departures_bahnhofde(station_id):
+def get_db_departures_bahnhofde(station_id, station_name, station_category=1, lookahead_minutes=60, transport_types=["HIGH_SPEED_TRAIN", "INTERCITY_TRAIN", "INTER_REGIONAL_TRAIN", "REGIONAL_TRAIN", "CITY_TRAIN"]):
+    """
+    Fetches departure data from the Deutsche Bahn Bahnhof.de.
+    Now it uses a workaround as the official API is not available anymore.
+    
+    The fetching is based on this curl command:
+    curl 'https://www.bahnhof.de/steinheim-westf/abfahrt' \                                                                               
+        --compressed \
+        -X POST \                                                                                              
+        -H 'Accept-Language: de,en-US;q=0.7,en;q=0.3' \                                                                                   
+        -H 'Accept-Encoding: gzip, deflate, br, zstd' \                       
+        -H 'Referer: https://www.bahnhof.de/steinheim-westf/abfahrt' \                                                                    
+        -H 'Next-Action: 1763f424e6ce09c2e07592add424e2c1908b9082' \                                                                                                                                       
+        -H 'Content-Type: text/plain;charset=UTF-8' \                           
+        --data-raw '[{"duration":60,"type":"departures","locale":"de","evaNumbers":["8005708"],"stationCategory":6,"filterTransports":["HIGH_SPEED_TRAIN","INTERCITY_TRAIN","INTER_REGIONAL_TRAIN","REGIONAL_TRAIN","CITY_TRAIN"],"sortBy":"TIME_SCHEDULE"}]'
+    
+    As one can see the -- data-raw part is a JSON object that contains the parameters for the request.
+    """
+
+    assert type(station_id) == int, "station_id must be an integer."
+    assert type(station_name) == str, "station_name must be a string."
+
+    data_raw_options = {
+        "evaNumbers": [f"{station_id}", ],    # List of EVA numbers (station IDs)
+        "filterTransports": transport_types,  # List of transport types to filter
+        "duration": lookahead_minutes,        # Lookahead in minutes
+        "stationCategory": station_category,  # category 1 for main stations, 2 for all other stations eg. wiki article
+        "locale": "de",
+        "sortBy": "TIME_SCHEDULE" 
+    }
+
+    # Construct the request URL
+    base_api_url = f"https://www.bahnhof.de/{station_name.lower().replace(' ', '-')}/abfahrt"
+    headers = {
+        "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Referer": f"https://www.bahnhof.de/{station_name.lower().replace(' ', '-')}/abfahrt",
+        "Next-Action": "1763f424e6ce09c2e07592add424e2c1908b9082",  # This is a static value, might change in the future, without it the request fails.
+        "Content-Type": "text/plain;charset=UTF-8"
+    }
+    data_raw = json.dumps([data_raw_options])  # Convert the options to a JSON string
+    print(f"Fetching data ...")
+    print(f"Request URL: {base_api_url}")
+    print(f"Request Headers: {headers}")
+    print(f"Request Data: {data_raw}")
+
+    try:
+        response = requests.post(url=base_api_url, headers=headers, data=data_raw)
+        response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+        print(f"API response status: {response.status_code}")
+
+        def extract_balanced_json(source: str, start_key: str = '{"globalMessages":[') -> str:
+            start_idx = source.find(start_key)
+            if start_idx == -1:
+                return None  # or raise an exception
+
+            brace_count = 0
+            in_string = False
+            escape = False
+
+            for i in range(start_idx, len(source)):
+                char = source[i]
+
+                if char == '"' and not escape:
+                    in_string = not in_string
+                elif char == '\\' and not escape:
+                    escape = True
+                    continue
+                elif not in_string:
+                    if char == '{':
+                        brace_count += 1
+                    elif char == '}':
+                        brace_count -= 1
+                        if brace_count == 0:
+                            return source[start_idx:i+1]
+
+                escape = False  # reset escape flag unless it was just set
+
+            return None  # If no matching brace was found
+    
+
+        json_str = extract_balanced_json(response.text)
+
+        if debug:
+            print(response.text)  # Print the raw response for debugging
+            print("----------")
+            print(json_str)  # Print the extracted JSON string for debugging
+        
+        # Parse the JSON response
+        api_data = json.loads(json_str) if json_str else {}
+        departures = []
+
+        for item in api_data.get('entries', []):
+            for train in item:
+                # Extract train line identifier
+                line = train.get('lineName', '')
+
+                # Extract destination
+                direction = train.get('destination', {}).get('name', '')
+
+                # Extract and format time
+                scheduled_time_str = train.get('timeSchedule', '')
+                actual_time_str = train.get('timeDelayed', '')
+
+                if not scheduled_time_str:
+                    continue
+
+                scheduled_dt = datetime.fromisoformat(scheduled_time_str)
+                actual_dt = datetime.fromisoformat(actual_time_str)
+                
+                departure_time_formatted = actual_dt.strftime('%H:%M')
+                
+                # Calculate delay
+                delay_seconds = (actual_dt - scheduled_dt).total_seconds()
+                delay_minutes = int(delay_seconds / 60)
+
+                departures.append({
+                    'line': str(line).strip().replace('â\x80¯', ''),
+                    'direction': direction,
+                    'departure_time': departure_time_formatted,
+                    'delay_minutes': delay_minutes,
+                    'is_cancelled': train.get('canceled', False) or train.get('stopPlace', {}).get('canceled', False)
+                })
+        print(f"Fetched {len(departures)} departures.")
+        print(departures)  # Debugging output
+        return departures
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data from DB API: {e}")
+        return None
+
+
+
+def get_db_departures_bahnhof_de_old(station_id):
     options = {
         "evaNumbers": station_id,
         "filterTransports": ["HIGH_SPEED_TRAIN", "INTERCITY_TRAIN", "INTER_REGIONAL_TRAIN", "REGIONAL_TRAIN", "CITY_TRAIN"],
@@ -388,7 +523,7 @@ def main():
     try:
         while i < 150:
             print(f"[{datetime.now().strftime('%H:%M:%S')}] Fetching new departure data...")
-            departures = get_db_departures_bahnhofde(STATION_EVA_ID)
+            departures = get_db_departures_bahnhofde(STATION_EVA_ID, STATION_DISPLAY_NAME, station_category=6, lookahead_minutes=100)
             
             print(f"[{datetime.now().strftime('%H:%M:%S')}] Drawing to matrix...")
             draw_to_matrix(matrix, departures)

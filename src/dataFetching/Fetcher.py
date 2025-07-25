@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 class Fetcher:
     def __init__(self):
         env_path = os.path.expanduser('~/LEDMatrix/.env')
+        env_path = os.path.join(os.path.dirname(__file__), '..', '..', '.env')
         load_dotenv(dotenv_path=env_path)
         self.TIMETABLE_CLIENT_ID     = os.getenv('DB_CLIENT_ID')
         self.TIMETABLE_CLIENT_SECRET = os.getenv('DB_CLIENT_SECRET')
@@ -131,19 +132,99 @@ class Fetcher:
         :return: A dictionary containing the parsed station data.
         """
 
-        print(response_text)  # Debugging line to see the raw response
+        # Debug output if needed
+        # print(response_text)  # Debugging line to see the raw response
 
         try:
             root = ET.fromstring(response_text)
             station_data = []
             for station in root.findall('station'):
-                station_data.append({
-                    'name': station.get('name'),
-                    'eva': station.get('eva'),
-                    'ds100': station.get('ds100'),
-                    'creation_ts': station.get('creationts'),
-                    'platforms': station.get('p').split('|') if station.get('p') else []
-                })
-            return station_data[0]
+                station_data.append(
+                    StationData(
+                        name=station.get('name'),
+                        eva=int(station.get('eva')),
+                        ds100=station.get('ds100'),
+                        creation_ts=station.get('creationts'),
+                        platforms=station.get('p').split('|') if station.get('p') else [],
+                        lookahead=60,
+                        category=int(station.get('stationCategory', 1))  # Default to category 1 if not provided
+                    )
+                )
+            return station_data[0] if len(station_data) == 1 else None
         except ET.ParseError as e:
             raise ValueError(f"Failed to parse station data: {e}")
+
+class StationData: 
+    def __init__(self, name: str, eva: int, ds100: str, platforms: list=None, 
+                 creation_ts: str = None, lookahead: int = 20, category: int = 1):
+        # assert values
+        assert isinstance(name, str), "name must be a string."
+        assert isinstance(eva, int), "eva must be a int."
+        assert isinstance(ds100, str), "ds100 must be a string."
+        assert isinstance(platforms, list) or platforms is None, "platforms must be a list or None."
+        assert isinstance(creation_ts, str) or creation_ts is None, "creation_ts must be a string or None."
+        assert isinstance(lookahead, int) and lookahead > 0, "lookahead must be a positive integer."
+        assert isinstance(category, int) and category in range(1,8), "station_category must be an integer in the range [1, 8]."
+
+        self.name = name
+        self.eva = eva
+        self.ds100 = ds100
+        self.platforms = platforms
+        self.creation_ts = creation_ts
+        self.lookahead = lookahead
+        self.category = category
+
+    def __repr__(self):
+        return f"StationData(name={self.name}, eva={self.eva}, ds100={self.ds100})"
+
+class StationDataCacher:
+    @staticmethod
+    def cache_station_data(station_data: StationData, cache_file: str = 'stationData.csv'):
+        """
+        Caches the station data to a csv table
+        :param station_data: The StationData object to cache.
+        :param cache_file: The file path to cache the data.
+        """
+        if not isinstance(station_data, StationData):
+            raise ValueError("station_data must be an instance of StationData.")
+
+        #if os.path.exists(cache_file):
+        # Check if the file has the correct header, if not, rewrite it
+        print("Writing to cache file:", cache_file)
+        with open(cache_file, 'r') as f:
+            header = f.readline().strip()
+            if header != "name,eva,ds100,platforms,creation_ts,lookahead,category":
+                with open(cache_file, 'w') as f:
+                    f.write("name,eva,ds100,platforms,creation_ts,lookahead,category\n")
+        
+        # Append the station data to the file
+        with open(cache_file, 'a') as f:
+            platforms_str = '|'.join(station_data.platforms) if station_data.platforms else ''
+            f.write(f"{station_data.name},{station_data.eva},{station_data.ds100},{platforms_str},{station_data.creation_ts},{station_data.lookahead},{station_data.category}\n")
+
+    
+    @staticmethod
+    def lookup_station_in_cache(station_eva: int, station_name: str, station_rl100: str, cache_file: str = 'stationData.csv') -> StationData:
+        """
+        Lookup station data by eva, name or rl100 name
+        :param station_eva: The EVA number of the station.
+        :param station_name: The name of the station.
+        :param station_rl100: The RLI100/DE100 name of the station.
+        :param cache_file: The file path to the cached data.
+        :return: StationData object if found, None otherwise.
+        """
+        if not os.path.exists(cache_file):
+            return None
+
+        with open(cache_file, 'r') as f:
+            header = f.readline().strip()
+            if header != "name,eva,ds100,platforms,creation_ts,lookahead,station_category":
+                raise ValueError("Cache file is corrupted or has an invalid header.")
+
+            for line in f:
+                name, eva, ds100, platforms, creation_ts, lookahead, category = line.strip().split(',')
+                if (eva == str(station_eva) or name == station_name or ds100 == station_rl100):
+                    platforms_list = platforms.split('|') if platforms else []
+                    return StationData(name=name, eva=int(eva), ds100=ds100, platforms=platforms_list,
+                                       creation_ts=creation_ts, lookahead=int(lookahead), 
+                                       category=int(category))

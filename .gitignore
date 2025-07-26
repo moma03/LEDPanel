@@ -33,3 +33,13 @@
 
 # Environment files
 .env
+
+# PyCharm specific files
+.idea/
+# VS Code specific files
+.vscode/
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+# Python cache files
+__pycache__/
+*.py[cod]

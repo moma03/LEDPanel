@@ -5,17 +5,16 @@ import xml.etree.ElementTree as ET
 import json
 from dotenv import load_dotenv
 
+
 class Fetcher:
     def __init__(self):
-        env_path = os.path.expanduser('~/LEDMatrix/.env')
         env_path = os.path.join(os.path.dirname(__file__), '..', '..', '.env')
         load_dotenv(dotenv_path=env_path)
-        self.TIMETABLE_CLIENT_ID     = os.getenv('DB_CLIENT_ID')
+        self.TIMETABLE_CLIENT_ID = os.getenv('DB_CLIENT_ID')
         self.TIMETABLE_CLIENT_SECRET = os.getenv('DB_CLIENT_SECRET')
 
         if not self.TIMETABLE_CLIENT_ID or not self.TIMETABLE_CLIENT_SECRET:
             raise EnvironmentError("DB_CLIENT_ID and DB_CLIENT_SECRET environment variables must be set.")
-
 
     def fetch_station_data(self, station_info: str or int):
         """
@@ -33,7 +32,7 @@ class Fetcher:
         headers = {
             'DB-Client-Id': self.TIMETABLE_CLIENT_ID,
             'DB-Api-Key': self.TIMETABLE_CLIENT_SECRET,
-            #'accept': 'application/json'
+            # 'accept': 'application/json'
             'accept': 'application/vnd.de.db.ris+json'
         }
         
@@ -48,11 +47,10 @@ class Fetcher:
 
         return Fetcher.parse_station_data(response.text)
 
-    
     def fetch_station_departures(self, request_data):
         """
         Fetches departures from bahnhof.de API using its EVA number.
-        :param station_eva: EVA number of the station.
+        :param request_data: A dictionary containing the following keys:
         :raises ValueError: if station_eva is not provided.
         :raises requests.HTTPError: if the request to the DB API fails.
         :return: JSON response from the DB API containing departure information.
@@ -62,12 +60,12 @@ class Fetcher:
             raise ValueError("Request data must be provided.")
 
         data_raw_options = {
-            "evaNumbers": [f"{request_data['eva']}", ],          # List of EVA numbers (station IDs)
-            "filterTransports": request_data["transports"],      # List of transport types to filter
-            "duration": request_data["lookahead"],               # Lookahead in minutes
-            "stationCategory": request_data["station_category"], # category 1 for main stations, 2 for all other stations eg. wiki article
+            "evaNumbers": [f"{request_data['eva']}", ],           # List of EVA numbers (station IDs)
+            "filterTransports": request_data["transports"],       # List of transport types to filter
+            "duration": request_data["lookahead"],                # Lookahead in minutes
+            "stationCategory": request_data["station_category"],  # category 1 for main stations, 2 for all other stations e.g. wiki article
             "locale": "de",
-            "type": request_data["type"],                        # 'departures' or 'arrivals'
+            "type": request_data["type"],                         # 'departures' or 'arrivals'
             "sortBy": "TIME_SCHEDULE" 
         }
 
@@ -77,7 +75,7 @@ class Fetcher:
             "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
             "Accept-Encoding": "gzip, deflate, br, zstd",
             "Referer": f"https://www.bahnhof.de/{request_data['name'].lower().replace(' ', '-')}",
-            "Next-Action": "1763f424e6ce09c2e07592add424e2c1908b9082",  # This is a static value, might change in the future, without it the request fails.
+            "Next-Action": "7f2445eb9aaa7f83c446bb545f8146392aea9ca9d0",  # This is a static value, might change in the future, without it the request fails.
             "Content-Type": "text/plain;charset=UTF-8"
         }
         body = json.dumps([data_raw_options])
@@ -87,18 +85,49 @@ class Fetcher:
             response.raise_for_status()  # Raise an error for bad responses
             
             # Extract the balanced JSON from the response text
-            json_str = Fetcher.extract_balanced_json(source = response.text, start_key='{"globalMessages":[')
+            json_str = Fetcher.extract_balanced_json(source=response.text, start_key='{"globalMessages":[')
             return json.loads(json_str) if json_str else None
         except requests.HTTPError as http_err:
             raise requests.HTTPError(f"HTTP error occurred: {http_err}")
         except Exception as err:
             raise Exception(f"An error occurred: {err}")
-        
-        
+
+    @staticmethod
+    def fetch_journey_data(journey_id: str, station_name: str, departure_id: str)-> str:
+        """
+        Fetches journey data from the DB Bahnhof.de webseit using the provided journey ID.
+        :param journey_id: The ID of the journey to fetch data for.
+        :param station_name: The name of the station to fetch data for.
+        :param departure_id: The ID of the departure to fetch data for.
+        :return: JSON response from the DB API containing journey information.
+        """
+
+        assert isinstance(journey_id, str) and journey_id, "journey_id must be a non-empty string."
+        assert isinstance(station_name, str) and station_name, "station_name must be a non-empty string."
+        assert isinstance(departure_id, str) and departure_id, "departure_id must be a non-empty string."
+
+        url = f"https://www.bahnhof.de/{station_name.lower().replace(' ', '-')}/abfahrt/fahrtverlauf/{journey_id}/{departure_id}"
+        headers = {
+            "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
+            "Accept-Encoding": "gzip, deflate, br, zstd",
+            "Content-Type": "text/plain;charset=UTF-8"
+        }
+
+        try:
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()  # Raise an error for bad responses
+            response = Fetcher.extract_balanced_json(source=response.text, start_key='{"stops":[')
+            return json.loads(response) if response else None
+        except requests.HTTPError as http_err:
+            raise requests.HTTPError(f"HTTP error occurred: {http_err}")
+        except Exception as err:
+            raise Exception(f"An error occurred: {err}")
+
+    @staticmethod
     def extract_balanced_json(source: str, start_key: str) -> str:
         start_idx = source.find(start_key)
         if start_idx == -1:
-            return None  # or raise an exception
+            return ""  # or raise an exception
 
         brace_count = 0
         in_string = False
@@ -122,9 +151,9 @@ class Fetcher:
 
             escape = False  # reset escape flag unless it was just set
 
-        return None  # If no matching brace was found
+        return ""  # If no matching brace was found
 
-
+    @staticmethod
     def parse_station_data(response_text: str):
         """
         Parses the station data XML from the response text.
@@ -154,8 +183,9 @@ class Fetcher:
         except ET.ParseError as e:
             raise ValueError(f"Failed to parse station data: {e}")
 
+
 class StationData: 
-    def __init__(self, name: str, eva: int, ds100: str, platforms: list=None, 
+    def __init__(self, name: str, eva: int, ds100: str, platforms: list = None,
                  creation_ts: str = None, lookahead: int = 20, category: int = 1):
         # assert values
         assert isinstance(name, str), "name must be a string."
@@ -164,7 +194,7 @@ class StationData:
         assert isinstance(platforms, list) or platforms is None, "platforms must be a list or None."
         assert isinstance(creation_ts, str) or creation_ts is None, "creation_ts must be a string or None."
         assert isinstance(lookahead, int) and lookahead > 0, "lookahead must be a positive integer."
-        assert isinstance(category, int) and category in range(1,8), "station_category must be an integer in the range [1, 8]."
+        assert isinstance(category, int) and category in range(1, 8), "station_category must be an integer in the range [1, 8]."
 
         self.name = name
         self.eva = eva
@@ -177,6 +207,7 @@ class StationData:
     def __repr__(self):
         return f"StationData(name={self.name}, eva={self.eva}, ds100={self.ds100})"
 
+
 class StationDataCacher:
     @staticmethod
     def cache_station_data(station_data: StationData, cache_file: str = 'stationData.csv'):
@@ -188,21 +219,23 @@ class StationDataCacher:
         if not isinstance(station_data, StationData):
             raise ValueError("station_data must be an instance of StationData.")
 
-        #if os.path.exists(cache_file):
+        if StationDataCacher.lookup_station_in_cache(station_data.eva, station_data.name, station_data.ds100, cache_file):
+            return  # Station data already cached, no need to write again
+
         # Check if the file has the correct header, if not, rewrite it
         print("Writing to cache file:", cache_file)
-        with open(cache_file, 'r') as f:
-            header = f.readline().strip()
-            if header != "name,eva,ds100,platforms,creation_ts,lookahead,category":
-                with open(cache_file, 'w') as f:
-                    f.write("name,eva,ds100,platforms,creation_ts,lookahead,category\n")
+        if os.path.exists(cache_file):
+            with open(cache_file, 'r') as f:
+                header = f.readline().strip()
+                if header != "name,eva,ds100,platforms,creation_ts,lookahead,category":
+                    with open(cache_file, 'w') as t:
+                        t.write("name,eva,ds100,platforms,creation_ts,lookahead,category\n")
         
         # Append the station data to the file
         with open(cache_file, 'a') as f:
             platforms_str = '|'.join(station_data.platforms) if station_data.platforms else ''
-            f.write(f"{station_data.name},{station_data.eva},{station_data.ds100},{platforms_str},{station_data.creation_ts},{station_data.lookahead},{station_data.category}\n")
+            f.write(f"'{station_data.name}',{station_data.eva},{station_data.ds100},{platforms_str},{station_data.creation_ts},{station_data.lookahead},{station_data.category}\n")
 
-    
     @staticmethod
     def lookup_station_in_cache(station_eva: int, station_name: str, station_rl100: str, cache_file: str = 'stationData.csv') -> StationData:
         """
@@ -214,17 +247,39 @@ class StationDataCacher:
         :return: StationData object if found, None otherwise.
         """
         if not os.path.exists(cache_file):
+            print(f"Cache file {cache_file} does not exist. Returning None.")
             return None
 
         with open(cache_file, 'r') as f:
             header = f.readline().strip()
-            if header != "name,eva,ds100,platforms,creation_ts,lookahead,station_category":
+            if header != "name,eva,ds100,platforms,creation_ts,lookahead,category":
                 raise ValueError("Cache file is corrupted or has an invalid header.")
 
             for line in f:
-                name, eva, ds100, platforms, creation_ts, lookahead, category = line.strip().split(',')
-                if (eva == str(station_eva) or name == station_name or ds100 == station_rl100):
+                print(f"Checking line in cache: {line.strip()}")
+                # Handle station name in single quotes, which may contain commas
+                line = line.strip()
+                name, eva, ds100, platforms, creation_ts, lookahead, category = StationDataCacher.parse_cache_line(line)
+                if eva == str(station_eva) or name == station_name or ds100 == station_rl100:
+                    print(f"Found station in cache: {name} (EVA: {eva})")
                     platforms_list = platforms.split('|') if platforms else []
                     return StationData(name=name, eva=int(eva), ds100=ds100, platforms=platforms_list,
                                        creation_ts=creation_ts, lookahead=int(lookahead), 
                                        category=int(category))
+
+    @staticmethod
+    def parse_cache_line(line: str):
+        """
+        Parses a line from the cache file.
+        :param line: The line to parse.
+        :return: A tuple containing the parsed station data.
+        """
+        line = line.strip()
+        if line.startswith("'"):
+            end_quote = line.find("'", 1)
+            name = line[1:end_quote]
+            rest = line[end_quote+2:]
+            print(f"Parsed name: {name}, rest: {rest}")
+            return [name, *rest.split(',')]
+        else:
+            return line.split(',')

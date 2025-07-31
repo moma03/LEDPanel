@@ -1,0 +1,498 @@
+{'globalMessages': [],'entries': [
+        [
+            {'canceledStopsAfterActualDestination': [
+                    {'evaNumber':'8000571','name':'Lippstadt','canceled':True,'additional':False,'displayPriority': 2
+                    },
+                    {'evaNumber':'8000076','name':'Soest','canceled':True,'additional':False,'displayPriority': 1
+                    }
+                ],'direction':'departure','id':'8000297_D_1','timeSchedule':'2025-07-26T13: 12: 00+02: 00','timeDelayed':'2025-07-26T13: 12: 00+02: 00','delayed':False,'platform':'1','platformSchedule':'1','timeType':'SCHEDULE','canceled':True,'administrationID':'NXRE','virtual':False,'lineName':'REâ\x80¯11','additionalLineName':'$undefined','type':'REGIONAL_TRAIN','replacementServiceType':'$undefined','kind':'canceled','journeyID':'20250726-6e4e3427-4fe6-3dcb-9458-d1cec2acb005','stopPlace': {'evaNumber':'8000297','name':'PaderbornHbf','canceled':True
+                },'arrivalOrDepartureId':'8000297_D_1','actualDestination':'$undefined','destination': {'evaNumber':'8000149','name':'Hamm(Westf)Hbf','canceled':True,'slug':'hamm-westf-hbf','nameParts': [
+                        {'type':'default','value':'Hamm'
+                        },
+                        {'type':'region','value':'(Westf)','valueSpeech':'(Westfalen)'
+                        },
+                        {'type':'default','value':'Hbf','valueSpeec∏h':'Hauptbahnhof'
+                        }
+                    ]
+                },'origin':'$undefined','viaStops': [],'additionalStops': [],'canceledStops': [],'messages': {'common': [],'delay': [],'cancelation': [
+                        {'locale':'de','text':'FahrtfÃ¤lltaus','type':'canceled-trip','change':True,'important':True,'open':True,'deviatingStopPlace':False,'links': []
+                        }
+                    ],'destination': [],'via': []
+                },'providesVehicleSequence':True
+            }
+        ],
+        [
+            {'canceledStopsAfterActualDestination': [],'direction':'departure','id':'8000297_D_1','timeSchedule':'2025-07-26T13: 13: 00+02: 00','timeDelayed':'2025-07-26T13: 13: 00+02: 00','delayed':False,'platform':'3','platformSchedule':'3','timeType':'PREVIEW','canceled':False,'administrationID':'TDHS','virtual':False,'lineName':'Sâ\x80¯5','additionalLineName':'$undefined','type':'CITY_TRAIN','replacementServiceType':'$undefined','kind':'default','journeyID':'20250726-963b6767-9afa-3f8f-a009-a096bb73b6b5','stopPlace': {'evaNumber':'8000297','name':'PaderbornHbf','canceled':False
+                },'arrivalOrDepartureId':'8000297_D_1','actualDestination':'$undefined','destination': {'evaNumber':'8002589','name':'HannoverFlughafen','canceled':False,'slug':'hannover-flughafen','nameParts': [
+                        {'type':'city','value':'Hannover'
+                        },
+                        {'type':'city-separator','value':'-'
+                        },
+                        {'type':'airport','value':'â\x9c\x88Â\xa0'
+                        },
+                        {'type':'default','value':'Flughafen'
+                        }
+                    ]
+                },'origin':'$undefined','viaStops': [
+                    {'evaNumber':'8000004','name':'Altenbeken','canceled':False,'additional':False,'displayPriority': 2,'separation':False,'slug':'altenbeken','nameParts': [
+                            {'type':'default','value':'Altenbeken'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005708','name':'Steinheim(Westf)','canceled':False,'additional':False,'displayPriority': 18,'separation':False,'slug':'steinheim-westf','nameParts': [
+                            {'type':'default','value':'Steinheim'
+                            },
+                            {'type':'region','value':'(Westf)','valueSpeech':'(Westfalen)'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005340','name':'Schieder','canceled':False,'additional':False,'displayPriority': 19,'separation':False,'slug':'schieder','nameParts': [
+                            {'type':'default','value':'Schieder'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8003784','name':'LÃ¼gde','canceled':False,'additional':False,'displayPriority': 20,'separation':False,'slug':'luegde','nameParts': [
+                            {'type':'default','value':'LÃ¼gde'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000735','name':'BadPyrmont','canceled':False,'additional':False,'displayPriority': 13,'separation':False,'slug':'bad-pyrmont','nameParts': [
+                            {'type':'default','value':'BadPyrmont','valueSpeech':'Baâ\x80\x8bdPyrmont'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8001777','name':'Emmerthal','canceled':False,'additional':False,'displayPriority': 14,'separation':False,'slug':'emmerthal','nameParts': [
+                            {'type':'default','value':'Emmerthal'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000148','name':'Hameln','canceled':False,'additional':False,'displayPriority': 3,'separation':False,'slug':'hameln','nameParts': [
+                            {'type':'default','value':'Hameln'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000725','name':'BadMÃ¼nder(Deister)','canceled':False,'additional':False,'displayPriority': 15,'separation':False,'slug':'bad-muender-deister','nameParts': [
+                            {'type':'default','value':'BadMÃ¼nder','valueSpeech':'Baâ\x80\x8bdMÃ¼nder'
+                            },
+                            {'type':'region','value':'(Deister)'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005638','name':'Springe','canceled':False,'additional':False,'displayPriority': 4,'separation':False,'slug':'springe','nameParts': [
+                            {'type':'default','value':'Springe'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8001741','name':'VÃ¶lksen/Eldagsen','canceled':False,'additional':False,'displayPriority': 16,'separation':False,'slug':'voelksen-eldagsen','nameParts': [
+                            {'type':'default','value':'VÃ¶lksen-Eldagsen'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000872','name':'Bennigsen','canceled':False,'additional':False,'displayPriority': 17,'separation':False,'slug':'bennigsen','nameParts': [
+                            {'type':'default','value':'Bennigsen'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002969','name':'Holtensen/Linderte','canceled':False,'additional':False,'displayPriority': 21,'separation':False,'slug':'holtensen-linderte','nameParts': [
+                            {'type':'default','value':'Holtensen/â\x80\x8bLinderte'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000342','name':'Weetzen','canceled':False,'additional':False,'displayPriority': 5,'separation':False,'slug':'weetzen','nameParts': [
+                            {'type':'default','value':'Weetzen'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002586','name':'Hannover-Linden/Fischerhof','canceled':False,'additional':False,'displayPriority': 6,'separation':False,'slug':'hannover-linden-fischerhof','nameParts': [
+                            {'type':'city','value':'Hannover'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Linden/â\x80\x8bFischerhof'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002580','name':'HannoverBismarckstr.','canceled':False,'additional':False,'displayPriority': 7,'separation':False,'slug':'hannover-bismarckstrasse','nameParts': [
+                            {'type':'city','value':'Hannover'
+                            },
+                            {'type':'city-separator','value':''
+                            },
+                            {'type':'default','value':'BismarckstraÃ\x9fe'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000152','name':'HannoverHbf','canceled':False,'additional':False,'displayPriority': 1,'separation':False,'slug':'hannover-hbf','nameParts': [
+                            {'type':'default','value':'HannoverHbf','valueSpeech':'HannoverHauptbahnhof'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8079095','name':'Hannover-Nordstadt','canceled':False,'additional':False,'displayPriority': 8,'separation':False,'slug':'hannover-nordstadt','nameParts': [
+                            {'type':'city','value':'Hannover'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Nordstadt'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8079097','name':'Hannover-Ledeburg','canceled':False,'additional':False,'displayPriority': 9,'separation':False,'slug':'hannover-ledeburg','nameParts': [
+                            {'type':'city','value':'Hannover'
+                            },
+                            {'type':'city-separator','value':''
+                            },
+                            {'type':'default','value':'-Ledeburg'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8006089','name':'Hannover-Vinnhorst','canceled':False,'additional':False,'displayPriority': 10,'separation':False,'slug':'hannover-vinnhorst','nameParts': [
+                            {'type':'city','value':'Hannover'
+                            },
+                            {'type':'city-separator','value':''
+                            },
+                            {'type':'default','value':'-Vinnhorst'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8003545','name':'LangenhagenMitte','canceled':False,'additional':False,'displayPriority': 11,'separation':False,'slug':'langenhagen-mitte','nameParts': [
+                            {'type':'default','value':'Langenhagen-Mitte'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8003542','name':'LangenhagenPferdemarkt','canceled':False,'additional':False,'displayPriority': 12,'separation':False,'slug':'langenhagen-pferdemarkt','nameParts': [
+                            {'type':'city','value':'Langenhagen'
+                            },
+                            {'type':'city-separator','value':''
+                            },
+                            {'type':'default','value':'Pferdemarkt'
+                            }
+                        ]
+                    }
+                ],'additionalStops': [],'canceledStops': [],'messages': {'common': [
+                        {'locale':'de','text':'FahrradmitnahmebegrenztmÃ¶glich','type':'bicycle-transport','change':False,'important':False,'open':False,'deviatingStopPlace':False,'links': []
+                        }
+                    ],'delay': [],'cancelation': [],'destination': [],'via': []
+                },'providesVehicleSequence':False
+            }
+        ],
+        [
+            {'canceledStopsAfterActualDestination': [],'direction':'departure','id':'8000297_D_1','timeSchedule':'2025-07-26T13: 15: 00+02: 00','timeDelayed':'2025-07-26T13: 15: 00+02: 00','delayed':False,'platform':'1','platformSchedule':'1','timeType':'PREVIEW','canceled':False,'administrationID':'R2RB','virtual':False,'lineName':'RBâ\x80¯89','additionalLineName':'$undefined','type':'REGIONAL_TRAIN','replacementServiceType':'$undefined','kind':'default','journeyID':'20250726-81f1c935-8351-325b-9b2a-b55b6c521a96','stopPlace': {'evaNumber':'8000297','name':'PaderbornHbf','canceled':False
+                },'arrivalOrDepartureId':'8000297_D_1','actualDestination':'$undefined','destination': {'evaNumber':'8000263','name':'MÃ¼nster(Westf)Hbf','canceled':False,'slug':'muenster-westf-hbf','nameParts': [
+                        {'type':'default','value':'MÃ¼nster'
+                        },
+                        {'type':'region','value':'(Westf)','valueSpeech':'(Westfalen)'
+                        },
+                        {'type':'default','value':'Hbf','valueSpeech':'Hauptbahnhof'
+                        }
+                    ]
+                },'origin':'$undefined','viaStops': [
+                    {'evaNumber':'8005322','name':'Scharmede','canceled':False,'additional':False,'displayPriority': 9,'separation':False,'slug':'scharmede','nameParts': [
+                            {'type':'default','value':'Scharmede'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005276','name':'Salzkotten','canceled':False,'additional':False,'displayPriority': 5,'separation':False,'slug':'salzkotten','nameParts': [
+                            {'type':'default','value':'Salzkotten'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002262','name':'Geseke','canceled':False,'additional':False,'displayPriority': 6,'separation':False,'slug':'geseke','nameParts': [
+                            {'type':'default','value':'Geseke'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8001692','name':'Ehringhausen(KrLippstadt)','canceled':False,'additional':False,'displayPriority': 10,'separation':False,'slug':'ehringhausen-kr-lippstadt','nameParts': [
+                            {'type':'default','value':'Ehringhausen'
+                            },
+                            {'type':'region','value':'(KrÂ\xa0Lippstadt)','valueSpeech':'(KreisLippstadt)'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8001394','name':'Dedinghausen','canceled':False,'additional':False,'displayPriority': 11,'separation':False,'slug':'dedinghausen','nameParts': [
+                            {'type':'default','value':'Dedinghausen'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000571','name':'Lippstadt','canceled':False,'additional':False,'displayPriority': 3,'separation':False,'slug':'lippstadt','nameParts': [
+                            {'type':'default','value':'Lippstadt'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000745','name':'BadSassendorf','canceled':False,'additional':False,'displayPriority': 12,'separation':False,'slug':'bad-sassendorf','nameParts': [
+                            {'type':'default','value':'BadSassendorf','valueSpeech':'Baâ\x80\x8bdSassendorf'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000076','name':'Soest','canceled':False,'additional':False,'displayPriority': 2,'separation':False,'slug':'soest','nameParts': [
+                            {'type':'default','value':'Soest'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8001093','name':'Borgeln','canceled':False,'additional':False,'displayPriority': 13,'separation':False,'slug':'borgeln','nameParts': [
+                            {'type':'default','value':'Borgeln'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8006323','name':'Welver','canceled':False,'additional':False,'displayPriority': 7,'separation':False,'slug':'welver','nameParts': [
+                            {'type':'default','value':'Welver'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002564','name':'Hamm-WesttÃ¼nnen','canceled':False,'additional':False,'displayPriority': 14,'separation':False,'slug':'hamm-westtuennen','nameParts': [
+                            {'type':'city','value':'Hamm'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'WesttÃ¼nnen'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000149','name':'Hamm(Westf)Hbf','canceled':False,'additional':False,'displayPriority': 1,'separation':False,'slug':'hamm-westf-hbf','nameParts':'$2'
+                    },
+                    {'evaNumber':'8001045','name':'Hamm-Bockum-HÃ¶vel','canceled':False,'additional':False,'displayPriority': 15,'separation':False,'slug':'hamm-bockum-hoevel','nameParts': [
+                            {'type':'city','value':'Hamm'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Bockum-HÃ¶vel'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8003986','name':'Mersch(Westf)','canceled':False,'additional':False,'displayPriority': 16,'separation':False,'slug':'mersch-westf','nameParts': [
+                            {'type':'default','value':'Mersch'
+                            },
+                            {'type':'region','value':'(Westf)','valueSpeech':'(Westfalen)'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8001558','name':'Drensteinfurt','canceled':False,'additional':False,'displayPriority': 8,'separation':False,'slug':'drensteinfurt','nameParts': [
+                            {'type':'default','value':'Drensteinfurt'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005102','name':'Rinkerode','canceled':False,'additional':False,'displayPriority': 17,'separation':False,'slug':'rinkerode','nameParts': [
+                            {'type':'default','value':'Rinkerode'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002841','name':'MÃ¼nster-Hiltrup','canceled':False,'additional':False,'displayPriority': 4,'separation':False,'slug':'muenster-hiltrup','nameParts': [
+                            {'type':'city','value':'MÃ¼nster'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Hiltrup'
+                            }
+                        ]
+                    }
+                ],'additionalStops': [],'canceledStops': [],'messages': {'common': [
+                        {'locale':'de','text':'FahrradmitnahmebegrenztmÃ¶glich','type':'bicycle-transport','change':False,'important':False,'open':False,'deviatingStopPlace':False,'links': []
+                        }
+                    ],'delay': [],'cancelation': [],'destination': [],'via': []
+                },'providesVehicleSequence':False
+            }
+        ],
+        [
+            {'canceledStopsAfterActualDestination': [],'direction':'departure','id':'8000297_D_1','timeSchedule':'2025-07-26T13: 21: 00+02: 00','timeDelayed':'2025-07-26T13: 21: 00+02: 00','delayed':False,'platform':'4','platformSchedule':'4','timeType':'PREVIEW','canceled':False,'administrationID':'R2RB','virtual':False,'lineName':'RBâ\x80¯72','additionalLineName':'$undefined','type':'REGIONAL_TRAIN','replacementServiceType':'$undefined','kind':'default','journeyID':'20250726-9900e7a0-e7ed-3bf4-8f20-ef3be73e8be2','stopPlace': {'evaNumber':'8000297','name':'PaderbornHbf','canceled':False
+                },'arrivalOrDepartureId':'8000297_D_1','actualDestination':'$undefined','destination': {'evaNumber':'8000162','name':'Herford','canceled':False,'slug':'herford','nameParts': [
+                        {'type':'default','value':'Herford'
+                        }
+                    ]
+                },'origin':'$undefined','viaStops': [
+                    {'evaNumber':'8000004','name':'Altenbeken','canceled':False,'additional':False,'displayPriority': 1,'separation':False,'slug':'altenbeken','nameParts':'$6'
+                    },
+                    {'evaNumber':'8005283','name':'Steinheim-Sandebeck','canceled':False,'additional':False,'displayPriority': 7,'separation':False,'slug':'steinheim-sandebeck','nameParts': [
+                            {'type':'city','value':'Steinheim'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Sandebeck'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8003655','name':'Leopoldstal','canceled':False,'additional':False,'displayPriority': 8,'separation':False,'slug':'leopoldstal','nameParts': [
+                            {'type':'default','value':'Leopoldstal'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8003000','name':'Horn-BadMeinberg','canceled':False,'additional':False,'displayPriority': 4,'separation':False,'slug':'horn-bad-meinberg','nameParts': [
+                            {'type':'default','value':'Horn-BadMeinberg','valueSpeech':'Horn-Baâ\x80\x8bdMeinberg'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8001420','name':'Detmold','canceled':False,'additional':False,'displayPriority': 2,'separation':False,'slug':'detmold','nameParts': [
+                            {'type':'default','value':'Detmold'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000215','name':'Lage(Lippe)','canceled':False,'additional':False,'displayPriority': 3,'separation':False,'slug':'lage-lippe','nameParts': [
+                            {'type':'default','value':'Lage'
+                            },
+                            {'type':'region','value':'(Lippe)'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005810','name':'BadSalzuflen-Sylbach','canceled':False,'additional':False,'displayPriority': 9,'separation':False,'slug':'bad-salzuflen-sylbach','nameParts': [
+                            {'type':'city','value':'BadSalzuflen','valueSpeech':'Baâ\x80\x8bdSalzuflen'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Sylbach'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005415','name':'SchÃ¶tmar','canceled':False,'additional':False,'displayPriority': 5,'separation':False,'slug':'schoetmar','nameParts': [
+                            {'type':'default','value':'SchÃ¶tmar'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000744','name':'BadSalzuflen','canceled':False,'additional':False,'displayPriority': 6,'separation':False,'slug':'bad-salzuflen','nameParts': [
+                            {'type':'default','value':'BadSalzuflen','valueSpeech':'Baâ\x80\x8bdSalzuflen'
+                            }
+                        ]
+                    }
+                ],'additionalStops': [],'canceledStops': [],'messages': {'common': [
+                        {'locale':'de','text':'DieRegionPaderbornHbfistaktuellbeeintrÃ¤chtigt.DasEndekÃ¶nnenwirleidernochnichtabschÃ¤tzen.DerGrunddafÃ¼risteineReparaturanderStrecke.DieZÃ¼gefahrenindembetroffenenStreckenabschnittlangsamer.InderFolgekommteswahrscheinlichzuVerspÃ¤tungen.BitteprÃ¼fenSieIhreReiseverbindungkurzvorderAbfahrt.','type':'general-warning','change':True,'important':False,'open':False,'deviatingStopPlace':False,'links': []
+                        },
+                        {'locale':'de','text':'FahrradmitnahmebegrenztmÃ¶glich','type':'bicycle-transport','change':False,'important':False,'open':False,'deviatingStopPlace':False,'links': []
+                        }
+                    ],'delay': [],'cancelation': [],'destination': [],'via': []
+                },'providesVehicleSequence':False
+            }
+        ],
+        [
+            {'canceledStopsAfterActualDestination': [],'direction':'departure','id':'8000297_D_1','timeSchedule':'2025-07-26T13: 23: 00+02: 00','timeDelayed':'2025-07-26T13: 23: 00+02: 00','delayed':False,'platform':'5','platformSchedule':'5','timeType':'PREVIEW','canceled':False,'administrationID':'N2','virtual':False,'lineName':'RBâ\x80¯74','additionalLineName':'$undefined','type':'REGIONAL_TRAIN','replacementServiceType':'$undefined','kind':'default','journeyID':'20250726-457b6242-c360-3328-90e7-e9d8c415d462','stopPlace': {'evaNumber':'8000297','name':'PaderbornHbf','canceled':False
+                },'arrivalOrDepartureId':'8000297_D_1','actualDestination':'$undefined','destination': {'evaNumber':'8000036','name':'BielefeldHbf','canceled':False,'slug':'bielefeld-hbf','nameParts': [
+                        {'type':'default','value':'BielefeldHbf','valueSpeech':'BielefeldHauptbahnhof'
+                        }
+                    ]
+                },'origin':'$undefined','viaStops': [
+                    {'evaNumber':'8004744','name':'PaderbornKasselerTor','canceled':False,'additional':False,'displayPriority': 2,'separation':False,'slug':'paderborn-kasseler-tor','nameParts': [
+                            {'type':'city','value':'Paderborn'
+                            },
+                            {'type':'city-separator','value':''
+                            },
+                            {'type':'default','value':'KasselerTor'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8004745','name':'PaderbornNord','canceled':False,'additional':False,'displayPriority': 3,'separation':False,'slug':'paderborn-nord','nameParts': [
+                            {'type':'default','value':'PaderbornNord'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005370','name':'Paderborn-SchloÃ\x9fNeuhaus','canceled':False,'additional':False,'displayPriority': 10,'separation':False,'slug':'paderborn-schloss-neuhaus','nameParts': [
+                            {'type':'city','value':'Paderborn'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'SchloÃ\x9f-Neuhaus'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005534','name':'Paderborn-Sennelager','canceled':False,'additional':False,'displayPriority': 11,'separation':False,'slug':'paderborn-sennelager','nameParts': [
+                            {'type':'city','value':'Paderborn'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Sennelager'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002920','name':'HÃ¶velhof','canceled':False,'additional':False,'displayPriority': 4,'separation':False,'slug':'hoevelhof','nameParts': [
+                            {'type':'default','value':'HÃ¶velhof'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002921','name':'HÃ¶velriege','canceled':False,'additional':False,'displayPriority': 5,'separation':False,'slug':'hoevelriege','nameParts': [
+                            {'type':'default','value':'HÃ¶velriege'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005369','name':'SchloÃ\x9fHolte','canceled':False,'additional':False,'displayPriority': 6,'separation':False,'slug':'schloss-holte','nameParts': [
+                            {'type':'default','value':'SchloÃ\x9fHolte'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8005535','name':'Bielefeld-Sennestadt','canceled':False,'additional':False,'displayPriority': 7,'separation':False,'slug':'bielefeld-sennestadt','nameParts': [
+                            {'type':'city','value':'Bielefeld'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Sennestadt'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8006466','name':'Bielefeld-Windelsbleiche','canceled':False,'additional':False,'displayPriority': 8,'separation':False,'slug':'bielefeld-windelsbleiche','nameParts': [
+                            {'type':'city','value':'Bielefeld'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Windelsbleiche'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000956','name':'Bielefeld-Senne','canceled':False,'additional':False,'displayPriority': 9,'separation':False,'slug':'bielefeld-senne','nameParts': [
+                            {'type':'city','value':'Bielefeld'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Senne'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000048','name':'Bielefeld-Brackwede','canceled':False,'additional':False,'displayPriority': 1,'separation':False,'slug':'bielefeld-brackwede','nameParts': [
+                            {'type':'city','value':'Bielefeld'
+                            },
+                            {'type':'city-separator','value':'-'
+                            },
+                            {'type':'default','value':'Brackwede'
+                            }
+                        ]
+                    }
+                ],'additionalStops': [],'canceledStops': [],'messages': {'common': [
+                        {'locale':'de','text':'KurzfristigeAusfÃ¤llebeidenZÃ¼genderLinieRBâ\x80¯74undRBâ\x80¯75BeidenZwischentaktenderLinieRBâ\x80¯74undRBâ\x80¯75zwischenHalle(Westf)undBielefeldHbfkommtesbisvoraussichtlich29.09.2025zukurzfristigenAusfÃ¤llen.ZusÃ¤tzlichkannesaufderLinieRBâ\x80¯74zuKapazitÃ¤tsengpÃ¤ssenkommen.GrunddafÃ¼risteineeingeschrÃ¤nkteFahrzeugverfÃ¼gbarkeitdurchnotwendigeReparaturenandenFahrzeugen.Voraussichtlichabdem29.09.2025werdenneue/instandgesetzteFahrzeugeerwartet.BitteinformierenSiesichzeitnahvorFahrtantrittÃ¼berihregewÃ¼nschteVerbindung.','type':'general-warning','change':True,'important':False,'open':False,'deviatingStopPlace':False,'links': []
+                        },
+                        {'locale':'de','text':'DieRegionPaderbornHbfistaktuellbeeintrÃ¤chtigt.DasEndekÃ¶nnenwirleidernochnichtabschÃ¤tzen.DerGrunddafÃ¼risteineReparaturanderStrecke.DieZÃ¼gefahrenindembetroffenenStreckenabschnittlangsamer.InderFolgekommteswahrscheinlichzuVerspÃ¤tungen.BitteprÃ¼fenSieIhreReiseverbindungkurzvorderAbfahrt.','type':'general-warning','change':True,'important':False,'open':False,'deviatingStopPlace':False,'links': []
+                        },
+                        {'locale':'de','text':'FahrradmitnahmebegrenztmÃ¶glich','type':'bicycle-transport','change':False,'important':False,'open':False,'deviatingStopPlace':False,'links': []
+                        }
+                    ],'delay': [],'cancelation': [],'destination': [],'via': []
+                },'providesVehicleSequence':False
+            }
+        ],
+        [
+            {'canceledStopsAfterActualDestination': [],'direction':'departure','id':'8000297_D_1','timeSchedule':'2025-07-26T13: 50: 00+02: 00','timeDelayed':'2025-07-26T13: 50: 00+02: 00','delayed':False,'platform':'2','platformSchedule':'2','timeType':'PREVIEW','canceled':False,'administrationID':'NXRE','virtual':False,'lineName':'REâ\x80¯11','additionalLineName':'$undefined','type':'REGIONAL_TRAIN','replacementServiceType':'$undefined','kind':'default','journeyID':'20250726-8522a692-c39e-319d-8986-a4a4105d4161','stopPlace': {'evaNumber':'8000297','name':'PaderbornHbf','canceled':False
+                },'arrivalOrDepartureId':'8000297_D_1','actualDestination':'$undefined','destination': {'evaNumber':'8003200','name':'Kassel-WilhelmshÃ¶he','canceled':False,'slug':'kassel-wilhelmshoehe','nameParts': [
+                        {'type':'default','value':'Kassel-WilhelmshÃ¶he'
+                        }
+                    ]
+                },'origin':'$undefined','viaStops': [
+                    {'evaNumber':'8000004','name':'Altenbeken','canceled':False,'additional':False,'displayPriority': 1,'separation':False,'slug':'altenbeken','nameParts':'$6'
+                    },
+                    {'evaNumber':'8006449','name':'Willebadessen','canceled':False,'additional':False,'displayPriority': 4,'separation':False,'slug':'willebadessen','nameParts': [
+                            {'type':'default','value':'Willebadessen'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8000196','name':'Warburg(Westf)','canceled':False,'additional':False,'displayPriority': 2,'separation':False,'slug':'warburg-westf','nameParts': [
+                            {'type':'default','value':'Warburg'
+                            },
+                            {'type':'region','value':'(Westf)','valueSpeech':'(Westfalen)'
+                            }
+                        ]
+                    },
+                    {'evaNumber':'8002933','name':'Hofgeismar','canceled':False,'additional':False,'displayPriority': 3,'separation':False,'slug':'hofgeismar','nameParts': [
+                            {'type':'default','value':'Hofgeismar'
+                            }
+                        ]
+                    }
+                ],'additionalStops': [],'canceledStops': [],'messages': {'common': [
+                        {'locale':'de','text':'AufgrundvonLeistungsreduzierungkommtesvom26.07.-27.07.2025aufderLinieREâ\x80¯11(RRX)zuAusfÃ¤llenaufdemgesamtenLaufweg.WeitereInformationenfindenSieunter{
+                                {
+                                    0
+                                }
+                            }oderunterfolgendemLink: {
+                                {
+                                    1
+                                }
+                            }','type':'general-warning','change':True,'important':False,'open':False,'deviatingStopPlace':False,'links': [
+                                {'type':'link','label':'zuginfo.nrw','href':'https: //zuginfo.nrw/','openInNewTab':True},{'type':'link','label':'zuginfo.nrw','href':'https://zuginfo.nrw/?msg=119404','openInNewTab':True}]},{'locale':'de','text':'DieRegionPaderbornHbfistaktuellbeeintrÃ¤chtigt.DasEndekÃ¶nnenwirleidernochnichtabschÃ¤tzen.DerGrunddafÃ¼risteineReparaturanderStrecke.DieZÃ¼gefahrenindembetroffenenStreckenabschnittlangsamer.InderFolgekommteswahrscheinlichzuVerspÃ¤tungen.BitteprÃ¼fenSieIhreReiseverbindungkurzvorderAbfahrt.','type':'general-warning','change':True,'important':False,'open':False,'deviatingStopPlace':False,'links':[]},{'locale':'de','text':'FahrradmitnahmebegrenztmÃ¶glich','type':'bicycle-transport','change':False,'important':False,'open':False,'deviatingStopPlace':False,'links':[]}],'delay':[],'cancelation':[],'destination':[],'via':[]},'providesVehicleSequence':True}],[{'canceledStopsAfterActualDestination':[],'direction':'departure','id':'8000297_D_1','timeSchedule':'2025-07-26T13:53:00+02:00','timeDelayed':'2025-07-26T13:53:00+02:00','delayed':False,'platform':'4','platformSchedule':'4','timeType':'PREVIEW','canceled':False,'administrationID':'N2','virtual':False,'lineName':'RBâ\x80¯84','additionalLineName':'$undefined','type':'REGIONAL_TRAIN','replacementServiceType':'$undefined','kind':'default','journeyID':'20250726-33deb851-777c-3cdd-bbc2-b0f6c510ce66','stopPlace':{'evaNumber':'8000297','name':'PaderbornHbf','canceled':False},'arrivalOrDepartureId':'8000297_D_1','actualDestination':'$undefined','destination':{'evaNumber':'8000391','name':'Holzminden','canceled':False,'slug':'holzminden','nameParts':[{'type':'default','value':'Holzminden'}]},'origin':'$undefined','viaStops':[{'evaNumber':'8000004','name':'Altenbeken','canceled':False,'additional':False,'displayPriority':1,'separation':False,'slug':'altenbeken','nameParts':'$6'},{'evaNumber':'8000697','name':'BadDriburg(Westf)','canceled':False,'additional':False,'displayPriority':2,'separation':False,'slug':'bad-driburg-westf','nameParts':[{'type':'default','value':'BadDriburg','valueSpeech':'Baâ\x80\x8bdDriburg'},{'type':'region','value':'(Westf)','valueSpeech':'(Westfalen)'}]},{'evaNumber':'8001121','name':'Brakel(HÃ¶xter)','canceled':False,'additional':False,'displayPriority':3,'separation':False,'slug':'brakel-kr-hoexter','nameParts':[{'type':'default','value':'Brakel'},{'type':'region','value':'(KrÂ\xa0HÃ¶xter)','valueSpeech':'(KreisHÃ¶xter)'}]},{'evaNumber':'8004720','name':'HÃ¶xter-Ottbergen','canceled':False,'additional':False,'displayPriority':4,'separation':False,'slug':'hoexter-ottbergen','nameParts':[{'type':'city','value':'HÃ¶xter'},{'type':'city-separator','value':'-'},{'type':'default','value':'Ottbergen'}]},{'evaNumber':'8002299','name':'HÃ¶xter-Godelheim','canceled':False,'additional':False,'displayPriority':7,'separation':False,'slug':'hoexter-godelheim','nameParts':[{'type':'city','value':'HÃ¶xter'},{'type':'city-separator','value':'-'},{'type':'default','value':'Godelheim'}]},{'evaNumber':'8002923','name':'HÃ¶xterRathaus','canceled':False,'additional':False,'displayPriority':5,'separation':False,'slug':'hoexter-rathaus','nameParts':[{'type':'city','value':'HÃ¶xter'},{'type':'city-separator','value':''},{'type':'default','value':'Rathaus'}]},{'evaNumber':'8003780','name':'HÃ¶xter-LÃ¼chtringen','canceled':False,'additional':False,'displayPriority':6,'separation':False,'slug':'hoexter-luechtringen','nameParts':[{'type':'city','value':'HÃ¶xter'},{'type':'city-separator','value':'-'},{'type':'default','value':'LÃ¼chtringen'}]}],'additionalStops':[],'canceledStops':[],'messages':{'common':[{'locale':'de','text':'DieRegionPaderbornHbfistaktuellbeeintrÃ¤chtigt.DasEndekÃ¶nnenwirleidernochnichtabschÃ¤tzen.DerGrunddafÃ¼risteineReparaturanderStrecke.DieZÃ¼gefahrenindembetroffenenStreckenabschnittlangsamer.InderFolgekommteswahrscheinlichzuVerspÃ¤tungen.BitteprÃ¼fenSieIhreReiseverbindungkurzvorderAbfahrt.','type':'general-warning','change':True,'important':False,'open':False,'deviatingStopPlace':False,'links':[]},{'locale':'de','text':'FahrradmitnahmebegrenztmÃ¶glich','type':'bicycle-transport','change':False,'important':False,'open':False,'deviatingStopPlace':False,'links':[]}],'delay':[],'cancelation':[],'destination':[],'via':[]},'providesVehicleSequence':False}]]}

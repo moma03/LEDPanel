@@ -184,7 +184,7 @@ def get_db_departures_bahnhofde(station_id, station_name, station_category=1, lo
         -H 'Accept-Language: de,en-US;q=0.7,en;q=0.3' \                                                                                   
         -H 'Accept-Encoding: gzip, deflate, br, zstd' \                       
         -H 'Referer: https://www.bahnhof.de/steinheim-westf/abfahrt' \                                                                    
-        -H 'Next-Action: 1763f424e6ce09c2e07592add424e2c1908b9082' \                                                                                                                                       
+        -H 'Next-Action: 7f2445eb9aaa7f83c446bb545f8146392aea9ca9d0' \                                                                                                                                       
         -H 'Content-Type: text/plain;charset=UTF-8' \                           
         --data-raw '[{"duration":60,"type":"departures","locale":"de","evaNumbers":["8005708"],"stationCategory":6,"filterTransports":["HIGH_SPEED_TRAIN","INTERCITY_TRAIN","INTER_REGIONAL_TRAIN","REGIONAL_TRAIN","CITY_TRAIN"],"sortBy":"TIME_SCHEDULE"}]'
     
@@ -209,7 +209,7 @@ def get_db_departures_bahnhofde(station_id, station_name, station_category=1, lo
         "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
         "Accept-Encoding": "gzip, deflate, br, zstd",
         "Referer": f"https://www.bahnhof.de/{station_name.lower().replace(' ', '-')}/abfahrt",
-        "Next-Action": "1763f424e6ce09c2e07592add424e2c1908b9082",  # This is a static value, might change in the future, without it the request fails.
+        "Next-Action": "7f2445eb9aaa7f83c446bb545f8146392aea9ca9d0",  # This is a static value, might change in the future, without it the request fails.
         "Content-Type": "text/plain;charset=UTF-8"
     }
     data_raw = json.dumps([data_raw_options])  # Convert the options to a JSON string

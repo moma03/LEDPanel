@@ -28,17 +28,22 @@ if __name__ == "__main__":
     
     #Check if station data is cached
     stationData = StationDataCacher.lookup_station_in_cache(station_eva=args.stationEVA, station_name=args.stationName, station_rl100=args.stationRL100)
+    print(f"Station data found in cache: {stationData}")
     if not stationData:
         stationData = fetcher.fetch_station_data(args.stationName or args.stationRL100 or args.stationEVA)
-        StationDataCacher.cache_station_data(stationData)
+        if not stationData:
+            print("Error: No station data found for the provided parameters.")
+        else:
+            StationDataCacher.cache_station_data(stationData)
+            print(f"Fetched data for station {stationData.name} (EVA: {stationData.eva})")
     
-    print(f"Fetched data for station {stationData.name} (EVA: {stationData.eva})")
-    #board = fetcher.fetch_station_departures({
-    #    'eva': stationData.eva,
-    #    'name': stationData.name,
-    #    'lookahead': stationData.lookahead,  # Lookahead in minutes
-    #    'transports': ["HIGH_SPEED_TRAIN","INTERCITY_TRAIN","INTER_REGIONAL_TRAIN","REGIONAL_TRAIN","CITY_TRAIN"],
-    #    'station_category': stationData.category,  # 1 for main stations, 2 for all other,
-    #    'type': 'departures'  # or 'arrivals' depending on the type of data needed
-    #})
-    #print(f"Departures: {board}")
+
+    board = fetcher.fetch_station_departures({
+        'eva': stationData.eva,
+        'name': stationData.name,
+        'lookahead': stationData.lookahead,  # Lookahead in minutes
+        'transports': ["HIGH_SPEED_TRAIN","INTERCITY_TRAIN","INTER_REGIONAL_TRAIN","REGIONAL_TRAIN","CITY_TRAIN"],
+        'station_category': stationData.category,  # 1 for main stations, 2 for all other,
+        'type': 'departures'  # or 'arrivals' depending on the type of data needed
+    })
+    print(f"Departures: {board}")

@@ -1,0 +1,74 @@
+[
+    {
+        "timetable_planned": {
+            "ar": {
+                "hi": 1,
+                "pp": "14",
+                "ppth": [
+                    "Hamburg-Altona",
+                    "Hamburg Dammtor"
+                ],
+                "pt": "2509010316"
+            },
+            "dp": {
+                "pp": "14",
+                "ppth": [
+                    "Hamburg-Harburg",
+                    "Lüneburg",
+                    "Uelzen",
+                    "Celle",
+                    "Hannover Hbf",
+                    "Göttingen",
+                    "Kassel-Wilhelmshöhe",
+                    "Fulda",
+                    "Hanau Hbf",
+                    "Frankfurt(Main)Hbf",
+                    "Mannheim Hbf",
+                    "Stuttgart Hbf",
+                    "Ulm Hbf",
+                    "Augsburg Hbf",
+                    "München-Pasing",
+                    "München Hbf"
+                ],
+                "pt": "2509010320"
+            },
+            "id": "-9076044575966614071-2509010303-3",
+            "tl": {
+                "c": "ICE",
+                "n": "591",
+                "o": "80",
+                "f": "F",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "pp": "14",
+                "ppth": [
+                    "Lüneburg",
+                    "Uelzen",
+                    "Celle",
+                    "Hannover Hbf",
+                    "Göttingen",
+                    "Kassel-Wilhelmshöhe",
+                    "Fulda",
+                    "Würzburg Hbf",
+                    "Nürnberg Hbf"
+                ],
+                "pt": "2509010349"
+            },
+            "id": "3572036840625034405-2509010349-1",
+            "tl": {
+                "c": "ICE",
+                "n": "781",
+                "o": "80",
+                "f": "F",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    }
+]

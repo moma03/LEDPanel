@@ -1,0 +1,830 @@
+[
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "RB31",
+                "pp": "11A-C",
+                "ppth": [
+                    "Uelzen",
+                    "Bad Bevensen",
+                    "Bienenbüttel",
+                    "Lüneburg",
+                    "Bardowick",
+                    "Radbruch",
+                    "Winsen(Luhe)",
+                    "Ashausen",
+                    "Stelle",
+                    "Maschen",
+                    "Meckelfeld",
+                    "Hamburg-Harburg"
+                ],
+                "pt": "2509010109"
+            },
+            "id": "4760651137475633059-2508312359-13",
+            "tl": {
+                "c": "ME",
+                "n": "81644",
+                "o": "R1",
+                "f": "D",
+                "t": "p"
+            }
+        },
+        "timetable_changes": [
+            {
+                "ar": {
+                    "cp": "11",
+                    "ct": "2509010213",
+                    "l": "RB31",
+                    "m": [
+                        {
+                            "c": "45",
+                            "id": "r23592162",
+                            "t": "d",
+                            "ts": "2509010017"
+                        }
+                    ],
+                    "pp": "11A-C",
+                    "ppth": [
+                        "Uelzen",
+                        "Bad Bevensen",
+                        "Bienenbüttel",
+                        "Lüneburg",
+                        "Bardowick",
+                        "Radbruch",
+                        "Winsen(Luhe)",
+                        "Ashausen",
+                        "Stelle",
+                        "Maschen",
+                        "Meckelfeld",
+                        "Hamburg-Harburg"
+                    ],
+                    "pt": "2509010109"
+                },
+                "eva": 8002549,
+                "id": "4760651137475633059-2508312359-13",
+                "tl": {
+                    "c": "ME",
+                    "n": "81644",
+                    "o": "R1",
+                    "f": "D",
+                    "t": "p"
+                }
+            },
+            {
+                "ar": {
+                    "cp": "11",
+                    "ct": "2509010213",
+                    "l": "RB31",
+                    "m": [
+                        {
+                            "c": "45",
+                            "id": "r23592162",
+                            "t": "d",
+                            "ts": "2509010017"
+                        }
+                    ],
+                    "pp": "11A-C",
+                    "ppth": [
+                        "Uelzen",
+                        "Bad Bevensen",
+                        "Bienenbüttel",
+                        "Lüneburg",
+                        "Bardowick",
+                        "Radbruch",
+                        "Winsen(Luhe)",
+                        "Ashausen",
+                        "Stelle",
+                        "Maschen",
+                        "Meckelfeld",
+                        "Hamburg-Harburg"
+                    ],
+                    "pt": "2509010109"
+                },
+                "eva": 8002549,
+                "id": "4760651137475633059-2508312359-13",
+                "tl": {
+                    "c": "ME",
+                    "n": "81644",
+                    "o": "R1",
+                    "f": "D",
+                    "t": "p"
+                }
+            }
+        ]
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "pp": "13",
+                "ppth": [
+                    "Berlin Südkreuz",
+                    "Berlin Hbf",
+                    "Berlin-Spandau",
+                    "Stendal Hbf",
+                    "Salzwedel",
+                    "Uelzen",
+                    "Hamburg-Harburg"
+                ],
+                "pt": "2509010100"
+            },
+            "dp": {
+                "hi": 1,
+                "pp": "13",
+                "ppth": [
+                    "Hamburg Dammtor",
+                    "Hamburg-Altona"
+                ],
+                "pt": "2509010103"
+            },
+            "id": "4527502747804446727-2508312227-8",
+            "tl": {
+                "c": "ICE",
+                "n": "700",
+                "o": "80",
+                "f": "F",
+                "t": "p"
+            }
+        },
+        "timetable_changes": [
+            {
+                "ar": {
+                    "clt": "2509010130",
+                    "cp": "12",
+                    "cpth": [
+                        "Berlin Südkreuz",
+                        "Berlin Hbf",
+                        "Berlin-Spandau",
+                        "Stendal Hbf",
+                        "Salzwedel",
+                        "Uelzen",
+                        "Hamburg-Harburg"
+                    ],
+                    "cs": "p",
+                    "ct": "2509010215",
+                    "m": [
+                        {
+                            "c": "95",
+                            "id": "r23553985",
+                            "t": "q",
+                            "ts": "2508310412"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23593185",
+                            "t": "d",
+                            "ts": "2509010105"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23593626",
+                            "t": "f",
+                            "ts": "2509010127"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23593674",
+                            "t": "d",
+                            "ts": "2509010130"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23595017",
+                            "t": "f",
+                            "ts": "2509010153"
+                        },
+                        {
+                            "c": "33",
+                            "id": "r23595031",
+                            "t": "d",
+                            "ts": "2509010155"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23595036",
+                            "t": "f",
+                            "ts": "2509010157"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23595052",
+                            "t": "d",
+                            "ts": "2509010201"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "Berlin Südkreuz",
+                        "Berlin Hbf",
+                        "Berlin-Spandau",
+                        "Stendal Hbf",
+                        "Salzwedel",
+                        "Uelzen",
+                        "Hamburg-Harburg"
+                    ],
+                    "pt": "2509010100"
+                },
+                "dp": {
+                    "clt": "2509010130",
+                    "cp": "12",
+                    "cpth": [
+                        "Hamburg Dammtor",
+                        "Hamburg-Altona"
+                    ],
+                    "cs": "p",
+                    "ct": "2509010219",
+                    "hi": 1,
+                    "m": [
+                        {
+                            "c": "95",
+                            "id": "r23553985",
+                            "t": "q",
+                            "ts": "2508310412"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23593185",
+                            "t": "d",
+                            "ts": "2509010105"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23593626",
+                            "t": "f",
+                            "ts": "2509010127"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23593674",
+                            "t": "d",
+                            "ts": "2509010130"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23595017",
+                            "t": "f",
+                            "ts": "2509010153"
+                        },
+                        {
+                            "c": "33",
+                            "id": "r23595031",
+                            "t": "d",
+                            "ts": "2509010155"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23595036",
+                            "t": "f",
+                            "ts": "2509010157"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23595052",
+                            "t": "d",
+                            "ts": "2509010201"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "Hamburg Dammtor",
+                        "Hamburg-Altona"
+                    ],
+                    "pt": "2509010103"
+                },
+                "eva": 8002549,
+                "id": "4527502747804446727-2508312227-8",
+                "m": [
+                    {
+                        "cat": "Störung",
+                        "id": "r2468371",
+                        "pr": "3",
+                        "t": "h",
+                        "to": "2508312359",
+                        "ts": "2508011321"
+                    },
+                    {
+                        "cat": "Information",
+                        "id": "r2484191",
+                        "pr": "2",
+                        "t": "h",
+                        "to": "2509010136",
+                        "ts": "2508310417"
+                    },
+                    {
+                        "id": "r965808482",
+                        "t": "c",
+                        "ts": "2509010212"
+                    }
+                ],
+                "tl": {
+                    "c": "ICE",
+                    "n": "700",
+                    "o": "80",
+                    "f": "F",
+                    "t": "p"
+                }
+            },
+            {
+                "ar": {
+                    "clt": "2509010130",
+                    "cp": "12",
+                    "cpth": [
+                        "Berlin Südkreuz",
+                        "Berlin Hbf",
+                        "Berlin-Spandau",
+                        "Stendal Hbf",
+                        "Salzwedel",
+                        "Uelzen",
+                        "Hamburg-Harburg"
+                    ],
+                    "cs": "p",
+                    "ct": "2509010215",
+                    "m": [
+                        {
+                            "c": "95",
+                            "id": "r23553985",
+                            "t": "q",
+                            "ts": "2508310412"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23593185",
+                            "t": "d",
+                            "ts": "2509010105"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23593626",
+                            "t": "f",
+                            "ts": "2509010127"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23593674",
+                            "t": "d",
+                            "ts": "2509010130"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23595017",
+                            "t": "f",
+                            "ts": "2509010153"
+                        },
+                        {
+                            "c": "33",
+                            "id": "r23595031",
+                            "t": "d",
+                            "ts": "2509010155"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23595036",
+                            "t": "f",
+                            "ts": "2509010157"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23595052",
+                            "t": "d",
+                            "ts": "2509010201"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "Berlin Südkreuz",
+                        "Berlin Hbf",
+                        "Berlin-Spandau",
+                        "Stendal Hbf",
+                        "Salzwedel",
+                        "Uelzen",
+                        "Hamburg-Harburg"
+                    ],
+                    "pt": "2509010100"
+                },
+                "dp": {
+                    "clt": "2509010130",
+                    "cp": "12",
+                    "cpth": [
+                        "Hamburg Dammtor",
+                        "Hamburg-Altona"
+                    ],
+                    "cs": "p",
+                    "ct": "2509010219",
+                    "hi": 1,
+                    "m": [
+                        {
+                            "c": "95",
+                            "id": "r23553985",
+                            "t": "q",
+                            "ts": "2508310412"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23593185",
+                            "t": "d",
+                            "ts": "2509010105"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23593626",
+                            "t": "f",
+                            "ts": "2509010127"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23593674",
+                            "t": "d",
+                            "ts": "2509010130"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23595017",
+                            "t": "f",
+                            "ts": "2509010153"
+                        },
+                        {
+                            "c": "33",
+                            "id": "r23595031",
+                            "t": "d",
+                            "ts": "2509010155"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23595036",
+                            "t": "f",
+                            "ts": "2509010157"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23595052",
+                            "t": "d",
+                            "ts": "2509010201"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "Hamburg Dammtor",
+                        "Hamburg-Altona"
+                    ],
+                    "pt": "2509010103"
+                },
+                "eva": 8002549,
+                "id": "4527502747804446727-2508312227-8",
+                "m": [
+                    {
+                        "cat": "Störung",
+                        "from_": "2508011319",
+                        "id": "r2468371",
+                        "pr": "3",
+                        "t": "h",
+                        "to": "2508312359",
+                        "ts": "2508011321"
+                    },
+                    {
+                        "cat": "Information",
+                        "from_": "2508301913",
+                        "id": "r2484191",
+                        "pr": "2",
+                        "t": "h",
+                        "to": "2509010136",
+                        "ts": "2508310417"
+                    },
+                    {
+                        "id": "r965808482",
+                        "t": "c",
+                        "ts": "2509010212"
+                    }
+                ],
+                "tl": {
+                    "c": "ICE",
+                    "n": "700",
+                    "o": "80",
+                    "f": "F",
+                    "t": "p"
+                }
+            }
+        ]
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "7",
+                "pp": "13",
+                "ppth": [
+                    "Kiel Hbf",
+                    "Flintbek",
+                    "Bordesholm",
+                    "Einfeld",
+                    "Neumünster",
+                    "Brokstedt",
+                    "Wrist",
+                    "Elmshorn",
+                    "Pinneberg",
+                    "Hamburg Dammtor"
+                ],
+                "pt": "2509010131"
+            },
+            "id": "-6711307188089838742-2509010005-11",
+            "tl": {
+                "c": "RE",
+                "n": "11293",
+                "o": "800201",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "7",
+                "pp": "13",
+                "ppth": [
+                    "Hamburg Dammtor",
+                    "Pinneberg",
+                    "Elmshorn",
+                    "Wrist",
+                    "Neumünster",
+                    "Einfeld",
+                    "Bordesholm",
+                    "Flintbek",
+                    "Kiel Hbf"
+                ],
+                "pt": "2509010143"
+            },
+            "id": "-3927096025170759993-2509010143-1",
+            "tl": {
+                "c": "RE",
+                "n": "11292",
+                "o": "800201",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "8",
+                "pp": "8",
+                "ppth": [
+                    "Lübeck Hbf",
+                    "Lübeck-Moisling",
+                    "Reinfeld(Holst)",
+                    "Bad Oldesloe"
+                ],
+                "pt": "2509010159"
+            },
+            "id": "-2677087939388563746-2509010109-5",
+            "tl": {
+                "c": "RE",
+                "n": "11449",
+                "o": "800292",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "pp": "13",
+                "ppth": [
+                    "München Hbf",
+                    "Augsburg Hbf",
+                    "Würzburg Hbf",
+                    "Fulda",
+                    "Kassel-Wilhelmshöhe",
+                    "Göttingen",
+                    "Hannover Hbf",
+                    "Celle",
+                    "Uelzen",
+                    "Lüneburg",
+                    "Hamburg-Harburg"
+                ],
+                "pt": "2509010113"
+            },
+            "id": "5375326263046654482-2508311852-12",
+            "tl": {
+                "c": "ICE",
+                "n": "580",
+                "o": "80",
+                "f": "F",
+                "t": "p"
+            }
+        },
+        "timetable_changes": [
+            {
+                "ar": {
+                    "clt": "2509010124",
+                    "cpth": [
+                        "München Hbf",
+                        "Augsburg Hbf",
+                        "Würzburg Hbf",
+                        "Fulda",
+                        "Kassel-Wilhelmshöhe",
+                        "Göttingen",
+                        "Hannover Hbf",
+                        "Celle",
+                        "Uelzen",
+                        "Lüneburg",
+                        "Hamburg-Harburg"
+                    ],
+                    "cs": "c",
+                    "ct": "2509010202",
+                    "m": [
+                        {
+                            "c": "47",
+                            "id": "r23578554",
+                            "t": "d",
+                            "ts": "2508311813"
+                        },
+                        {
+                            "c": "36",
+                            "id": "r23581591",
+                            "t": "d",
+                            "ts": "2508311918"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23592943",
+                            "t": "d",
+                            "ts": "2509010057"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23593584",
+                            "t": "d",
+                            "ts": "2509010124"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "München Hbf",
+                        "Augsburg Hbf",
+                        "Würzburg Hbf",
+                        "Fulda",
+                        "Kassel-Wilhelmshöhe",
+                        "Göttingen",
+                        "Hannover Hbf",
+                        "Celle",
+                        "Uelzen",
+                        "Lüneburg",
+                        "Hamburg-Harburg"
+                    ],
+                    "pt": "2509010113"
+                },
+                "eva": 8002549,
+                "id": "5375326263046654482-2508311852-12",
+                "m": [
+                    {
+                        "cat": "Information",
+                        "id": "r2397244",
+                        "pr": "2",
+                        "t": "h",
+                        "to": "2509302359",
+                        "ts": "2504021355"
+                    }
+                ],
+                "tl": {
+                    "c": "ICE",
+                    "n": "580",
+                    "o": "80",
+                    "f": "F",
+                    "t": "p"
+                }
+            },
+            {
+                "ar": {
+                    "clt": "2509010124",
+                    "cpth": [
+                        "München Hbf",
+                        "Augsburg Hbf",
+                        "Würzburg Hbf",
+                        "Fulda",
+                        "Kassel-Wilhelmshöhe",
+                        "Göttingen",
+                        "Hannover Hbf",
+                        "Celle",
+                        "Uelzen",
+                        "Lüneburg",
+                        "Hamburg-Harburg"
+                    ],
+                    "cs": "c",
+                    "ct": "2509010202",
+                    "m": [
+                        {
+                            "c": "47",
+                            "id": "r23578554",
+                            "t": "d",
+                            "ts": "2508311813"
+                        },
+                        {
+                            "c": "36",
+                            "id": "r23581591",
+                            "t": "d",
+                            "ts": "2508311918"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23592943",
+                            "t": "d",
+                            "ts": "2509010057"
+                        },
+                        {
+                            "c": "67",
+                            "id": "r23593584",
+                            "t": "d",
+                            "ts": "2509010124"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "München Hbf",
+                        "Augsburg Hbf",
+                        "Würzburg Hbf",
+                        "Fulda",
+                        "Kassel-Wilhelmshöhe",
+                        "Göttingen",
+                        "Hannover Hbf",
+                        "Celle",
+                        "Uelzen",
+                        "Lüneburg",
+                        "Hamburg-Harburg"
+                    ],
+                    "pt": "2509010113"
+                },
+                "eva": 8002549,
+                "id": "5375326263046654482-2508311852-12",
+                "m": [
+                    {
+                        "cat": "Information",
+                        "from_": "2504021351",
+                        "id": "r2397244",
+                        "pr": "2",
+                        "t": "h",
+                        "to": "2509302359",
+                        "ts": "2504021355"
+                    }
+                ],
+                "tl": {
+                    "c": "ICE",
+                    "n": "580",
+                    "o": "80",
+                    "f": "F",
+                    "t": "p"
+                }
+            }
+        ]
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "8",
+                "pp": "7A-D",
+                "ppth": [
+                    "Bad Oldesloe",
+                    "Reinfeld(Holst)",
+                    "Lübeck-Moisling",
+                    "Lübeck Hbf"
+                ],
+                "pt": "2509010106"
+            },
+            "id": "-2931579395362521098-2509010106-1",
+            "tl": {
+                "c": "RE",
+                "n": "11442",
+                "o": "800292",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "EV",
+                "pp": "",
+                "ppth": [
+                    "Sprötze",
+                    "Buchholz(Nordheide)",
+                    "Klecken",
+                    "Hittfeld",
+                    "Hamburg-Harburg"
+                ],
+                "pt": "2509010137"
+            },
+            "id": "1732033698810502565-2509010021-6",
+            "tl": {
+                "c": "Bus",
+                "n": "4242",
+                "o": "R1",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    }
+]

@@ -1,0 +1,207 @@
+[
+    {
+        "timetable_planned": {
+            "ar": {
+                "pp": "13",
+                "ppth": [
+                    "Berlin Südkreuz",
+                    "Berlin Hbf",
+                    "Berlin-Spandau",
+                    "Stendal Hbf",
+                    "Salzwedel",
+                    "Uelzen",
+                    "Hamburg-Harburg"
+                ],
+                "pt": "2509010216"
+            },
+            "dp": {
+                "hi": 1,
+                "pp": "13",
+                "ppth": [
+                    "Hamburg-Altona"
+                ],
+                "pt": "2509010219"
+            },
+            "id": "8106992050879326200-2508312332-8",
+            "tl": {
+                "c": "ICE",
+                "n": "906",
+                "o": "80",
+                "f": "F",
+                "t": "p"
+            }
+        },
+        "timetable_changes": [
+            {
+                "ar": {
+                    "cpth": [
+                        "Berlin Südkreuz",
+                        "Berlin Hbf",
+                        "Berlin-Spandau",
+                        "Stendal Hbf",
+                        "Uelzen",
+                        "Hamburg-Harburg"
+                    ],
+                    "ct": "2509010353",
+                    "m": [
+                        {
+                            "c": "31",
+                            "id": "r23592697",
+                            "t": "d",
+                            "ts": "2509010049"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23593798",
+                            "t": "f",
+                            "ts": "2509010142"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23593818",
+                            "t": "d",
+                            "ts": "2509010143"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "Berlin Südkreuz",
+                        "Berlin Hbf",
+                        "Berlin-Spandau",
+                        "Stendal Hbf",
+                        "Salzwedel",
+                        "Uelzen",
+                        "Hamburg-Harburg"
+                    ],
+                    "pt": "2509010216"
+                },
+                "dp": {
+                    "cpth": [
+                        "Hamburg-Altona"
+                    ],
+                    "ct": "2509010356",
+                    "hi": 1,
+                    "m": [
+                        {
+                            "c": "31",
+                            "id": "r23592697",
+                            "t": "d",
+                            "ts": "2509010049"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23593798",
+                            "t": "f",
+                            "ts": "2509010142"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23593818",
+                            "t": "d",
+                            "ts": "2509010143"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "Hamburg-Altona"
+                    ],
+                    "pt": "2509010219"
+                },
+                "eva": 8002549,
+                "id": "8106992050879326200-2508312332-8",
+                "tl": {
+                    "c": "ICE",
+                    "n": "906",
+                    "o": "80",
+                    "f": "F",
+                    "t": "p"
+                }
+            },
+            {
+                "ar": {
+                    "cpth": [
+                        "Berlin Südkreuz",
+                        "Berlin Hbf",
+                        "Berlin-Spandau",
+                        "Stendal Hbf",
+                        "Uelzen",
+                        "Hamburg-Harburg"
+                    ],
+                    "ct": "2509010353",
+                    "m": [
+                        {
+                            "c": "31",
+                            "id": "r23592697",
+                            "t": "d",
+                            "ts": "2509010049"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23593798",
+                            "t": "f",
+                            "ts": "2509010142"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23593818",
+                            "t": "d",
+                            "ts": "2509010143"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "Berlin Südkreuz",
+                        "Berlin Hbf",
+                        "Berlin-Spandau",
+                        "Stendal Hbf",
+                        "Salzwedel",
+                        "Uelzen",
+                        "Hamburg-Harburg"
+                    ],
+                    "pt": "2509010216"
+                },
+                "dp": {
+                    "cpth": [
+                        "Hamburg-Altona"
+                    ],
+                    "ct": "2509010356",
+                    "hi": 1,
+                    "m": [
+                        {
+                            "c": "31",
+                            "id": "r23592697",
+                            "t": "d",
+                            "ts": "2509010049"
+                        },
+                        {
+                            "c": "0",
+                            "id": "r23593798",
+                            "t": "f",
+                            "ts": "2509010142"
+                        },
+                        {
+                            "c": "31",
+                            "id": "r23593818",
+                            "t": "d",
+                            "ts": "2509010143"
+                        }
+                    ],
+                    "pp": "13",
+                    "ppth": [
+                        "Hamburg-Altona"
+                    ],
+                    "pt": "2509010219"
+                },
+                "eva": 8002549,
+                "id": "8106992050879326200-2508312332-8",
+                "tl": {
+                    "c": "ICE",
+                    "n": "906",
+                    "o": "80",
+                    "f": "F",
+                    "t": "p"
+                }
+            }
+        ]
+    }
+]

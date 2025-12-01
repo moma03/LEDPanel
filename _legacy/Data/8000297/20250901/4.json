@@ -1,0 +1,84 @@
+[
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "89",
+                "pp": "1",
+                "ppth": [
+                    "Scharmede",
+                    "Salzkotten",
+                    "Geseke",
+                    "Ehringhausen(Kr Lippstadt)",
+                    "Dedinghausen",
+                    "Lippstadt",
+                    "Bad Sassendorf",
+                    "Soest",
+                    "Borgeln",
+                    "Welver",
+                    "Hamm-Westtünnen",
+                    "Hamm(Westf)Hbf",
+                    "Hamm-Bockum-Hövel",
+                    "Mersch(Westf)",
+                    "Drensteinfurt",
+                    "Rinkerode",
+                    "Münster-Hiltrup",
+                    "Münster(Westf)Hbf"
+                ],
+                "pt": "2509010451"
+            },
+            "id": "7615355469460915134-2509010451-1",
+            "tl": {
+                "c": "RB",
+                "n": "90054",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "S5",
+                "pp": "",
+                "ppth": [
+                    "Altenbeken",
+                    "Steinheim(Westf)"
+                ],
+                "pt": "2509010440"
+            },
+            "id": "5115643815445501331-2509010440-1",
+            "tl": {
+                "c": "Bus",
+                "n": "4528",
+                "o": "TDHS",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "EV",
+                "pp": "",
+                "ppth": [
+                    "Altenbeken",
+                    "Bad Driburg(Westf)",
+                    "Brakel(Höxter)",
+                    "Höxter-Ottbergen"
+                ],
+                "pt": "2509010405"
+            },
+            "id": "2003029609736437925-2509010405-1",
+            "tl": {
+                "c": "Bus",
+                "n": "14942",
+                "o": "NWBus",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    }
+]

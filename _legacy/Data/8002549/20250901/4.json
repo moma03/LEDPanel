@@ -1,0 +1,335 @@
+[
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "81",
+                "pp": "6A-C",
+                "ppth": [
+                    "Ahrensburg",
+                    "Hamburg-Rahlstedt",
+                    "Hamburg-Tonndorf",
+                    "Hamburg Hasselbrook"
+                ],
+                "pt": "2509010448"
+            },
+            "id": "9034693412834794181-2509010425-5",
+            "tl": {
+                "c": "RB",
+                "n": "11351",
+                "o": "800293",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "RB41",
+                "pp": "11A-C",
+                "ppth": [
+                    "Hamburg-Harburg",
+                    "Hittfeld",
+                    "Klecken",
+                    "Buchholz(Nordheide)",
+                    "Sprötze",
+                    "Tostedt",
+                    "Lauenbrück",
+                    "Scheeßel",
+                    "Rotenburg(Wümme)",
+                    "Sottrum",
+                    "Ottersberg(Han)",
+                    "Sagehorn",
+                    "Bremen-Oberneuland",
+                    "Bremen Hbf"
+                ],
+                "pt": "2509010457"
+            },
+            "id": "3912172823124337390-2509010457-1",
+            "tl": {
+                "c": "ME",
+                "n": "81907",
+                "o": "R1",
+                "f": "D",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "hi": 1,
+                "pp": "14",
+                "ppth": [
+                    "Hamburg-Altona",
+                    "Hamburg Dammtor"
+                ],
+                "pt": "2509010435"
+            },
+            "dp": {
+                "pp": "14",
+                "ppth": [
+                    "Hamburg-Harburg",
+                    "Bremen Hbf",
+                    "Diepholz",
+                    "Osnabrück Hbf",
+                    "Münster(Westf)Hbf",
+                    "Dortmund Hbf",
+                    "Bochum Hbf",
+                    "Essen Hbf",
+                    "Duisburg Hbf",
+                    "Düsseldorf Hbf",
+                    "Köln Hbf",
+                    "Bonn Hbf",
+                    "Koblenz Hbf",
+                    "Mainz Hbf",
+                    "Mannheim Hbf",
+                    "Karlsruhe Hbf",
+                    "Freiburg(Breisgau) Hbf",
+                    "Basel Bad Bf",
+                    "Basel SBB"
+                ],
+                "pt": "2509010438"
+            },
+            "id": "7152046210696401911-2509010421-3",
+            "tl": {
+                "c": "EC",
+                "n": "7",
+                "o": "80",
+                "f": "F",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "70",
+                "pp": "8",
+                "ppth": [
+                    "Kiel Hbf",
+                    "Bordesholm",
+                    "Neumünster",
+                    "Brokstedt",
+                    "Wrist",
+                    "Elmshorn",
+                    "Hamburg Dammtor"
+                ],
+                "pt": "2509010431"
+            },
+            "id": "-5967924537871298080-2509010312-8",
+            "tl": {
+                "c": "RE",
+                "n": "11201",
+                "o": "800201",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "81",
+                "pp": "8",
+                "ppth": [
+                    "Hamburg Hasselbrook",
+                    "Hamburg-Tonndorf",
+                    "Hamburg-Rahlstedt",
+                    "Ahrensburg",
+                    "Ahrensburg-Gartenholz",
+                    "Bargteheide",
+                    "Kupfermühle",
+                    "Bad Oldesloe"
+                ],
+                "pt": "2509010441"
+            },
+            "id": "4518814974506885933-2509010441-1",
+            "tl": {
+                "c": "RB",
+                "n": "11302",
+                "o": "800293",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "RB31",
+                "pde": "Hannover Hbf",
+                "pp": "11A-C",
+                "ppth": [
+                    "Hamburg-Harburg",
+                    "Meckelfeld",
+                    "Maschen",
+                    "Stelle",
+                    "Ashausen",
+                    "Winsen(Luhe)",
+                    "Radbruch",
+                    "Bardowick",
+                    "Lüneburg",
+                    "Bienenbüttel",
+                    "Bad Bevensen",
+                    "Uelzen"
+                ],
+                "pt": "2509010433"
+            },
+            "id": "4413794860031017446-2509010433-1",
+            "tl": {
+                "c": "ME",
+                "n": "81607",
+                "o": "R1",
+                "f": "D",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "RB41",
+                "pp": "11A-C",
+                "ppth": [
+                    "Rotenburg(Wümme)",
+                    "Scheeßel",
+                    "Lauenbrück",
+                    "Tostedt",
+                    "Sprötze",
+                    "Buchholz(Nordheide)",
+                    "Klecken",
+                    "Hittfeld",
+                    "Hamburg-Harburg"
+                ],
+                "pt": "2509010444"
+            },
+            "id": "9011218217436282603-2509010346-10",
+            "tl": {
+                "c": "ME",
+                "n": "81902",
+                "o": "R1",
+                "f": "D",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "7",
+                "pp": "12C-F",
+                "ppth": [
+                    "Hamburg Dammtor",
+                    "Pinneberg",
+                    "Elmshorn",
+                    "Wrist",
+                    "Brokstedt",
+                    "Neumünster",
+                    "Einfeld",
+                    "Bordesholm",
+                    "Flintbek",
+                    "Kiel Hbf"
+                ],
+                "pt": "2509010436"
+            },
+            "id": "6429184803042562792-2509010436-1",
+            "tl": {
+                "c": "RE",
+                "n": "11250",
+                "o": "800201",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "hi": 1,
+                "pp": "14",
+                "ppth": [
+                    "Hamburg Dammtor"
+                ],
+                "pt": "2509010450"
+            },
+            "dp": {
+                "pp": "14",
+                "ppth": [
+                    "Hamburg-Harburg",
+                    "Lüneburg",
+                    "Uelzen",
+                    "Celle",
+                    "Hannover Hbf",
+                    "Göttingen",
+                    "Kassel-Wilhelmshöhe",
+                    "Fulda",
+                    "Würzburg Hbf",
+                    "Augsburg Hbf",
+                    "München Hbf"
+                ],
+                "pt": "2509010454"
+            },
+            "id": "474224413520299351-2509010446-2",
+            "tl": {
+                "c": "ICE",
+                "n": "581",
+                "o": "80",
+                "f": "F",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "hi": 1,
+                "pp": "13",
+                "ppth": [
+                    "Hamburg-Altona",
+                    "Hamburg Dammtor"
+                ],
+                "pt": "2509010444"
+            },
+            "dp": {
+                "pp": "13",
+                "ppth": [
+                    "Lüneburg",
+                    "Uelzen",
+                    "Salzwedel",
+                    "Stendal Hbf",
+                    "Berlin-Spandau",
+                    "Berlin Hbf",
+                    "Berlin Südkreuz",
+                    "Bitterfeld",
+                    "Halle(Saale)Hbf",
+                    "Erfurt Hbf",
+                    "Würzburg Hbf",
+                    "Donauwörth",
+                    "Augsburg Hbf",
+                    "München-Pasing",
+                    "München Hbf"
+                ],
+                "pt": "2509010448"
+            },
+            "id": "6178329184277023949-2509010431-3",
+            "tl": {
+                "c": "ICE",
+                "n": "701",
+                "o": "80",
+                "f": "F",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    }
+]

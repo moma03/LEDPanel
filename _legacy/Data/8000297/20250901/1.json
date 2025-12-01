@@ -1,0 +1,70 @@
+[
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "89",
+                "pp": "3",
+                "ppth": [
+                    "Münster(Westf)Hbf",
+                    "Münster-Hiltrup",
+                    "Rinkerode",
+                    "Drensteinfurt",
+                    "Mersch(Westf)",
+                    "Hamm-Bockum-Hövel",
+                    "Hamm(Westf)Hbf",
+                    "Hamm-Westtünnen",
+                    "Welver",
+                    "Borgeln",
+                    "Soest",
+                    "Bad Sassendorf",
+                    "Lippstadt",
+                    "Dedinghausen",
+                    "Ehringhausen(Kr Lippstadt)",
+                    "Geseke",
+                    "Salzkotten",
+                    "Scharmede"
+                ],
+                "pt": "2509010103"
+            },
+            "id": "-9088865381407852178-2508312310-19",
+            "tl": {
+                "c": "RB",
+                "n": "90043",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "RB72",
+                "pp": "",
+                "ppth": [
+                    "Herford",
+                    "Bad Salzuflen",
+                    "Schötmar",
+                    "Bad Salzuflen-Sylbach",
+                    "Lage(Lippe)",
+                    "Detmold",
+                    "Horn-Bad Meinberg",
+                    "Leopoldstal",
+                    "Sandebeck Gasthaus, Steinheim (Westf)",
+                    "Sandebeck Südstraße, Steinheim (Westf)",
+                    "Altenbeken"
+                ],
+                "pt": "2509010123"
+            },
+            "id": "4994303118525767117-2508312238-12",
+            "tl": {
+                "c": "Bus",
+                "n": "7235",
+                "o": "R2",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    }
+]

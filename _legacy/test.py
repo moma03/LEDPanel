@@ -209,7 +209,7 @@ def get_db_departures_bahnhofde(station_id, station_name, station_category=1, lo
         "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
         "Accept-Encoding": "gzip, deflate, br, zstd",
         "Referer": f"https://www.bahnhof.de/{station_name.lower().replace(' ', '-')}/abfahrt",
-        "Next-Action": "7f2445eb9aaa7f83c446bb545f8146392aea9ca9d0",  # This is a static value, might change in the future, without it the request fails.
+        "Next-Action": "7fdb13accc96279b44d8b9adb1f70dc3b532d54c9d",  # This is a static value, might change in the future, without it the request fails.
         "Content-Type": "text/plain;charset=UTF-8"
     }
     data_raw = json.dumps([data_raw_options])  # Convert the options to a JSON string

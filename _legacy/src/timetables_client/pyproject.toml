@@ -1,0 +1,22 @@
+[project]
+name = "bahn-api"
+version = "0.1.0"
+description = "Full Deutsche Bahn Timetables API client with station caching and helpers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Moritz Manegold", email = "TODO" }
+]
+dependencies = [
+    "pydantic>=2.5",
+    "httpx>=0.27",
+    "python-dotenv>=1.0",
+    "xmltodict>=0.13"
+]
+
+[project.urls]
+Homepage = "https://github.com/moma03/LEDPanel"
+
+[tool.setuptools.packages.find]
+where = ["src"]

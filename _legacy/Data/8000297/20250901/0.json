@@ -1,0 +1,184 @@
+[
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "RB74",
+                "pp": "5",
+                "ppth": [
+                    "Bielefeld Hbf",
+                    "Bielefeld-Brackwede",
+                    "Bielefeld-Senne",
+                    "Bielefeld-Windelsbleiche",
+                    "Bielefeld-Sennestadt",
+                    "Schloß Holte",
+                    "Hövelriege",
+                    "Hövelhof",
+                    "Paderborn-Sennelager",
+                    "Paderborn-Schloss Neuhaus",
+                    "Paderborn Nord",
+                    "Paderborn Kasseler Tor"
+                ],
+                "pt": "2509010037"
+            },
+            "id": "-3882557690608314224-2508312343-13",
+            "tl": {
+                "c": "NWB",
+                "n": "75087",
+                "o": "N2",
+                "f": "D",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "RB72",
+                "pp": "",
+                "ppth": [
+                    "Herford",
+                    "Bad Salzuflen",
+                    "Schötmar",
+                    "Bad Salzuflen-Sylbach",
+                    "Lage(Lippe)",
+                    "Detmold",
+                    "Horn-Bad Meinberg",
+                    "Leopoldstal",
+                    "Sandebeck Gasthaus, Steinheim (Westf)",
+                    "Sandebeck Südstraße, Steinheim (Westf)",
+                    "Altenbeken"
+                ],
+                "pt": "2509010023"
+            },
+            "id": "7794219673487737681-2508312138-12",
+            "tl": {
+                "c": "Bus",
+                "n": "7233",
+                "o": "R2",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "EV",
+                "pp": "",
+                "ppth": [
+                    "Höxter-Ottbergen",
+                    "Brakel(Höxter)",
+                    "Bad Driburg(Westf)",
+                    "Altenbeken"
+                ],
+                "pt": "2509010059"
+            },
+            "id": "8152627378318135438-2508312337-5",
+            "tl": {
+                "c": "Bus",
+                "n": "14981",
+                "o": "NWBus",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "89",
+                "pp": "3",
+                "ppth": [
+                    "Scharmede",
+                    "Salzkotten",
+                    "Geseke",
+                    "Ehringhausen(Kr Lippstadt)",
+                    "Dedinghausen",
+                    "Lippstadt",
+                    "Bad Sassendorf",
+                    "Soest",
+                    "Borgeln",
+                    "Welver",
+                    "Hamm-Westtünnen",
+                    "Hamm(Westf)Hbf",
+                    "Hamm-Bockum-Hövel",
+                    "Mersch(Westf)",
+                    "Drensteinfurt",
+                    "Rinkerode",
+                    "Münster-Hiltrup",
+                    "Münster(Westf)Hbf"
+                ],
+                "pt": "2509010015"
+            },
+            "id": "-6725426308915019299-2509010015-1",
+            "tl": {
+                "c": "RB",
+                "n": "90044",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "89",
+                "pp": "2",
+                "ppth": [
+                    "Münster(Westf)Hbf",
+                    "Münster-Hiltrup",
+                    "Rinkerode",
+                    "Drensteinfurt",
+                    "Mersch(Westf)",
+                    "Hamm-Bockum-Hövel",
+                    "Hamm(Westf)Hbf",
+                    "Hamm-Westtünnen",
+                    "Welver",
+                    "Borgeln",
+                    "Soest",
+                    "Bad Sassendorf",
+                    "Lippstadt",
+                    "Dedinghausen",
+                    "Ehringhausen(Kr Lippstadt)",
+                    "Geseke",
+                    "Salzkotten",
+                    "Scharmede"
+                ],
+                "pt": "2509010003"
+            },
+            "id": "7839853945287523601-2508312210-19",
+            "tl": {
+                "c": "RB",
+                "n": "90041",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "S5",
+                "pp": "",
+                "ppth": [
+                    "Steinheim(Westf)",
+                    "Altenbeken"
+                ],
+                "pt": "2509010035"
+            },
+            "id": "7189820757982065870-2508312340-3",
+            "tl": {
+                "c": "Bus",
+                "n": "4587",
+                "o": "TDHS",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    }
+]

@@ -1,0 +1,305 @@
+[
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "RB74",
+                "pp": "5",
+                "ppth": [
+                    "Bielefeld Hbf",
+                    "Bielefeld-Brackwede",
+                    "Bielefeld-Senne",
+                    "Bielefeld-Windelsbleiche",
+                    "Bielefeld-Sennestadt",
+                    "Schloß Holte",
+                    "Hövelriege",
+                    "Hövelhof",
+                    "Paderborn-Sennelager",
+                    "Paderborn-Schloss Neuhaus",
+                    "Paderborn Nord",
+                    "Paderborn Kasseler Tor"
+                ],
+                "pt": "2509010527"
+            },
+            "id": "3526675649310514845-2509010434-13",
+            "tl": {
+                "c": "NWB",
+                "n": "75001",
+                "o": "N2",
+                "f": "D",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "RB74",
+                "pp": "5",
+                "ppth": [
+                    "Paderborn Kasseler Tor",
+                    "Paderborn Nord",
+                    "Paderborn-Sennelager",
+                    "Hövelhof",
+                    "Schloß Holte",
+                    "Bielefeld-Sennestadt",
+                    "Bielefeld-Windelsbleiche",
+                    "Bielefeld-Senne",
+                    "Bielefeld-Brackwede",
+                    "Bielefeld Hbf"
+                ],
+                "pt": "2509010543"
+            },
+            "id": "-5350196717819852045-2509010543-1",
+            "tl": {
+                "c": "NWB",
+                "n": "75004",
+                "o": "N2",
+                "f": "D",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "89",
+                "pp": "1",
+                "ppth": [
+                    "Scharmede",
+                    "Salzkotten",
+                    "Geseke",
+                    "Ehringhausen(Kr Lippstadt)",
+                    "Dedinghausen",
+                    "Lippstadt",
+                    "Bad Sassendorf",
+                    "Soest",
+                    "Borgeln",
+                    "Welver",
+                    "Hamm-Westtünnen",
+                    "Hamm(Westf)Hbf",
+                    "Hamm-Bockum-Hövel",
+                    "Mersch(Westf)",
+                    "Drensteinfurt",
+                    "Rinkerode",
+                    "Münster-Hiltrup",
+                    "Münster(Westf)Hbf"
+                ],
+                "pt": "2509010521"
+            },
+            "id": "7480392243953521332-2509010521-1",
+            "tl": {
+                "c": "RB",
+                "n": "90006",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "72",
+                "pp": "4",
+                "ppth": [
+                    "Altenbeken"
+                ],
+                "pt": "2509010515"
+            },
+            "id": "-6353748043268884837-2509010515-1",
+            "tl": {
+                "c": "RB",
+                "n": "92550",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "RB74",
+                "pp": "5",
+                "ppth": [
+                    "Paderborn Kasseler Tor",
+                    "Paderborn Nord",
+                    "Paderborn-Schloss Neuhaus",
+                    "Paderborn-Sennelager",
+                    "Hövelhof",
+                    "Hövelriege",
+                    "Schloß Holte",
+                    "Bielefeld-Sennestadt",
+                    "Bielefeld-Windelsbleiche",
+                    "Bielefeld-Senne",
+                    "Bielefeld-Brackwede",
+                    "Bielefeld Hbf"
+                ],
+                "pt": "2509010513"
+            },
+            "id": "3812085608145352262-2509010513-1",
+            "tl": {
+                "c": "NWB",
+                "n": "75000",
+                "o": "N2",
+                "f": "D",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "S5",
+                "pp": "",
+                "ppth": [
+                    "Altenbeken",
+                    "Steinheim(Westf)"
+                ],
+                "pt": "2509010542"
+            },
+            "id": "3129952448244025015-2509010542-1",
+            "tl": {
+                "c": "Bus",
+                "n": "4532",
+                "o": "TDHS",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "89",
+                "pp": "3 West",
+                "ppth": [
+                    "Hamm(Westf)Hbf",
+                    "Hamm-Westtünnen",
+                    "Welver",
+                    "Borgeln",
+                    "Soest",
+                    "Bad Sassendorf",
+                    "Lippstadt",
+                    "Dedinghausen",
+                    "Ehringhausen(Kr Lippstadt)",
+                    "Geseke",
+                    "Salzkotten",
+                    "Scharmede"
+                ],
+                "pt": "2509010540"
+            },
+            "id": "8880075572479984942-2509010446-13",
+            "tl": {
+                "c": "RB",
+                "n": "90005",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "11",
+                "pp": "2",
+                "ppth": [
+                    "Dortmund Hbf",
+                    "Kamen",
+                    "Hamm(Westf)Hbf",
+                    "Soest",
+                    "Lippstadt"
+                ],
+                "pt": "2509010542"
+            },
+            "dp": {
+                "l": "11",
+                "pp": "2",
+                "ppth": [
+                    "Altenbeken",
+                    "Willebadessen",
+                    "Warburg(Westf)",
+                    "Hofgeismar",
+                    "Kassel-Wilhelmshöhe"
+                ],
+                "pt": "2509010543"
+            },
+            "id": "-3544810355449558240-2509010433-6",
+            "tl": {
+                "c": "RE",
+                "n": "26701",
+                "o": "NXRE",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "dp": {
+                "l": "89",
+                "pp": "3",
+                "ppth": [
+                    "Scharmede",
+                    "Salzkotten",
+                    "Geseke",
+                    "Ehringhausen(Kr Lippstadt)",
+                    "Dedinghausen",
+                    "Lippstadt",
+                    "Bad Sassendorf",
+                    "Soest",
+                    "Borgeln",
+                    "Welver",
+                    "Hamm-Westtünnen",
+                    "Hamm(Westf)Hbf",
+                    "Hamm-Bockum-Hövel",
+                    "Mersch(Westf)",
+                    "Drensteinfurt",
+                    "Rinkerode",
+                    "Münster-Hiltrup",
+                    "Münster(Westf)Hbf",
+                    "Münster(W)Zentrum Nord"
+                ],
+                "pt": "2509010551"
+            },
+            "id": "-1154749152026119141-2509010551-1",
+            "tl": {
+                "c": "RB",
+                "n": "90056",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    },
+    {
+        "timetable_planned": {
+            "ar": {
+                "l": "72",
+                "pp": "4",
+                "ppth": [
+                    "Altenbeken"
+                ],
+                "pt": "2509010543"
+            },
+            "id": "-4866102456086610901-2509010533-2",
+            "tl": {
+                "c": "RB",
+                "n": "92551",
+                "o": "R2RB",
+                "f": "N",
+                "t": "p"
+            }
+        },
+        "timetable_changes": []
+    }
+]

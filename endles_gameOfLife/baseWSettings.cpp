@@ -37,8 +37,8 @@ namespace {
 }
 
 struct BaseWSettings::Impl {
-	Impl(const std::string& settings_file)
-	  : settings_file(settings_file), matrix(nullptr), canvas(nullptr), io(new rgb_matrix::GPIO()) {}
+		Impl(const std::string& settings_file)
+			: settings_file(settings_file), matrix(nullptr), canvas(nullptr) {}
 
 	~Impl() {
 		if (matrix) {
@@ -63,15 +63,15 @@ struct BaseWSettings::Impl {
 		rgb_matrix::RuntimeOptions runtime_opts;
 
 		auto getInt = [&](const std::string& key, int def)->int {
-			if (settings[key]) return settings[key].as<int>();
+			if (settings[std::string(key)]) return settings[std::string(key)].as<int>();
 			return def;
 		};
 		auto getBool = [&](const std::string& key, bool def)->bool {
-			if (settings[key]) return settings[key].as<bool>();
+			if (settings[std::string(key)]) return settings[std::string(key)].as<bool>();
 			return def;
 		};
 		auto getString = [&](const std::string& key, const std::string& def)->std::string {
-			if (settings[key]) return settings[key].as<std::string>();
+			if (settings[std::string(key)]) return settings[std::string(key)].as<std::string>();
 			return def;
 		};
 
@@ -87,17 +87,19 @@ struct BaseWSettings::Impl {
 		matrix_opts.parallel = readDimension("parallel", "led-parallel", 1);
 		matrix_opts.pwm_bits = getInt("pwm_bits", 11);
 		matrix_opts.brightness = getInt("brightness", 100);
-		matrix_opts.hardware_mapping = getString("hardware_mapping", getString("led-gpio-mapping", "regular"));
+		// store hardware_mapping string to keep pointer valid
+		hardware_mapping_storage = getString("hardware_mapping", getString("led-gpio-mapping", "regular"));
+		matrix_opts.hardware_mapping = hardware_mapping_storage.c_str();
 
 		runtime_opts.gpio_slowdown = getInt("gpio_slowdown", getInt("led-slowdown-gpio", 1));
-		runtime_opts.disable_hardware_pulsing = getBool("disable_hardware_pulsing", false);
-		runtime_opts.rows = matrix_opts.rows;
+		// disable_hardware_pulsing is part of Options (not RuntimeOptions)
+		matrix_opts.disable_hardware_pulsing = getBool("disable_hardware_pulsing", false);
 
-		if (settings["pwm_lsb_nanoseconds"]) {
-			runtime_opts.pwm_lsb_nanoseconds = settings["pwm_lsb_nanoseconds"].as<int>();
+		if (settings[std::string("pwm_lsb_nanoseconds")]) {
+			matrix_opts.pwm_lsb_nanoseconds = settings[std::string("pwm_lsb_nanoseconds")].as<int>();
 		}
 
-		matrix = rgb_matrix::CreateMatrixFromOptions(matrix_opts, runtime_opts, io.get());
+		matrix = rgb_matrix::CreateMatrixFromOptions(matrix_opts, runtime_opts);
 		if (!matrix) {
 			std::cerr << "CreateMatrixFromOptions returned null\n";
 			return false;
@@ -120,9 +122,9 @@ struct BaseWSettings::Impl {
 	// members
 	std::string settings_file;
 	YAML::Node settings;
-	std::unique_ptr<rgb_matrix::GPIO> io;
+	std::string hardware_mapping_storage;
 	rgb_matrix::RGBMatrix* matrix;
-	rgb_matrix::Canvas* canvas;
+	rgb_matrix::FrameCanvas* canvas;
 };
 
 BaseWSettings::BaseWSettings(const std::string& settings_file)
@@ -143,9 +145,7 @@ void BaseWSettings::Start() {
 	if (impl_->matrix) impl_->matrix->Clear();
 }
 
-rgb_matrix::RGBMatrix* BaseWSettings::matrix() const { return impl_->matrix; }
-rgb_matrix::Canvas* BaseWSettings::canvas() const { return impl_->canvas; }
-const YAML::Node& BaseWSettings::settings() const { return impl_->settings; }
+// matrix()/canvas()/settings() are intentionally not exposed in the header
 
 void BaseWSettings::WaitExitOrDelay(int ms) {
 	int slept = 0;
@@ -156,4 +156,51 @@ void BaseWSettings::WaitExitOrDelay(int ms) {
 }
 
 bool BaseWSettings::ExitRequested() const { return g_exit_requested; }
+
+int BaseWSettings::canvas_width() const {
+	return impl_->canvas ? impl_->canvas->width() : 0;
+}
+
+int BaseWSettings::canvas_height() const {
+	return impl_->canvas ? impl_->canvas->height() : 0;
+}
+
+void BaseWSettings::set_pixel(int x, int y, int r, int g, int b) {
+	if (impl_->canvas) impl_->canvas->SetPixel(x, y, r, g, b);
+}
+
+void BaseWSettings::clear_canvas() {
+	if (impl_->canvas) impl_->canvas->Clear();
+}
+
+void BaseWSettings::swap_on_vsync() {
+	if (!impl_->matrix || !impl_->canvas) return;
+	// Swap returns a pointer to the previous buffer; store it back in impl_->canvas
+	impl_->canvas = impl_->matrix->SwapOnVSync(impl_->canvas);
+}
+
+int BaseWSettings::get_int_setting(const std::string& key, int def) const {
+	try {
+		if (impl_->settings[key]) return impl_->settings[key].as<int>();
+	} catch (...) {}
+	return def;
+}
+
+double BaseWSettings::get_double_setting(const std::string& key, double def) const {
+	try {
+		if (impl_->settings[key]) return impl_->settings[key].as<double>();
+	} catch (...) {}
+	return def;
+}
+
+bool BaseWSettings::get_bool_setting(const std::string& key, bool def) const {
+	try {
+		if (impl_->settings[key]) return impl_->settings[key].as<bool>();
+	} catch (...) {}
+	return def;
+}
+
+bool BaseWSettings::has_setting(const std::string& key) const {
+	try { return bool(impl_->settings[key]); } catch (...) { return false; }
+}
 

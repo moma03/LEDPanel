@@ -14,10 +14,9 @@ public:
 
     void Run() override {
         // Determine logical width/height from canvas
-        auto c = canvas();
-        if (!c) return;
-        const int width = c->width();
-        const int height = c->height();
+        if (canvas_width() == 0 || canvas_height() == 0) return;
+        const int width = canvas_width();
+        const int height = canvas_height();
 
         // Settings: speed, spawn probability, initial fill
         int speed_ms = 100; // default
@@ -25,12 +24,13 @@ public:
         double initial_fill = 0.12; // fraction of cells initially alive
 
         // Accept multiple key names to be forgiving with settings.yaml formats
-        if (settings()["gol-speed-ms"]) speed_ms = settings()["gol-speed-ms"].as<int>();
-        if (settings()["gol"]["speed_ms"]) speed_ms = settings()["gol"]["speed_ms"].as<int>();
-        if (settings()["gol-spawn-chance"]) spawn_chance = settings()["gol-spawn-chance"].as<double>();
-        if (settings()["gol"]["spawn_chance"]) spawn_chance = settings()["gol"]["spawn_chance"].as<double>();
-        if (settings()["gol-initial-fill"]) initial_fill = settings()["gol-initial-fill"].as<double>();
-        if (settings()["gol"]["initial_fill"]) initial_fill = settings()["gol"]["initial_fill"].as<double>();
+        // read settings via accessors (supports flat keys)
+        speed_ms = get_int_setting("gol-speed-ms", speed_ms);
+        speed_ms = get_int_setting("gol.speed_ms", speed_ms);
+        spawn_chance = get_double_setting("gol-spawn-chance", spawn_chance);
+        spawn_chance = get_double_setting("gol.spawn_chance", spawn_chance);
+        initial_fill = get_double_setting("gol-initial-fill", initial_fill);
+        initial_fill = get_double_setting("gol.initial_fill", initial_fill);
 
         grid_current_.assign(width * height, false);
         grid_next_.assign(width * height, false);
@@ -76,15 +76,15 @@ public:
                 for (int x = 0; x < width; ++x) {
                     bool alive = grid_next_[y*width + x];
                     if (alive) {
-                        c->SetPixel(x, y, 255, 255, 255);
+                        set_pixel(x, y, 255, 255, 255);
                     } else {
-                        c->SetPixel(x, y, 0, 0, 0);
+                        set_pixel(x, y, 0, 0, 0);
                     }
                 }
             }
 
             // swap buffers
-            c = matrix()->SwapOnVSync(c);
+            swap_on_vsync();
 
             // commit next grid
             grid_current_.swap(grid_next_);

@@ -26,9 +26,18 @@ public:
 
 protected:
     // Accessors available to derived classes (implemented in the .cpp)
-    rgb_matrix::RGBMatrix* matrix() const;
-    rgb_matrix::Canvas* canvas() const;
-    const YAML::Node& settings() const;
+    // Canvas accessors and drawing helpers (no heavy headers required)
+    int canvas_width() const;
+    int canvas_height() const;
+    void set_pixel(int x, int y, int r, int g, int b);
+    void clear_canvas();
+    void swap_on_vsync();
+
+    // Settings accessors
+    int get_int_setting(const std::string& key, int def) const;
+    double get_double_setting(const std::string& key, double def) const;
+    bool get_bool_setting(const std::string& key, bool def) const;
+    bool has_setting(const std::string& key) const;
 
     // Sleep for up to 'ms' milliseconds but return early if exit requested.
     void WaitExitOrDelay(int ms = 16);

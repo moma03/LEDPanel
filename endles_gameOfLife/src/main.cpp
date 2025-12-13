@@ -7,24 +7,17 @@
 // This is a grab-bag of various demos and not very readable.
 #include "led-matrix.h"
 
-#include "pixel-mapper.h"
-#include "graphics.h"
-
-#include <assert.h>
 #include <getopt.h>
-#include <limits.h>
 #include <math.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
 #include <algorithm>
 
-#include <json.hpp>
-#include <fstream>
 #include <iostream>
+#include "config_loader.h"
 
 using std::min;
 using std::max;
@@ -33,7 +26,6 @@ using std::max;
 #define TERM_NORM "\033[0m"
 
 using namespace rgb_matrix;
-using json = nlohmann::json;
 
 volatile bool interrupt_received = false;
 static void InterruptHandler(int signo) {
@@ -107,8 +99,7 @@ public:
   }
 
 private:
-  void Rotate(int x, int y, float angle,
-              float *new_x, float *new_y) {
+  void Rotate(int x, int y, float angle, float *new_x, float *new_y) {
     *new_x = x * cosf(angle) - y * sinf(angle);
     *new_y = x * sinf(angle) + y * cosf(angle);
   }
@@ -268,30 +259,95 @@ private:
   bool torus_;
 };
 
+class EndlessGameOfLife : public DemoRunner {
+public:
+  EndlessGameOfLife(Canvas *m) : DemoRunner(m) {}
+
+  // Endlessly runs Conway's Game of Life, by continuously awaking random cells to life, with
+  // probability 1/1000 per cell per iteration.
+  void Run() override {
+    const int width = canvas()->width();
+    const int height = canvas()->height();
+
+    // Initialize all cells to dead.
+    std::vector<std::vector<bool>> cells(width, std::vector<bool>(height, false));
+
+    // Make 70% of the cells alive initially.
+    for (int x = 0; x < width; ++x) {
+      for (int y = 0; y < height; ++y) {
+        if (rand() % 100 < 70) {
+          cells[x][y] = true;
+        }
+      }
+    }
+
+
+    srand(time(NULL));
+
+    while (!interrupt_received) {
+      // Update cells based on Game of Life rules.
+      std::vector<std::vector<bool>> new_cells = cells;
+      for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+          int alive_neighbors = 0;
+          for (int dx = -1; dx <= 1; ++dx) {
+            for (int dy = -1; dy <= 1; ++dy) {
+              if (dx == 0 && dy == 0) continue;
+              int nx = x + dx;
+              int ny = y + dy;
+              if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                alive_neighbors += cells[nx][ny] ? 1 : 0;
+              }
+            }
+          }
+          if (cells[x][y]) {
+            new_cells[x][y] = (alive_neighbors == 2 || alive_neighbors == 3);
+          } else {
+            new_cells[x][y] = (alive_neighbors == 3);
+          }
+        }
+      }
+
+      // Randomly awaken dead cells.
+      for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+          if (!new_cells[x][y] && (rand() % 500 == 0)) {
+            new_cells[x][y] = true;
+          }
+        }
+      }
+
+      cells = new_cells;
+
+      // Render the cells to the canvas.
+      for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+          if (cells[x][y]) {
+            canvas()->SetPixel(x, y, 255, 255, 255); // Alive cell: white
+          } else {
+            canvas()->SetPixel(x, y, 0, 0, 0);       // Dead cell: black
+          }
+        }
+      }
+
+      usleep(1000 * 10); // 100 ms
+    }
+  }
+};
+
+
 static int usage(const char *progname) {
-  fprintf(stderr, "usage: %s <options> -D <demo-nr> [optional parameter]\n",
-          progname);
+  fprintf(stderr, "usage: %s <options> -D <demo-nr> [optional parameter]\n", progname);
   fprintf(stderr, "Options:\n");
-  fprintf(stderr,
-          "\t-D <demo-nr>              : Always needs to be set\n"
-          );
+  fprintf(stderr, "\t-D <demo-nr>              : Always needs to be set\n");
 
 
   rgb_matrix::PrintMatrixFlags(stderr);
 
   fprintf(stderr, "Demos, choosen with -D\n");
   fprintf(stderr, "\t0  - some rotating square\n"
-          "\t1  - forward scrolling an image (-m <scroll-ms>)\n"
-          "\t2  - backward scrolling an image (-m <scroll-ms>)\n"
-          "\t3  - test image: a square\n"
-          "\t4  - Pulsing color\n"
-          "\t5  - Grayscale Block\n"
-          "\t6  - Abelian sandpile model (-m <time-step-ms>)\n"
-          "\t7  - Conway's game of life (-m <time-step-ms>)\n"
-          "\t8  - Langton's ant (-m <time-step-ms>)\n"
-          "\t9  - Volume bars (-m <time-step-ms>)\n"
-          "\t10 - Evolution of color (-m <time-step-ms>)\n"
-          "\t11 - Brightness pulse generator\n");
+          "\t1  - Conway's game of life (-m <time-step-ms>)\n"
+          "\t2  - Endless Conway's game of life\n");
   fprintf(stderr, "Example:\n\t%s -D 1 runtext.ppm\n"
           "Scrolls the runtext until Ctrl-C is pressed\n", progname);
   return 1;
@@ -305,74 +361,10 @@ int main(int argc, char *argv[]) {
   RGBMatrix::Options matrix_options;
   rgb_matrix::RuntimeOptions runtime_opt;
 
-  // Get options from config file
-  std::ifstream config_file("config.json");
-  // print error and exit if file not found
-  if (!config_file.is_open()) {
-    std::cerr << TERM_ERR << "Error: Could not open config.json file." << TERM_NORM << std::endl;
+  // Load options from config file (separated into config_loader)
+  if (!LoadMatrixOptionsFromConfig("config.json", matrix_options, runtime_opt)) {
+    std::cerr << TERM_ERR << "Error: Could not open or parse config.json file." << TERM_NORM << std::endl;
     return 1;
-  }
-  json cfg = json::parse(config_file);
-
-  for (auto& element : cfg["matrix_options"].items()) {
-    const std::string& key = element.key();
-    const json& value = element.value();
-
-    if (key == "hardware_mapping") {
-      matrix_options.hardware_mapping = strdup(value.get<std::string>().c_str());
-    } else if (key == "rows") {
-      matrix_options.rows = value.get<int>();
-    } else if (key == "cols") {
-      matrix_options.cols = value.get<int>();
-    } else if (key == "chain_length") {
-      matrix_options.chain_length = value.get<int>();
-    } else if (key == "parallel") {
-      matrix_options.parallel = value.get<int>();
-    } else if (key == "pwm_bits") {
-      matrix_options.pwm_bits = value.get<int>();
-    } else if (key == "pwm_lsb_nanoseconds") {
-      matrix_options.pwm_lsb_nanoseconds = value.get<int>();
-    } else if (key == "pwm_dither_bits") {
-      matrix_options.pwm_dither_bits = value.get<int>();
-    } else if (key == "brightness") {
-      matrix_options.brightness = value.get<int>();
-    } else if (key == "scan_mode") {
-      matrix_options.scan_mode = value.get<int>();
-    } else if (key == "row_address_type") {
-      matrix_options.row_address_type = value.get<int>();
-    } else if (key == "multiplexing") {
-      matrix_options.multiplexing = value.get<int>();
-    } // Advanced options
-      else if (key == "disable_hardware_pulsing") {
-      matrix_options.disable_hardware_pulsing = value.get<bool>();
-    } else if (key == "show_refresh_rate") {
-      matrix_options.show_refresh_rate = value.get<bool>();
-    } else if (key == "inverse_colors") {
-      matrix_options.inverse_colors = value.get<bool>();
-    } else if (key == "led_rgb_sequence") {
-      matrix_options.led_rgb_sequence = strdup(value.get<std::string>().c_str());
-    } else if (key == "pixel_mapper_config") {
-      matrix_options.pixel_mapper_config = strdup(value.get<std::string>().c_str());
-    } else if (key == "panel_type") {
-      matrix_options.panel_type = strdup(value.get<std::string>().c_str());
-    } else if (key == "limit_refresh_rate_hz") {
-      matrix_options.limit_refresh_rate_hz = value.get<int>();
-    } else if (key == "disable_busy_waiting") {
-      matrix_options.disable_busy_waiting = value.get<bool>();
-    } // Runtime options
-    else if (key == "gpio_slowdown") {
-      runtime_opt.gpio_slowdown = value.get<int>();
-    } else if (key == "daemon") {
-      runtime_opt.daemon = value.get<int>();
-    } else if (key == "drop_privileges") {
-      runtime_opt.drop_privileges = value.get<int>();
-    } else if (key == "do_gpio_init") {
-      runtime_opt.do_gpio_init = value.get<bool>();
-    } else if (key == "drop_priv_user") {
-      runtime_opt.drop_priv_user = strdup(value.get<std::string>().c_str());
-    } else if (key == "drop_priv_group") {
-      runtime_opt.drop_priv_group = strdup(value.get<std::string>().c_str());
-    }
   }
 
   // First things first: extract the command line flags that contain
@@ -425,6 +417,10 @@ int main(int argc, char *argv[]) {
 
   case 1:
     demo_runner = new GameLife(canvas, scroll_ms);
+    break;
+
+  case 2:
+    demo_runner = new EndlessGameOfLife(canvas);
     break;
   }
 

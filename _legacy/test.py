@@ -26,8 +26,8 @@ except ImportError:
 debug = False  # Set to True for debugging output
 
 # Read the schema file as a string
-with open('db_timetables_schema.json', 'r') as f:
-  schema_str = f.read()
+# with open('db_timetables_schema.json', 'r') as f:
+#  schema_str = f.read()
 
 # --- CONFIGURATION ---
 
@@ -39,7 +39,7 @@ DB_CLIENT_SECRET = os.getenv('DB_CLIENT_SECRET')
 # 2. Station Configuration
 # HSTM is the short name (DS100), but the API works best with the EVA number.
 STATION_DS100 = "HSTM"  # Short name for "Steinheim (Westf)"
-STATION_EVA_ID = 8005708 # HSTM=8005708 AH=8002549  
+STATION_EVA_ID = 8002549 # HSTM=8005708 AH=8002549  
 STATION_DISPLAY_NAME = "Steinheim Westf"
 
 if (not STATION_EVA_ID):
@@ -52,18 +52,19 @@ if (not STATION_EVA_ID):
 
 # 3. LED Matrix Configuration
 MATRIX_ROWS = 64
-MATRIX_COLS = 64
+MATRIX_COLS = 128 #64
 
 options = RGBMatrixOptions()
 options.rows = MATRIX_ROWS
 options.cols = MATRIX_COLS
 options.brightness = 90  # Brightness level (0-100)
-options.chain_length = 1
+options.chain_length = 4
 options.pwm_bits = 3  # PWM bits for brightness control
 options.parallel = 1
 options.hardware_mapping = 'regular'  # Change if you have a different hardware mapping
 options.gpio_slowdown = 2 # Uncomment if you have issues with flickering
 options.show_refresh_rate = True  # Show the refresh rate on the matrix
+options.pixel_mapper_config = "U-mapper"  # Use default pixel mapping
 
 # 4. Display & Data Configuration
 FONT_PATH = '5x8.bdf' # Place this font file in the same directory
@@ -209,7 +210,7 @@ def get_db_departures_bahnhofde(station_id, station_name, station_category=1, lo
         "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
         "Accept-Encoding": "gzip, deflate, br, zstd",
         "Referer": f"https://www.bahnhof.de/{station_name.lower().replace(' ', '-')}/abfahrt",
-        "Next-Action": "7fdb13accc96279b44d8b9adb1f70dc3b532d54c9d",  # This is a static value, might change in the future, without it the request fails.
+        "Next-Action": "7f224b883c4a036854b93606d3611b94aebb8ae93b",  # This is a static value, might change in the future, without it the request fails.
         "Content-Type": "text/plain;charset=UTF-8"
     }
     data_raw = json.dumps([data_raw_options])  # Convert the options to a JSON string
@@ -456,7 +457,7 @@ def draw_to_matrix(matrix, departures_data):
                 graphics.DrawText(offscreen_canvas, font, 30, y_pos + 8, red, f"+{delay} min")
 
         y_pos += 18 # Move to the next line
-        if y_pos > MATRIX_ROWS - 10:
+        if y_pos > MATRIX_ROWS*2 - 10:
             break
 
     # Send the finished image to the matrix

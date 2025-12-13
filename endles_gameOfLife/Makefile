@@ -1,45 +1,36 @@
+CXX=g++
+CXXFLAGS = -std=c++20 -Iinclude -Wall -Wextra
 
-CXX := g++
-PKG_CFLAGS := $(shell pkg-config --cflags yaml-cpp 2>/dev/null)
-PKG_LIBS := $(shell pkg-config --libs yaml-cpp 2>/dev/null)
+SRC = $(wildcard src/*.cpp)
+OBJ = $(SRC:.cpp=.o)
+DEPS = $(OBJ:.o=.d)
 
-# Path to rpi-rgb-led-matrix submodule (relative to this folder)
-LED_DIR ?= $(abspath $(CURDIR)/../rpi-rgb-led-matrix)
-LED_INC := -I$(LED_DIR)/include
-LED_LIBS := -L$(LED_DIR)/lib -lledmatrix -lpthread
+TARGET = main
 
-FALLBACK_YAML_INC := -I$(CURDIR)/fake_include
-CXXFLAGS := -O2 -std=c++17 $(PKG_CFLAGS) $(LED_INC)
-ifeq ($(strip $(PKG_CFLAGS)),)
-CXXFLAGS += $(FALLBACK_YAML_INC)
-endif
+# Where our library resides. You mostly only need to change the
+# RGB_LIB_DISTRIBUTION, this is where the library is checked out.
+RGB_LIB_DISTRIBUTION=../rpi-rgb-led-matrix
+RGB_INCDIR=$(RGB_LIB_DISTRIBUTION)/include
+RGB_LIBDIR=$(RGB_LIB_DISTRIBUTION)/lib
+RGB_LIBRARY_NAME=rgbmatrix
+RGB_LIBRARY=$(RGB_LIBDIR)/lib$(RGB_LIBRARY_NAME).a
+LDFLAGS+=-L$(RGB_LIBDIR) -l$(RGB_LIBRARY_NAME) -lrt -lm -lpthread
 
-LDFLAGS := $(PKG_LIBS) $(LED_LIBS)
+all : $(TARGET)
 
-SRCS := endles_gameOfLife.cpp baseWSettings.cpp
-OBJS := $(SRCS:.cpp=.o)
-TARGET := endles_gameOfLife
+$(RGB_LIBRARY): FORCE
+	$(MAKE) -C $(RGB_LIBDIR)
 
-.PHONY: all clean run help
+$(TARGET): $(OBJ) $(RGB_LIBRARY)
+	$(CXX) $(OBJ) -o $@ $(LDFLAGS)
 
-all: $(TARGET)
+src/%.o : src/%.cpp
+	$(CXX) -I$(RGB_INCDIR) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
-
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+-include $(DEPS)
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJ) $(TARGET) $(DEPS)
 
-run: $(TARGET)
-	# Running on hardware usually requires root to access GPIO
-	sudo ./$(TARGET) endles_gameOfLife/settings.yaml
-
-# Help target to show compile flags if pkg-config cannot find yaml-cpp
-help:
-	@echo "Build: make" \
-		"(requires yaml-cpp pkg-config and rpi-rgb-led-matrix submodule at ../rpi-rgb-led-matrix)"
-	@echo "If pkg-config cannot find yaml-cpp, set PKG_CFLAGS and PKG_LIBS manually." \
-	@echo "Example: make CXXFLAGS=\"-O2 -std=c++17 -I/path/to/yaml-cpp/include\" LDFLAGS=\"-L/path/to/yaml-cpp/lib -lyaml-cpp -lledmatrix -lpthread\""
+FORCE:
+.PHONY: FORCE

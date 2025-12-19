@@ -1,0 +1,19 @@
+# Core dependencies
+pydantic==2.7.0
+pydantic-settings==2.2.0
+
+# Database
+sqlalchemy==2.0.24
+asyncpg==0.29.0
+
+# HTTP client (async)
+httpx==0.25.2
+
+# Utilities
+python-dotenv==1.0.0
+
+# Optional: development/testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.12.1
+flake8==6.1.0

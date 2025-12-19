@@ -5,13 +5,13 @@ services:
     restart: unless-stopped
 
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: dbstorer
+      POSTGRES_PASSWORD: le!2d4pa$elpas?sword123
+      POSTGRES_DB: stationsdb
 
     # Expose port on host
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5442:5432"
 
     # Persistent volume for DB files
     volumes:
@@ -20,3 +20,5 @@ services:
 volumes:
   mainnode_postgres_data:
     driver: local
+
+# docker run -d --name ledpanel-postgres -e POSTGRES_USER=dbstorer -e POSTGRES_PASSWORD='le!2d4pa$elpas?sword123' -e POSTGRES_DB=stationsdb -p 5442:5432 -v ledpanel-postgres-data:/var/lib/postgresql/data postgres:16

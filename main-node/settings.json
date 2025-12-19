@@ -1,0 +1,10 @@
+{
+  "lookahead_hours": 3,
+  "lookbehind_hours": 0,
+  "stations": [8005708],
+  "fetch_interval_seconds": 60,
+  "retry_attempts": 3,
+  "timeout_seconds": 30,
+  "log_level": "INFO",
+  "log_file_path": null
+}

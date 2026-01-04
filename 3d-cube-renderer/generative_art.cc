@@ -61,12 +61,18 @@ int main(int argc, char* argv[]) {
     
     Canvas* canvas = matrix;
     
+    // Calculate actual display dimensions accounting for chain_length and parallel
+    int display_width = matrix_options.cols * matrix_options.chain_length;
+    int display_height = matrix_options.rows * matrix_options.parallel;
+    
+    std::cout << "Display resolution: " << display_width << "x" << display_height << std::endl;
+    
     // Colors from config
     Color colorLight(renderer_options.light_r, renderer_options.light_g, renderer_options.light_b);
     Color colorShadow(renderer_options.shadow_r, renderer_options.shadow_g, renderer_options.shadow_b);
     Color colorBlack(0, 0, 0);
     
-    CubeRenderer renderer(matrix_options.cols, matrix_options.rows);
+    CubeRenderer renderer(display_width, display_height);
     renderer.lightDirection = Vec3(renderer_options.light_dir_x, renderer_options.light_dir_y, renderer_options.light_dir_z).normalized();
     
     std::vector<Cube> cubes;
@@ -103,8 +109,8 @@ int main(int argc, char* argv[]) {
         }
         
         // Draw to LED matrix
-        for (int y = 0; y < matrix_options.rows; y++) {
-            for (int x = 0; x < matrix_options.cols; x++) {
+        for (int y = 0; y < display_height; y++) {
+            for (int x = 0; x < display_width; x++) {
                 int shade = renderer.framebuffer[y][x];
                 Color color;
                 switch (shade) {

@@ -13,7 +13,7 @@
     "pixel_mapper_config": "U-mapper"
   },
   "cube_renderer_options": {
-    "num_cubes": 3,
+    "num_cubes": 1,
     "cube_size": 2.5,
     "rotation_speed_x": 0.7,
     "rotation_speed_y": 0.5,

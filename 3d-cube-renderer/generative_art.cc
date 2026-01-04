@@ -19,9 +19,9 @@ int main(int argc, char* argv[]) {
     matrix_options.cols = 32;
     matrix_options.chain_length = 1;
     matrix_options.parallel = 1;
-    matrix_options.brightness = 100;
     
-    RGBMatrix::RuntimeOptions runtime_options;
+    rgb_matrix::RuntimeOptions runtime_options;
+    runtime_options.do_gpio_init = true;
     RGBMatrix* matrix = RGBMatrix::CreateFromOptions(matrix_options, runtime_options);
     if (matrix == NULL) {
         std::cerr << "Unable to create matrix\n";

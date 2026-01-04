@@ -34,6 +34,7 @@ struct Vec2 {
     float x, y;
     Vec2() : x(0), y(0) {}
     Vec2(float x, float y) : x(x), y(y) {}
+    Vec2 operator-(const Vec2& v) const { return Vec2(x - v.x, y - v.y); }
 };
 
 struct Face {
@@ -87,11 +88,11 @@ public:
         
         // Create faces
         faces.push_back(Face(v[0], v[1], v[2], v[3])); // front
-        faces.push_back(Face(v[4], v[7], v[6], v[5]])); // back
-        faces.push_back(Face(v[0], v[3], v[7], v[4]])); // left
-        faces.push_back(Face(v[1], v[5], v[6], v[2]])); // right
-        faces.push_back(Face(v[3], v[2], v[6], v[7]])); // top
-        faces.push_back(Face(v[0], v[4], v[5], v[1]])); // bottom
+        faces.push_back(Face(v[4], v[7], v[6], v[5])); // back
+        faces.push_back(Face(v[0], v[3], v[7], v[4])); // left
+        faces.push_back(Face(v[1], v[5], v[6], v[2])); // right
+        faces.push_back(Face(v[3], v[2], v[6], v[7])); // top
+        faces.push_back(Face(v[0], v[4], v[5], v[1])); // bottom
         
         return faces;
     }
@@ -209,10 +210,5 @@ public:
         return true;
     }
 };
-
-// Overload - operator for Vec2
-inline Vec2 operator-(const Vec2& a, const Vec2& b) {
-    return Vec2(a.x - b.x, a.y - b.y);
-}
 
 #endif // CUBE_RENDERER_H

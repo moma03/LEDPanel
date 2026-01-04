@@ -1,12 +1,16 @@
 {
   "matrix_options": {
-    "rows": 32,
-    "cols": 32,
-    "chain_length": 1,
+    "rows": 64,
+    "cols": 128,
+    "chain_length": 4,
     "parallel": 1,
+    "multiplexing": 0,
+    "pwm_bits": 5,
+    "pwm_dither_bits": 1,
     "brightness": 100,
-    "pwm_bits": 11,
-    "scan_mode": 0
+    "slowdown_gpio": 0,
+    "show_refresh_rate": true,
+    "pixel_mapper_config": "U-mapper"
   },
   "cube_renderer_options": {
     "num_cubes": 3,

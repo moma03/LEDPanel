@@ -120,3 +120,35 @@ bool LoadConfigFromFile(const std::string& path,
 
   return true;
 }
+
+void GetDisplayDimensions(const RGBMatrix::Options& matrix_options,
+                         int& out_width, int& out_height) {
+  int cols_multiplier = matrix_options.chain_length;
+  int rows_multiplier = matrix_options.parallel;
+  
+  // Check if using U-mapper or similar pixel mapper that arranges panels in a grid
+  if (matrix_options.pixel_mapper_config != nullptr) {
+    std::string mapper_config(matrix_options.pixel_mapper_config);
+    
+    // U-mapper arranges the chain in a U shape, effectively splitting chain_length
+    // across both dimensions. For example, chain_length=4 becomes 2x2 grid
+    if (mapper_config.find("U-mapper") != std::string::npos ||
+        mapper_config.find("u-mapper") != std::string::npos) {
+      // Split chain_length into square-ish grid
+      int chain_sqrt = (int)std::sqrt(matrix_options.chain_length);
+      if (chain_sqrt * chain_sqrt == matrix_options.chain_length) {
+        cols_multiplier = chain_sqrt;
+        rows_multiplier *= chain_sqrt;
+      } else {
+        // If not a perfect square, arrange as close to square as possible
+        cols_multiplier = (matrix_options.chain_length + 1) / 2;
+        rows_multiplier *= (matrix_options.chain_length + cols_multiplier - 1) / cols_multiplier;
+      }
+    }
+    // Add other mappers here as needed
+  }
+  
+  out_width = matrix_options.cols * cols_multiplier;
+  out_height = matrix_options.rows * rows_multiplier;
+}
+

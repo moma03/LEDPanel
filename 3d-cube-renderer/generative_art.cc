@@ -61,9 +61,9 @@ int main(int argc, char* argv[]) {
     
     Canvas* canvas = matrix;
     
-    // Calculate actual display dimensions accounting for chain_length and parallel
-    int display_width = matrix_options.cols * matrix_options.chain_length;
-    int display_height = matrix_options.rows * matrix_options.parallel;
+    // Calculate actual display dimensions accounting for chain_length, parallel, and pixel mapper
+    int display_width, display_height;
+    GetDisplayDimensions(matrix_options, display_width, display_height);
     
     std::cout << "Display resolution: " << display_width << "x" << display_height << std::endl;
     

@@ -25,4 +25,9 @@ bool LoadConfigFromFile(const std::string& path,
                        rgb_matrix::RuntimeOptions& runtime_opt,
                        CubeRendererOptions& renderer_opt);
 
+// Calculate actual display dimensions accounting for chain_length, parallel, and pixel mapper
+// This handles special mappers like U-mapper that arrange panels differently
+void GetDisplayDimensions(const rgb_matrix::RGBMatrix::Options& matrix_options,
+                         int& out_width, int& out_height);
+
 #endif // CONFIG_LOADER_H

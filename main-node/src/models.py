@@ -26,6 +26,10 @@ class PlannedEvent(BaseModel):
     planned_platform: Optional[str] = Field(None, description="Planned platform")
     planned_path: Optional[str] = Field(None, description="Planned path (ppth) - pipe-separated stations")
     wings: Optional[str] = Field(None, description="Wing identifiers if train has wings (wings)")
+    category: Optional[str] = Field(None, description="Train category from trip label (tl.c), e.g., ICE/RE/RB")
+    train_number: Optional[str] = Field(None, description="Train number from trip label (tl.n)")
+    operator: Optional[str] = Field(None, description="Operator/owner code from trip label (tl.o)")
+    hidden: Optional[bool] = Field(None, description="Hidden flag (hi='1' means hidden)")
     
     class Config:
         frozen = True
@@ -41,6 +45,10 @@ class ChangedEvent(BaseModel):
     changed_status: Optional[str] = Field(None, description="Status code")
     fetched_at: datetime = Field(default_factory=datetime.utcnow, description="When this was fetched")
     wings: Optional[str] = Field(None, description="Wing identifiers if present")
+    category: Optional[str] = Field(None, description="Train category from trip label (tl.c)")
+    train_number: Optional[str] = Field(None, description="Train number from trip label (tl.n)")
+    operator: Optional[str] = Field(None, description="Operator/owner code from trip label (tl.o)")
+    hidden: Optional[bool] = Field(None, description="Hidden flag (hi)")
     
     class Config:
         frozen = True

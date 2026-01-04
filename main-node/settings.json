@@ -1,7 +1,7 @@
 {
-  "lookahead_hours": 3,
-  "lookbehind_hours": 0,
-  "stations": [8005708],
+  "lookahead_hours": 1,
+  "lookbehind_hours": 1,
+  "stations": [8000297],
   "fetch_interval_seconds": 60,
   "retry_attempts": 3,
   "timeout_seconds": 30,

@@ -170,6 +170,10 @@ class DataFetcher:
                     for stop in root.findall(".//s"):
                         stop_eva = int(stop.get("eva", 0))
                         stop_id = stop.get("id", "")
+                        tl = stop.find("tl")
+                        category = tl.get("c") if tl is not None else None
+                        train_number = tl.get("n") if tl is not None else None
+                        operator = tl.get("o") if tl is not None else None
                         
                         # Parse departure event
                         dp_elem = stop.find("dp")
@@ -178,6 +182,9 @@ class DataFetcher:
                             if pt:
                                     planned_path = dp_elem.get("ppth") or stop.get("ppth")
                                     wings = dp_elem.get("wings") or stop.get("wings")
+                                    planned_line = dp_elem.get("l") or (f"{category} {train_number}" if category and train_number else None)
+                                    planned_destination = dp_elem.get("pde")
+                                    hidden = True if dp_elem.get("hi") == "1" else (False if dp_elem.get("hi") == "0" else None)
                                     events.append(PlannedEvent(
                                         stop_id=stop_id,
                                         event_type="dep",
@@ -185,6 +192,12 @@ class DataFetcher:
                                         planned_platform=dp_elem.get("pp"),
                                         planned_path=planned_path,
                                         wings=wings,
+                                        planned_line=planned_line,
+                                        planned_destination=planned_destination,
+                                        category=category,
+                                        train_number=train_number,
+                                        operator=operator,
+                                        hidden=hidden,
                                     ))
                         
                         # Parse arrival event
@@ -194,6 +207,9 @@ class DataFetcher:
                             if pt:
                                 planned_path = ar_elem.get("ppth") or stop.get("ppth")
                                 wings = ar_elem.get("wings") or stop.get("wings")
+                                planned_line = ar_elem.get("l") or (f"{category} {train_number}" if category and train_number else None)
+                                planned_destination = ar_elem.get("pde")
+                                hidden = True if ar_elem.get("hi") == "1" else (False if ar_elem.get("hi") == "0" else None)
                                 events.append(PlannedEvent(
                                     stop_id=stop_id,
                                     event_type="arr",
@@ -201,6 +217,12 @@ class DataFetcher:
                                     planned_platform=ar_elem.get("pp"),
                                     planned_path=planned_path,
                                     wings=wings,
+                                    planned_line=planned_line,
+                                    planned_destination=planned_destination,
+                                    category=category,
+                                    train_number=train_number,
+                                    operator=operator,
+                                    hidden=hidden,
                                 ))
                 
                 except httpx.HTTPStatusError as e:
@@ -319,6 +341,10 @@ class DataFetcher:
         # Extract events from timetable stops
         for stop in root.findall(".//s"):
             stop_id = stop.get("id", "")
+            tl = stop.find("tl")
+            category = tl.get("c") if tl is not None else None
+            train_number = tl.get("n") if tl is not None else None
+            operator = tl.get("o") if tl is not None else None
             
             # Parse departure changes
             dp_elem = stop.find("dp")
@@ -328,6 +354,9 @@ class DataFetcher:
                 if ct or cs:
                     changed_path = dp_elem.get("cpth") or dp_elem.get("ppth") or stop.get("cpth") or stop.get("ppth")
                     wings = dp_elem.get("wings") or stop.get("wings")
+                    changed_line = dp_elem.get("l") or (f"{category} {train_number}" if category and train_number else None)
+                    changed_destination = dp_elem.get("pde")
+                    hidden = True if dp_elem.get("hi") == "1" else (False if dp_elem.get("hi") == "0" else None)
                     events.append(ChangedEvent(
                         stop_id=stop_id,
                         event_type="departure",
@@ -336,6 +365,12 @@ class DataFetcher:
                         changed_status=cs,
                         changed_path=changed_path,
                         wings=wings,
+                        changed_line=changed_line,
+                        changed_destination=changed_destination,
+                        category=category,
+                        train_number=train_number,
+                        operator=operator,
+                        hidden=hidden,
                     ))
             
             # Parse arrival changes
@@ -346,6 +381,9 @@ class DataFetcher:
                 if ct or cs:
                     changed_path = ar_elem.get("cpth") or ar_elem.get("ppth") or stop.get("cpth") or stop.get("ppth")
                     wings = ar_elem.get("wings") or stop.get("wings")
+                    changed_line = ar_elem.get("l") or (f"{category} {train_number}" if category and train_number else None)
+                    changed_destination = ar_elem.get("pde")
+                    hidden = True if ar_elem.get("hi") == "1" else (False if ar_elem.get("hi") == "0" else None)
                     events.append(ChangedEvent(
                         stop_id=stop_id,
                         event_type="arrival",
@@ -354,6 +392,12 @@ class DataFetcher:
                         changed_status=cs,
                         changed_path=changed_path,
                         wings=wings,
+                        changed_line=changed_line,
+                        changed_destination=changed_destination,
+                        category=category,
+                        train_number=train_number,
+                        operator=operator,
+                        hidden=hidden,
                     ))
         
         return events

@@ -50,6 +50,12 @@ class DBPlannedEvent(Base):
     planned_platform = Column(String(10), nullable=True)
     planned_path = Column(String(1000), nullable=True)
     wings = Column(String(500), nullable=True)
+    planned_line = Column(String(200), nullable=True)
+    planned_destination = Column(String(500), nullable=True)
+    category = Column(String(20), nullable=True)
+    train_number = Column(String(20), nullable=True)
+    operator = Column(String(50), nullable=True)
+    hidden = Column(sa.Boolean, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     
     __table_args__ = (sa.Index("idx_eva_planned_time", "eva", "planned_time"),)
@@ -67,6 +73,12 @@ class DBChangedEvent(Base):
     changed_platform = Column(String(10), nullable=True)
     changed_status = Column(String(10), nullable=True)  # 'p', 'a', 'c'
     changed_path = Column(String(1000), nullable=True)
+    changed_line = Column(String(200), nullable=True)
+    changed_destination = Column(String(500), nullable=True)
+    category = Column(String(20), nullable=True)
+    train_number = Column(String(20), nullable=True)
+    operator = Column(String(50), nullable=True)
+    hidden = Column(sa.Boolean, nullable=True)
     wings = Column(String(500), nullable=True)
     fetched_at = Column(DateTime, default=datetime.utcnow)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -297,6 +309,12 @@ class DatabaseManager:
                             existing.planned_platform = event.planned_platform
                             existing.planned_path = getattr(event, 'planned_path', None)
                             existing.wings = getattr(event, 'wings', None)
+                            existing.planned_line = getattr(event, 'planned_line', None)
+                            existing.planned_destination = getattr(event, 'planned_destination', None)
+                            existing.category = getattr(event, 'category', None)
+                            existing.train_number = getattr(event, 'train_number', None)
+                            existing.operator = getattr(event, 'operator', None)
+                            existing.hidden = getattr(event, 'hidden', None)
                     else:
                         # Insert new
                         db_event = DBPlannedEvent(
@@ -307,6 +325,12 @@ class DatabaseManager:
                             planned_platform=event.planned_platform,
                             planned_path=getattr(event, 'planned_path', None),
                             wings=getattr(event, 'wings', None),
+                            planned_line=getattr(event, 'planned_line', None),
+                            planned_destination=getattr(event, 'planned_destination', None),
+                            category=getattr(event, 'category', None),
+                            train_number=getattr(event, 'train_number', None),
+                            operator=getattr(event, 'operator', None),
+                            hidden=getattr(event, 'hidden', None),
                         )
                         session.add(db_event)
             
@@ -348,6 +372,12 @@ class DatabaseManager:
                         changed_time=event.changed_time,
                         changed_platform=event.changed_platform,
                         changed_path=getattr(event, 'changed_path', None),
+                        changed_line=getattr(event, 'changed_line', None),
+                        changed_destination=getattr(event, 'changed_destination', None),
+                        category=getattr(event, 'category', None),
+                        train_number=getattr(event, 'train_number', None),
+                        operator=getattr(event, 'operator', None),
+                        hidden=getattr(event, 'hidden', None),
                         wings=getattr(event, 'wings', None),
                         changed_status=event.changed_status,
                         fetched_at=event.fetched_at or datetime.utcnow(),

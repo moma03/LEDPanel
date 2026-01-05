@@ -48,7 +48,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    Canvas* canvas = matrix;
+    // Use an offscreen frame canvas and swap it each frame to avoid flicker.
+    rgb_matrix::FrameCanvas *offscreen = matrix->CreateFrameCanvas();
+    Canvas* canvas = offscreen;
     
     // Calculate actual display dimensions accounting for chain_length, parallel, and pixel mapper
     int display_width, display_height;
@@ -100,7 +102,7 @@ int main(int argc, char* argv[]) {
     
     // Display loop (hold the pattern)
     while (true) {
-        // Draw base pattern to LED matrix
+        // Draw base pattern to the offscreen frame canvas
         for (int y = 0; y < display_height; y++) {
             for (int x = 0; x < display_width; x++) {
                 int shade = pattern.framebuffer[y][x];
@@ -159,8 +161,13 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // Overlay scrolling text (transparent background; clipping inside Update)
+        // Ensure the marquee draws into the current offscreen canvas, then update it.
+        marquee.SetCanvas(canvas);
         marquee.Update();
+
+        // Swap the offscreen buffer to the display (waits for vsync).
+        offscreen = matrix->SwapOnVSync(offscreen);
+        canvas = offscreen;
     }
     
     delete matrix;

@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
     int textbox_y = display_height - textbox_height - 1;
     ScrollingTextBox marquee(canvas,
                              0, textbox_y,
-                             display_width, textbox_height,
+                             display_width/2, textbox_height,
                              font,
                              colorLight,
                              "LED Matrix Test Pattern – scrolling text demo",
@@ -91,11 +91,11 @@ int main(int argc, char* argv[]) {
                              10);     // gap between repeats
     
     // Vertical bouncing box parameters
-    const int box_width = 15;
-    const int box_height = std::max(0, display_height - textbox_height - 2);
-    float box_x = 0.0f;
-    int box_dir = 1; // 1 = moving right, -1 = moving left
-    const float box_speed = 80.0f; // pixels per second
+    const int box_width = 15; 
+    const int box_height = std::max(0, display_height - textbox_height - 2); 
+    float box_x = 0.0f; 
+    int box_dir = 1; // 1 = moving right, -1 = moving left 
+    const float box_speed = 40.0f; // pixels per second (slower)
     const float frame_dt = renderer_options.frame_rate_ms / 1000.0f;
     
     // Display loop (hold the pattern)
@@ -114,22 +114,48 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // Update bouncing box position
+        // Update bouncing box position and color
         {
             int max_x = std::max(0, display_width - box_width);
             box_x += box_dir * box_speed * frame_dt;
             if (box_x < 0.0f) { box_x = 0.0f; box_dir = 1; }
             if (box_x > max_x) { box_x = (float)max_x; box_dir = -1; }
 
+            // advance hue
+            // initialize hue variables if missing
+            static float box_hue = 0.0f;
+            const float hue_speed = 30.0f; // degrees per second
+            box_hue += hue_speed * frame_dt;
+            if (box_hue >= 360.0f) box_hue -= 360.0f;
+
+            auto hsv_to_rgb = [](float h, float s, float v){
+                float C = v * s;
+                float X = C * (1 - fabs(fmod(h / 60.0f, 2) - 1));
+                float m = v - C;
+                float r=0,g=0,b=0;
+                if (h < 60) { r = C; g = X; b = 0; }
+                else if (h < 120) { r = X; g = C; b = 0; }
+                else if (h < 180) { r = 0; g = C; b = X; }
+                else if (h < 240) { r = 0; g = X; b = C; }
+                else if (h < 300) { r = X; g = 0; b = C; }
+                else { r = C; g = 0; b = X; }
+                uint8_t R = (uint8_t)std::round((r + m) * 255.0f);
+                uint8_t G = (uint8_t)std::round((g + m) * 255.0f);
+                uint8_t B = (uint8_t)std::round((b + m) * 255.0f);
+                return rgb_matrix::Color(R,G,B);
+            };
+
+            rgb_matrix::Color boxColor = hsv_to_rgb(box_hue, 1.0f, 0.8f);
+
             int ix = (int)std::round(box_x);
-            // Draw vertical border only so background shows through
+            // Draw filled vertical box so background is covered
             for (int y = 0; y < box_height; y++) {
-                // left border
-                canvas->SetPixel(ix, y, colorShadow.r, colorShadow.g, colorShadow.b);
-                // right border
-                int rx = ix + box_width - 1;
-                if (rx >= 0 && rx < display_width)
-                    canvas->SetPixel(rx, y, colorShadow.r, colorShadow.g, colorShadow.b);
+                for (int bx = 0; bx < box_width; bx++) {
+                    int px = ix + bx;
+                    if (px >= 0 && px < display_width) {
+                        canvas->SetPixel(px, y, boxColor.r, boxColor.g, boxColor.b);
+                    }
+                }
             }
         }
 

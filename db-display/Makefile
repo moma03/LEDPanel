@@ -1,3 +1,4 @@
+
 CXXFLAGS = -Wall -O3 -I../rpi-rgb-led-matrix/include -I../common/include -I../common/third_party/json
 LDFLAGS = -L../rpi-rgb-led-matrix/lib -L../common -lrgbmatrix -lledcommon -lstdc++ -lm
 

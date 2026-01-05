@@ -147,3 +147,4 @@ void GetDisplayDimensions(const RGBMatrix::Options& matrix_options,
   out_width = matrix_options.cols * cols_multiplier;
   out_height = matrix_options.rows * rows_multiplier;
 }
+

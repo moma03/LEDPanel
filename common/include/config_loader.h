@@ -29,4 +29,5 @@ bool LoadConfigFromFile(const std::string& path,
 void GetDisplayDimensions(const rgb_matrix::RGBMatrix::Options& matrix_options,
                          int& out_width, int& out_height);
 
+
 #endif // CONFIG_LOADER_H

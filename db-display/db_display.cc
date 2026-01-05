@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
     rgb_matrix::RuntimeOptions runtime_options;
     CubeRendererOptions dummy;
 
-    // try load config, but fall back to defaults
+    // try load matrix config, but fall back to defaults
     if (!LoadConfigFromFile("config.json", matrix_options, runtime_options, dummy)) {
         matrix_options.rows = 32;
         matrix_options.cols = 64;
@@ -101,14 +101,14 @@ int main(int argc, char **argv) {
     FrameCanvas *off = matrix->CreateFrameCanvas();
     Canvas *c = off;
 
-    // Load fonts
+    // Load fonts (UI settings are local defaults; matrix settings come from config.json)
     Font bigFont; bigFont.LoadFont("../rpi-rgb-led-matrix/fonts/clR6x12.bdf");
     Font smallFont; smallFont.LoadFont("../rpi-rgb-led-matrix/fonts/5x8.bdf");
 
     int width = c->width();
     int height = c->height();
 
-    // Sample data
+    // Sample data (UI content is fixed here; matrix options load from config.json)
     std::vector<Departure> list = {
         {"1", "S5", "Paderborn Hbf", "Technischer Defekt am Zug", "10:27"},
         {"3", "S5", "Hannover Flughafen", "", "10:44"},

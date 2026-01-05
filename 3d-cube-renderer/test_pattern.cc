@@ -1,5 +1,6 @@
 #include "test_pattern.h"
 #include "config_loader.h"
+#include "scrolling_textbox.h"
 #include "../rpi-rgb-led-matrix/include/led-matrix.h"
 #include <cmath>
 #include <cstdlib>
@@ -67,11 +68,32 @@ int main(int argc, char* argv[]) {
     pattern.clear();
     pattern.drawCross();
     pattern.drawResolution(display_width, display_height);
+
+    // Load font for scrolling text
+    rgb_matrix::Font font;
+    if (!font.LoadFont("../rpi-rgb-led-matrix/fonts/5x7.bdf")) {
+        std::cerr << "Failed to load font 5x7.bdf" << std::endl;
+        return 1;
+    }
+
+    // Scrolling text box (transparent background, clipped)
+    // Place near bottom, height = font height + 2px padding
+    int textbox_height = font.height() + 2;
+    int textbox_y = display_height - textbox_height - 1;
+    ScrollingTextBox marquee(canvas,
+                             0, textbox_y,
+                             display_width, textbox_height,
+                             font,
+                             colorLight,
+                             "LED Matrix Test Pattern – scrolling text demo",
+                             20.0f,   // px per second
+                             1.0f,    // wait before scrolling
+                             10);     // gap between repeats
     
     // Display loop (hold the pattern)
     int frame = 0;
     while (true) {
-        // Draw to LED matrix
+        // Draw base pattern to LED matrix
         for (int y = 0; y < display_height; y++) {
             for (int x = 0; x < display_width; x++) {
                 int shade = pattern.framebuffer[y][x];
@@ -84,6 +106,9 @@ int main(int argc, char* argv[]) {
                 canvas->SetPixel(x, y, color.r, color.g, color.b);
             }
         }
+
+        // Overlay scrolling text (transparent background; clipping inside Update)
+        marquee.Update();
         
         usleep((useconds_t)(renderer_options.frame_rate_ms * 1000));
         frame++;

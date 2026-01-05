@@ -1,5 +1,7 @@
 #ifndef CUBE_RENDERER_H
 #define CUBE_RENDERER_H
+// Ensure single inclusion for various toolchains
+#pragma once
 
 #include <vector>
 #include <cmath>

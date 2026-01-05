@@ -1,18 +1,22 @@
-CXXFLAGS = -Wall -O3 -fPIC -I../rpi-rgb-led-matrix/include -I./include
-LDFLAGS = -L../rpi-rgb-led-matrix/lib -lrgbmatrix -lstdc++ -lm
+CXXFLAGS = -Wall -O3 -fPIC -I../rpi-rgb-led-matrix/include -I../common/include -I../common/third_party/json
+LDFLAGS = -L../rpi-rgb-led-matrix/lib -L../common -lrgbmatrix -lledcommon -lstdc++ -lm
 
+COMMON_LIB = ../common/libledcommon.a
 TARGETS = generative_art test_pattern falling_rain
 
 all: $(TARGETS)
 
-generative_art: generative_art.cc config_loader.cpp cube_renderer.h config_loader.h
-	g++ $(CXXFLAGS) generative_art.cc config_loader.cpp -o generative_art $(LDFLAGS)
+$(COMMON_LIB):
+	$(MAKE) -C ../common
 
-test_pattern: test_pattern.cc config_loader.cpp test_pattern.h config_loader.h
-	g++ $(CXXFLAGS) test_pattern.cc config_loader.cpp -o test_pattern $(LDFLAGS)
+generative_art: generative_art.cc cube_renderer.h $(COMMON_LIB)
+	g++ $(CXXFLAGS) generative_art.cc -o generative_art $(LDFLAGS)
 
-falling_rain: falling_rain.cc config_loader.cpp cube_renderer.h config_loader.h
-	g++ $(CXXFLAGS) falling_rain.cc config_loader.cpp -o falling_rain $(LDFLAGS)
+test_pattern: test_pattern.cc test_pattern.h $(COMMON_LIB)
+	g++ $(CXXFLAGS) test_pattern.cc -o test_pattern $(LDFLAGS)
+
+falling_rain: falling_rain.cc cube_renderer.h $(COMMON_LIB)
+	g++ $(CXXFLAGS) falling_rain.cc -o falling_rain $(LDFLAGS)
 
 clean:
 	rm -f $(TARGETS)

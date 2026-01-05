@@ -2,7 +2,7 @@
 #define CONFIG_LOADER_H
 
 #include <string>
-#include "../rpi-rgb-led-matrix/include/led-matrix.h"
+#include <led-matrix.h>
 
 struct CubeRendererOptions {
     int num_cubes;
@@ -26,7 +26,6 @@ bool LoadConfigFromFile(const std::string& path,
                        CubeRendererOptions& renderer_opt);
 
 // Calculate actual display dimensions accounting for chain_length, parallel, and pixel mapper
-// This handles special mappers like U-mapper that arrange panels differently
 void GetDisplayDimensions(const rgb_matrix::RGBMatrix::Options& matrix_options,
                          int& out_width, int& out_height);
 

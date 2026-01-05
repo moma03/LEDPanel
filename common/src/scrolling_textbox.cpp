@@ -61,6 +61,10 @@ ScrollingTextBox::ScrollingTextBox(Canvas *canvas,
     text_width_ = MeasureTextWidth(text_);
 }
 
+void ScrollingTextBox::SetCanvas(Canvas *canvas) {
+    canvas_ = canvas;
+}
+
 void ScrollingTextBox::SetText(const std::string &text) {
     text_ = text;
     text_width_ = MeasureTextWidth(text_);

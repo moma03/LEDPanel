@@ -28,6 +28,9 @@ public:
     // Update text and reset scroll state.
     void SetText(const std::string &text);
 
+    // Change the canvas the widget draws into (useful when double-buffering).
+    void SetCanvas(rgb_matrix::Canvas *canvas);
+
 private:
     rgb_matrix::Canvas *canvas_;
     int x_, y_, w_, h_;

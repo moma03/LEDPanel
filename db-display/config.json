@@ -8,8 +8,9 @@
     "pwm_bits": 5,
     "pwm_dither_bits": 1,
     "brightness": 100,
-    "slowdown_gpio": 0,
+    "gpio_slowdown": 2,
     "show_refresh_rate": true,
+    "limit_refresh_rate_hz": 140,
     "pixel_mapper_config": "U-mapper"
   }
 }

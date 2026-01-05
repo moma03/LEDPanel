@@ -10,8 +10,7 @@ using namespace rgb_matrix;
 
 bool LoadConfigFromFile(const std::string& path,
                        RGBMatrix::Options& matrix_options,
-                       RuntimeOptions& runtime_opt,
-                       CubeRendererOptions& renderer_opt) {
+                       RuntimeOptions& runtime_opt) {
   std::ifstream config_file(path);
   if (!config_file.is_open()) {
     return false;
@@ -77,46 +76,6 @@ bool LoadConfigFromFile(const std::string& path,
         runtime_opt.drop_priv_user = strdup(value.get<std::string>().c_str());
       } else if (key == "drop_priv_group") {
         runtime_opt.drop_priv_group = strdup(value.get<std::string>().c_str());
-      }
-    }
-  }
-
-  // Load renderer options
-  if (cfg.contains("cube_renderer_options")) {
-    for (auto& element : cfg["cube_renderer_options"].items()) {
-      const std::string& key = element.key();
-      const json& value = element.value();
-
-      if (key == "num_cubes") {
-        renderer_opt.num_cubes = value.get<int>();
-      } else if (key == "cube_size") {
-        renderer_opt.cube_size = value.get<float>();
-      } else if (key == "rotation_speed_x") {
-        renderer_opt.rotation_speed_x = value.get<float>();
-      } else if (key == "rotation_speed_y") {
-        renderer_opt.rotation_speed_y = value.get<float>();
-      } else if (key == "rotation_speed_z") {
-        renderer_opt.rotation_speed_z = value.get<float>();
-      } else if (key == "position_animation_speed") {
-        renderer_opt.position_animation_speed = value.get<float>();
-      } else if (key == "position_animation_amplitude") {
-        renderer_opt.position_animation_amplitude = value.get<float>();
-      } else if (key == "frame_rate_ms") {
-        renderer_opt.frame_rate_ms = value.get<int>();
-      } else if (key == "focal_length") {
-        renderer_opt.focal_length = value.get<float>();
-      } else if (key == "light_color") {
-        renderer_opt.light_r = value["r"].get<int>();
-        renderer_opt.light_g = value["g"].get<int>();
-        renderer_opt.light_b = value["b"].get<int>();
-      } else if (key == "shadow_color") {
-        renderer_opt.shadow_r = value["r"].get<int>();
-        renderer_opt.shadow_g = value["g"].get<int>();
-        renderer_opt.shadow_b = value["b"].get<int>();
-      } else if (key == "light_direction") {
-        renderer_opt.light_dir_x = value["x"].get<float>();
-        renderer_opt.light_dir_y = value["y"].get<float>();
-        renderer_opt.light_dir_z = value["z"].get<float>();
       }
     }
   }

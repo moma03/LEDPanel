@@ -2,7 +2,7 @@ CXXFLAGS = -Wall -O3 -fPIC -I../rpi-rgb-led-matrix/include -I./include -I./third
 AR = ar
 
 LIB = libledcommon.a
-OBJS = src/config_loader.o src/scrolling_textbox.o src/baseWSettings.o graphics.o
+OBJS = src/config_loader.o src/scrolling_textbox.o src/scrolling_box.o graphics.o
 
 all: $(LIB)
 
@@ -15,8 +15,9 @@ src/config_loader.o: src/config_loader.cpp include/config_loader.h
 src/scrolling_textbox.o: src/scrolling_textbox.cpp include/scrolling_textbox.h
 	g++ $(CXXFLAGS) -c src/scrolling_textbox.cpp -o src/scrolling_textbox.o
 
-src/baseWSettings.o: src/baseWSettings.cpp include/baseWSettings.h
-	g++ $(CXXFLAGS) -c src/baseWSettings.cpp -o src/baseWSettings.o
+src/scrolling_box.o: src/scrolling_box.cpp include/scrolling_box.h
+	g++ $(CXXFLAGS) -c src/scrolling_box.cpp -o src/scrolling_box.o
+
 
 # Build graphics from rpi-rgb-led-matrix source to satisfy DrawText
 graphics.o: ../rpi-rgb-led-matrix/lib/graphics.cc ../rpi-rgb-led-matrix/lib/utf8-internal.h

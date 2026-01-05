@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
     int textbox_y = display_height - textbox_height - 1;
     ScrollingTextBox marquee(canvas,
                              0, textbox_y,
-                             display_width, textbox_height,
+                             20, textbox_height,
                              font,
                              colorLight,
                              "LED Matrix Test Pattern – scrolling text demo",
@@ -91,7 +91,6 @@ int main(int argc, char* argv[]) {
                              10);     // gap between repeats
     
     // Display loop (hold the pattern)
-    int frame = 0;
     while (true) {
         // Draw base pattern to LED matrix
         for (int y = 0; y < display_height; y++) {
@@ -109,13 +108,6 @@ int main(int argc, char* argv[]) {
 
         // Overlay scrolling text (transparent background; clipping inside Update)
         marquee.Update();
-        
-        usleep((useconds_t)(renderer_options.frame_rate_ms * 1000));
-        frame++;
-        
-        if (frame % 100 == 0) {
-            std::cout << "Frame: " << frame << std::endl;
-        }
     }
     
     delete matrix;

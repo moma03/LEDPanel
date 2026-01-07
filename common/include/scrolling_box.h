@@ -21,7 +21,7 @@ public:
                  const std::string &content,
                  float scroll_speed_px_per_sec = 20.0f,
                  float wait_before_scroll_sec = 1.0f,
-                 int scrollbar_width = 3);
+                 int scrollbar_width = 2);
 
     void Update();
     void SetCanvas(rgb_matrix::Canvas *canvas);
@@ -41,6 +41,7 @@ private:
     int content_height_; // total height in pixels
     float offset_px_;
     bool scrolling_;
+    bool end_pause_;
     std::chrono::steady_clock::time_point last_change_;
 
     void RecomputeMetrics();

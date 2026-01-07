@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     Color white(255,255,255);
 
     // Create ScrollingBox occupying full display
-    ScrollingBox box(canvas, 0, 0, width, height, font, white, content, 20.0f, 2.0f, 4);
+    ScrollingBox box(canvas, 0, 0, width, height, font, white, content, 20.0f, 2.0f, 2);
 
     // Main loop
     while (true) {

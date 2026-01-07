@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Create vertical ScrollingBox occupying area above the textbox
-    ScrollingBox vbox(canvas, 0, 0, display_width, box_height, font, Color(255,255,0), vcontent, 20.0f, 2.0f, 4);
+    ScrollingBox vbox(canvas, 0, 0, display_width, box_height, font, Color(255,255,0), vcontent, 20.0f, 2.0f, 2);
     
     // Display loop (hold the pattern)
     while (true) {

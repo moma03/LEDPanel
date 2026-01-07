@@ -84,6 +84,12 @@ void ScrollingTextBox::Update() {
     const float dt = std::chrono::duration<float>(now - last_change_).count();
 
     ClipCanvas clip(canvas_, 0, 0, x_, y_, w_, h_);
+    // Clear the clipped area to avoid previous-frame glyph remnants
+    for (int yy = 0; yy < h_; ++yy) {
+        for (int xx = 0; xx < w_; ++xx) {
+            clip.SetPixel(x_ + xx, y_ + yy, 0, 0, 0);
+        }
+    }
     const int baseline = y_ + font_.baseline();
 
     // If text fits, just draw once.

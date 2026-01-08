@@ -1,4 +1,5 @@
 #include "cube_renderer.h"
+#include "cube_renderer_options.h"
 #include "config_loader.h"
 #include "../rpi-rgb-led-matrix/include/led-matrix.h"
 #include <cmath>
@@ -56,8 +57,9 @@ int main(int argc, char* argv[]) {
     renderer_options.focal_length = 5.0f;
     renderer_options.frame_rate_ms = 33;
     
-    // Try to load from config file
-    if (!LoadConfigFromFile("config.json", matrix_options, runtime_options, renderer_options)) {
+    // Try to load matrix/runtime config from config file (renderer options
+    // are local to this example and kept as defaults).
+    if (!LoadConfigFromFile("config.json", matrix_options, runtime_options)) {
         std::cerr << "Warning: Could not load config.json, using defaults\n";
         matrix_options.rows = 32;
         matrix_options.cols = 32;
@@ -87,9 +89,16 @@ int main(int argc, char* argv[]) {
     Color colorLight(renderer_options.light_r, renderer_options.light_g, renderer_options.light_b);
     Color colorShadow(renderer_options.shadow_r, renderer_options.shadow_g, renderer_options.shadow_b);
     Color colorBlack(0, 0, 0);
-    
+
     CubeRenderer renderer(display_width, display_height);
     renderer.lightDirection = Vec3(renderer_options.light_dir_x, renderer_options.light_dir_y, renderer_options.light_dir_z).normalized();
+    // configure renderer blended colors
+    renderer.light_r = colorLight.r;
+    renderer.light_g = colorLight.g;
+    renderer.light_b = colorLight.b;
+    renderer.shadow_r = colorShadow.r;
+    renderer.shadow_g = colorShadow.g;
+    renderer.shadow_b = colorShadow.b;
     
     std::vector<FallingCube> cubes;
     
@@ -111,33 +120,47 @@ int main(int argc, char* argv[]) {
         }
         
         // Update and render cubes
-        for (auto it = cubes.begin(); it != cubes.end(); ) {
-            it->update(time);
-            
-            // Remove cubes that have fallen off the bottom
-            if (it->position.y > display_height + 5) {
-                it = cubes.erase(it);
-            } else {
-                // Render the cube
-                Cube c(it->size);
-                c.position = it->position;
-                c.rotation = it->rotation;
-                renderer.renderCube(c);
-                ++it;
+        for (auto &cobj : cubes) {
+            cobj.update(time);
+
+            // Projective coordinates vary; use a simple screen-space test by
+            // approximating projection: screen_y = world_y * (f / (z+f)) + display_height/2
+            const float focal = 5.0f; // matches renderer's focal length default
+            float z = cobj.position.z + focal;
+            if (z <= 0.1f) z = 0.1f;
+            float scale = focal / z;
+            float screen_y = cobj.position.y * scale + display_height / 2.0f;
+
+            // If below screen, teleport back to top and give a new fixed random velocity
+            if (screen_y > display_height + 5) {
+                // place above the top in world coords (choose a negative world y)
+                // pick a screen target around -10 pixels and convert back to world y
+                float target_screen_y = -10.0f;
+                float world_y = (target_screen_y - display_height / 2.0f) / scale;
+                cobj.position.y = world_y;
+                // randomize horizontal position within display width (in world units)
+                float rx = static_cast<float>(rand() % (display_width - 5)) - display_width / 2.0f;
+                cobj.position.x = rx;
+                // new fixed velocity (no acceleration)
+                cobj.velocity_y = 0.1f + (rand() % 100) / 200.0f;  // 0.5 to 1.0
+                cobj.drift_x = (rand() % 200 - 100) / 500.0f;      // -0.2 to 0.2
             }
+
+            // Render the cube
+            Cube c(cobj.size);
+            c.position = cobj.position;
+            c.rotation = cobj.rotation;
+            renderer.renderCube(c);
         }
         
         // Draw to LED matrix
         for (int y = 0; y < display_height; y++) {
             for (int x = 0; x < display_width; x++) {
-                int shade = renderer.framebuffer[y][x];
-                Color color;
-                switch (shade) {
-                    case 2: color = colorLight; break;
-                    case 1: color = colorShadow; break;
-                    default: color = colorBlack; break;
-                }
-                canvas->SetPixel(x, y, color.r, color.g, color.b);
+                uint32_t packed = renderer.framebuffer[y][x];
+                uint8_t r = (packed >> 16) & 0xFF;
+                uint8_t g = (packed >> 8) & 0xFF;
+                uint8_t b = packed & 0xFF;
+                canvas->SetPixel(x, y, r, g, b);
             }
         }
         

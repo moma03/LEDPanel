@@ -6,6 +6,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <cstdint>
 
 struct Vec3 {
     float x, y, z;
@@ -56,6 +57,13 @@ struct Face {
     }
 };
 
+// Generic polygon mesh: list of vertices and faces expressed as index lists.
+struct Mesh {
+    std::vector<Vec3> vertices;
+    // each face is a list of indices into `vertices`
+    std::vector<std::vector<int>> faces;
+};
+
 class Cube {
 public:
     Vec3 position;
@@ -98,6 +106,40 @@ public:
         
         return faces;
     }
+
+    // Convert this cube into a generic Mesh (useful for rendering via
+    // mesh-based renderer paths).
+    Mesh ToMesh() const {
+        Mesh m;
+        float s = size / 2.0f;
+        Vec3 v[8] = {
+            Vec3(-s, -s, -s),
+            Vec3(s, -s, -s),
+            Vec3(s, s, -s),
+            Vec3(-s, s, -s),
+            Vec3(-s, -s, s),
+            Vec3(s, -s, s),
+            Vec3(s, s, s),
+            Vec3(-s, s, s)
+        };
+
+        for (int i = 0; i < 8; i++) {
+            v[i] = rotateX(v[i], rotation.x);
+            v[i] = rotateY(v[i], rotation.y);
+            v[i] = rotateZ(v[i], rotation.z);
+            v[i] = v[i] + position;
+            m.vertices.push_back(v[i]);
+        }
+
+        m.faces.push_back({0,1,2,3});
+        m.faces.push_back({4,7,6,5});
+        m.faces.push_back({0,3,7,4});
+        m.faces.push_back({1,5,6,2});
+        m.faces.push_back({3,2,6,7});
+        m.faces.push_back({0,4,5,1});
+
+        return m;
+    }
     
 private:
     Vec3 rotateX(const Vec3& v, float angle) const {
@@ -122,47 +164,70 @@ private:
 class CubeRenderer {
 public:
     int width, height;
-    std::vector<std::vector<int>> framebuffer;
+    // framebuffer stores packed 0xRRGGBB colors per pixel
+    std::vector<std::vector<uint32_t>> framebuffer;
     Vec3 lightDirection;
+    // Colors used for interpolation between shadow and light
+    uint8_t light_r = 255, light_g = 255, light_b = 255;
+    uint8_t shadow_r = 0, shadow_g = 0, shadow_b = 0;
     
     CubeRenderer(int w, int h) : width(w), height(h), lightDirection(1, 1, 1) {
         lightDirection = lightDirection.normalized();
-        framebuffer.resize(h, std::vector<int>(w, 0));
+        framebuffer.resize(h, std::vector<uint32_t>(w, 0));
     }
     
     void clear() {
         for (auto& row : framebuffer) {
-            std::fill(row.begin(), row.end(), 0);
+            std::fill(row.begin(), row.end(), 0u);
         }
     }
     
-    // Shade value: 0 = black, 1 = shadow, 2 = light
-    int getShadeFactor(const Vec3& normal) const {
+    // Return brightness [0,1] based on Lambertian dot product
+    float getShadeValue(const Vec3& normal) const {
         float brightness = std::max(0.0f, normal.dot(lightDirection));
-        
-        if (brightness < 0.33f) return 0; // black
-        if (brightness < 0.66f) return 1; // shadow
-        return 2; // light
+        if (brightness < 0.0f) brightness = 0.0f;
+        if (brightness > 1.0f) brightness = 1.0f;
+        return brightness;
     }
     
     void renderCube(const Cube& cube) {
-        std::vector<Face> faces = cube.getFaces();
-        
-        // Sort faces by z-depth (painter's algorithm)
-        std::sort(faces.begin(), faces.end(), [](const Face& a, const Face& b) {
-            float avgZa = 0, avgZb = 0;
-            for (const auto& v : a.vertices) avgZa += v.z;
-            for (const auto& v : b.vertices) avgZb += v.z;
-            return (avgZa / a.vertices.size()) < (avgZb / b.vertices.size());
-        });
-        
-        for (const auto& face : faces) {
-            int shade = getShadeFactor(face.normal);
-            drawFilledQuad(face.vertices, shade);
+        // Backwards-compatible: render cube by converting to a Mesh.
+        renderMesh(cube.ToMesh());
+    }
+
+    // Render an arbitrary polygon mesh. Faces are lists of vertex indices
+    // into `mesh.vertices`. Faces are rendered using a simple painter's
+    // algorithm (sorted by average Z) and shaded by face normal.
+    void renderMesh(const Mesh& mesh) {
+        struct TempFace { std::vector<Vec3> verts; Vec3 normal; float avgZ; };
+        std::vector<TempFace> temp;
+        temp.reserve(mesh.faces.size());
+
+        for (const auto &fidx : mesh.faces) {
+            if (fidx.size() < 3) continue;
+            TempFace tf;
+            for (int idx : fidx) {
+                if (idx >= 0 && idx < (int)mesh.vertices.size()) tf.verts.push_back(mesh.vertices[idx]);
+            }
+            // compute normal using first three vertices (robust enough for planar polygons)
+            Vec3 edge1 = tf.verts[1] - tf.verts[0];
+            Vec3 edge2 = tf.verts.size() > 2 ? tf.verts[2] - tf.verts[0] : Vec3(0,0,1);
+            tf.normal = edge1.cross(edge2).normalized();
+            tf.avgZ = 0.0f;
+            for (const auto &v : tf.verts) tf.avgZ += v.z;
+            tf.avgZ /= std::max(1, (int)tf.verts.size());
+            temp.push_back(std::move(tf));
+        }
+
+        std::sort(temp.begin(), temp.end(), [](const TempFace &a, const TempFace &b){ return a.avgZ < b.avgZ; });
+
+        for (const auto &tf : temp) {
+            float brightness = getShadeValue(tf.normal);
+            drawFilledQuad(tf.verts, brightness);
         }
     }
     
-    void drawFilledQuad(const std::vector<Vec3>& vertices, int shade) {
+    void drawFilledQuad(const std::vector<Vec3>& vertices, float brightness) {
         // Simple projection: perspective divide
         std::vector<Vec2> proj(vertices.size());
         float focalLength = 5.0f;
@@ -191,11 +256,22 @@ public:
         int y0 = std::max(0, (int)minY);
         int y1 = std::min(height - 1, (int)maxY + 1);
         
+        // Precompute blended color from brightness (linear interpolation)
+        auto lerp = [](uint8_t a, uint8_t b, float t) -> uint8_t {
+            float v = a + (b - a) * t;
+            if (v < 0.0f) v = 0.0f; if (v > 255.0f) v = 255.0f;
+            return static_cast<uint8_t>(v + 0.5f);
+        };
+        uint8_t r = lerp(shadow_r, light_r, brightness);
+        uint8_t g = lerp(shadow_g, light_g, brightness);
+        uint8_t b = lerp(shadow_b, light_b, brightness);
+        uint32_t packed = (static_cast<uint32_t>(r) << 16) | (static_cast<uint32_t>(g) << 8) | static_cast<uint32_t>(b);
+
         // Scanline fill (simple point-in-quad test)
         for (int y = y0; y <= y1; y++) {
             for (int x = x0; x <= x1; x++) {
                 if (isPointInQuad(Vec2(x, y), proj)) {
-                    framebuffer[y][x] = shade;
+                    framebuffer[y][x] = packed;
                 }
             }
         }

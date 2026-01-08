@@ -61,9 +61,9 @@ ScrollingBox::ScrollingBox(Canvas *canvas,
                            int scrollbar_width)
     : canvas_(canvas), x_(x), y_(y), w_(width), h_(height), font_(font), color_(color),
       scroll_speed_px_per_sec_(scroll_speed_px_per_sec), wait_before_scroll_sec_(wait_before_scroll_sec),
-      scrollbar_width_(scrollbar_width), content_height_(0), offset_px_(0.0f), scrolling_(false), last_change_(Clock::now()) {
-    lines_ = split_lines(content);
-    RecomputeMetrics();
+            scrollbar_width_(scrollbar_width), content_height_(0), offset_px_(0.0f), scrolling_(false), last_change_(Clock::now()), draw_callback_(nullptr) {
+        lines_ = split_lines(content);
+        RecomputeMetrics();
 }
 
 void ScrollingBox::SetCanvas(Canvas *canvas) { canvas_ = canvas; }
@@ -76,6 +76,24 @@ void ScrollingBox::SetContent(const std::string &content) {
     last_change_ = Clock::now();
 }
 
+void ScrollingBox::SetDrawCallback(std::function<void(Canvas*, int)> draw_cb, int content_height_px) {
+    draw_callback_ = std::move(draw_cb);
+    content_height_ = content_height_px;
+    offset_px_ = 0.0f;
+    scrolling_ = false;
+    end_pause_ = false;
+    last_change_ = Clock::now();
+}
+
+void ScrollingBox::ClearDrawCallback() {
+    draw_callback_ = nullptr;
+    // keep current content_height_ (recompute if SetContent called)
+    offset_px_ = 0.0f;
+    scrolling_ = false;
+    end_pause_ = false;
+    last_change_ = Clock::now();
+}
+
 void ScrollingBox::RecomputeMetrics() {
     // Each line height approximated by font.height()
     content_height_ = static_cast<int>(lines_.size() * font_.height());
@@ -85,13 +103,85 @@ void ScrollingBox::Update() {
     const auto now = Clock::now();
     const float dt = std::chrono::duration<float>(now - last_change_).count();
 
-    ClipCanvas clip(canvas_, 0, 0, x_, y_, w_, h_);
-    // Clear the clipped area so previous-frame content isn't visible
-    for (int yy = 0; yy < h_; ++yy) {
-        for (int xx = 0; xx < w_; ++xx) {
-            clip.SetPixel(x_ + xx, y_ + yy, 0, 0, 0);
+    // If a custom draw callback is provided, use it to render arbitrary
+    // content. The callback draws the full content into a canvas whose
+    // origin (0,0) maps to the top-left of the content; we shift that
+    // origin by `offset_px_` to achieve vertical scrolling.
+    if (draw_callback_) {
+        // draw area (content drawing) uses origin at (x_, y_ - offset)
+        ClipCanvas contentClip(canvas_, x_, y_ - static_cast<int>(offset_px_), x_, y_, w_, h_);
+
+        // If content fits, draw at top
+        if (content_height_ <= h_) {
+            draw_callback_(&contentClip, std::max(0, w_ - scrollbar_width_));
+            last_change_ = Clock::now();
+            return;
         }
+
+        const auto now = Clock::now();
+        const float dt = std::chrono::duration<float>(now - last_change_).count();
+
+        if (!scrolling_) {
+            // initial wait: draw using current offset (0 initially)
+            draw_callback_(&contentClip, std::max(0, w_ - scrollbar_width_));
+            // decide whether to start scrolling
+            if (dt >= wait_before_scroll_sec_) {
+                scrolling_ = true;
+                last_change_ = now;
+            }
+            return;
+        }
+
+        // Scrolling active: advance offset but clamp so the last row becomes visible
+        const int max_offset = std::max(0, content_height_ - h_);
+        offset_px_ += scroll_speed_px_per_sec_ * dt;
+        if (offset_px_ >= static_cast<float>(max_offset)) {
+            offset_px_ = static_cast<float>(max_offset);
+            scrolling_ = false;
+            end_pause_ = true;
+            last_change_ = now;
+        }
+
+        // draw with new offset
+        ClipCanvas contentClip2(canvas_, x_, y_ - static_cast<int>(offset_px_), x_, y_, w_, h_);
+        draw_callback_(&contentClip2, std::max(0, w_ - scrollbar_width_));
+
+        // draw scrollbar (overlay) below
+        ClipCanvas overlay(canvas_, 0, 0, x_, y_, w_, h_);
+
+        // draw track and thumb similar to previous implementation
+        const int track_x = x_ + w_ - scrollbar_width_;
+        const int track_w = scrollbar_width_;
+        for (int yy = 0; yy < h_; ++yy) {
+            for (int xx = 0; xx < track_w; ++xx) {
+                uint8_t r = static_cast<uint8_t>(color_.r * 0.12f);
+                uint8_t g = static_cast<uint8_t>(color_.g * 0.12f);
+                uint8_t b = static_cast<uint8_t>(color_.b * 0.12f);
+                overlay.SetPixel(track_x + xx, y_ + yy, r, g, b);
+            }
+        }
+        const int max_offset2 = std::max(0, content_height_ - h_);
+        const float visible = static_cast<float>(h_);
+        const float thumb_h = std::max(4.0f, (visible / static_cast<float>(std::max(1, content_height_))) * h_);
+        const float max_thumb_pos = h_ - thumb_h;
+        float thumb_pos = 0.0f;
+        if (max_offset2 > 0) thumb_pos = (offset_px_ / static_cast<float>(max_offset2)) * max_thumb_pos;
+        int thumb_top = y_ + static_cast<int>(thumb_pos);
+        int thumb_h_i = static_cast<int>(thumb_h);
+        for (int yy = 0; yy < thumb_h_i; ++yy) {
+            for (int xx = 0; xx < track_w; ++xx) {
+                overlay.SetPixel(track_x + xx, thumb_top + yy, color_.r, color_.g, color_.b);
+            }
+        }
+
+        last_change_ = now;
+        return;
     }
+
+    // --- fallback: original text-based rendering ---
+    ClipCanvas clip(canvas_, 0, 0, x_, y_, w_, h_);
+    // Do not clear the clipped area here; the caller should repaint the
+    // background. Clearing to black would overwrite caller background.
 
     // If content fits, draw static starting at top
     if (content_height_ <= h_) {

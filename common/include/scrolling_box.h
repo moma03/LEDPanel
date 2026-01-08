@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <chrono>
+#include <functional>
 #include <led-matrix.h>
 #include <graphics.h>
 
@@ -26,6 +27,16 @@ public:
     void Update();
     void SetCanvas(rgb_matrix::Canvas *canvas);
     void SetContent(const std::string &content);
+    // Set a custom draw callback and the total content height (in px).
+    // The callback will be invoked with a `Canvas*` to draw the full
+    // content (origin (0,0) is the top-left of the content area) and
+    // the available drawing width (content area width minus scrollbar).
+    // When a draw callback is set, `SetContent` (string) is ignored.
+    void SetDrawCallback(std::function<void(rgb_matrix::Canvas*, int)> draw_cb,
+                         int content_height_px);
+
+    // Clear the draw callback and revert to text content mode.
+    void ClearDrawCallback();
 
 private:
     rgb_matrix::Canvas *canvas_;
@@ -33,6 +44,7 @@ private:
     const rgb_matrix::Font &font_;
     rgb_matrix::Color color_;
     std::vector<std::string> lines_;
+    std::function<void(rgb_matrix::Canvas*, int)> draw_callback_;
 
     float scroll_speed_px_per_sec_;
     float wait_before_scroll_sec_;

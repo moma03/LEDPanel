@@ -12,66 +12,98 @@
 #include "../common/include/config_loader.h"
 #include "../common/include/scrolling_textbox.h"
 #include "../common/include/scrolling_box.h"
+#include "../common/include/update_event.h"
 
 using namespace rgb_matrix;
+using namespace std;
 
-struct Departure { std::string platform; std::string line; std::string dest; std::string note; std::string time; std::string stops; std::string orig_time; };
+
+struct Departure { string platform; string line; string dest; string note; string time; string stops; string orig_time; };
 
 // Draw header with station name
 // returns height used
-int DrawHeader(Canvas *c, const Font &fontBig, const std::string &station, int width) {
-    int header_h = fontBig.height() + 4;
+int DrawHeader(Canvas *c, const Font &fontBig, const string &station, int width, int top=0) {
     // Station name large, white
-    int y = fontBig.baseline() + 2;
-    DrawText(c, fontBig, 4, y, Color(255,255,255), nullptr, station.c_str());
+    int y = fontBig.baseline() + 1 + top;
+    DrawText(c, fontBig, 3, y, Color(255,255,255), nullptr, station.c_str());
     // Bottom border line
-    DrawLine(c, 0, header_h -1, width -1, header_h -1, Color(0,0,0));
-    return header_h;
+    y += 4;
+    DrawLine(c, 0, y-1, width -1, y-1, Color(255,255,255));
+    return y;
 }
 
 // Draw next departure main band
 // Returns height used
-int DrawMain(Canvas *c, const Font &fontBig, const Font &fontSmall, const Departure &d, int width) {
-    int header_h = fontBig.height() + 4;
+int DrawMain(Canvas *c, const Font &fontBig, const Font &fontSmall, const Departure &d, int width, int top=0) {
     // Main band below header
     int band_y = fontBig.height() + 6;
     int band_h = 26;
 
-    // Draw line name
     int text_y = band_y + fontBig.baseline();
-    DrawText(c, fontBig, 12, text_y, Color(0,0,0), nullptr, d.line.c_str());
-
-    // Destination next to line
-    DrawText(c, fontBig, 12 + 8 + DrawText(c, fontBig, 0,0, Color(0,0,0), nullptr, d.line.c_str()),
-             text_y, Color(0,0,0), nullptr, d.dest.c_str());
-
+    int cur_x = 3;
+    // Draw platform
+    cur_x += DrawText(c, fontBig, cur_x, text_y, Color(255,255,255), nullptr, d.platform.c_str());
+    // Draw line name
+    cur_x += 4;
+    int start_line_x = cur_x;
+    cur_x += DrawText(c, fontBig, cur_x, text_y, Color(255,255,0), nullptr, d.line.c_str());
+    // Destination
+    cur_x += 8;
+                                     
     // If delay draw delayed departure time in red on right side otherwise draw scheduled time in white
     Color timeCol = d.note.empty() ? Color(255,255,255) : Color(255,0,0);
-    int tw = DrawText(c, fontBig, 0,0, timeCol, nullptr, d.time.c_str());
-    DrawText(c, fontBig, width - tw - 12, text_y, timeCol, nullptr, d.time.c_str());
+    // Draw time right-aligned (need to calculate text width first)
+    int tw = DrawText(c, fontBig, 0, 0, timeCol, nullptr, d.time.c_str());
+    DrawText(c, fontBig, width - tw - 4, text_y, timeCol, nullptr, d.time.c_str());
+
+    // Main destination (large) scroller
+    ScrollingTextBox mainDestScroller(c, cur_x, band_y,
+                                        max(20, width - cur_x - tw - 8),
+                                        fontBig.height(),
+                                        fontBig,
+                                        Color(255,255,255),
+                                        d.dest,
+                                        30.0f, 1.0f, 12);
+    mainDestScroller.SetCanvas(c);
+
+    int band_bottom = band_y + fontSmall.height() +4;
     // if it was delayed, draw original planned departure time below in small font and white
     if (!d.note.empty()) {
-        DrawText(c, fontSmall, width - tw - 12, band_y + fontBig.height()/2 + fontSmall.baseline(),
-                 Color(255,255,255), nullptr, d.orig_time.c_str());
+        DrawText(c, fontSmall, width - tw - 12, band_bottom, Color(255,255,255), nullptr, d.orig_time.c_str());
     }
-    // The stops/destination area is rendered by a persistent ScrollingTextBox
-    // created and updated from `main()` so we don't create ephemeral widgets here.
+
+    // Next, stops scroller below main band
+    ScrollingTextBox stopsScroller(c, start_line_x, band_bottom,
+                                   width - start_line_x - tw - 8,
+                                   fontSmall.height(),
+                                   fontSmall,
+                                   Color(200,200,200),
+                                   d.stops,
+                                   20.0f, 1.0f, 8);
+    stopsScroller.SetCanvas(c);
 
     // If any note, draw below in blue on white strip in a Scrolling text box
     if (!d.note.empty()) {
-        int note_y = band_y + band_h;
-        for (int yy=note_y; yy<note_y + fontSmall.height() +4; ++yy)
+        band_bottom = band_bottom + fontSmall.height() +4;
+        // make white strip
+        for (int yy=band_bottom-2; yy<band_bottom + fontSmall.height() +4; ++yy)
             for (int x=0;x<width;++x)
-                c->SetPixel(x, yy, 0,0,200); // blue background
-        // The note text is drawn by a persistent ScrollingTextBox from `main()`.
-        return band_y + band_h + fontSmall.height() +4;
+                c->SetPixel(x, yy, 0,0,200);
+        ScrollingTextBox noteScroller(c, start_line_x, band_bottom,
+                                      width - start_line_x - tw - 8,
+                                      fontSmall.height(),
+                                      fontSmall,
+                                      Color(0,0,255),
+                                      d.note,
+                                      30.0f, 1.0f, 8);
+        noteScroller.SetCanvas(c);
     }
-    return band_y + band_h;
+    return 0;
 }
 
 // Draw a next departure in a scrollable list
 // with given height starting at start_y
-void DrawList(Canvas *c, const Font &fontSmall, const std::vector<Departure> &list, int width, int start_y) {
+void DrawList(Canvas *c, const Font &fontSmall, const vector<Departure> &list, int width, int start_y) {
     // Simple, compact list rendering: platform, destination, time (right-aligned-ish).
     int y = start_y;
     const int line_spacing = fontSmall.height() + 6;
@@ -87,14 +119,14 @@ void DrawList(Canvas *c, const Font &fontSmall, const std::vector<Departure> &li
         DrawText(c, fontSmall, dest_x, y + fontSmall.baseline(), Color(0,0,0), nullptr, d.dest.c_str());
 
         // Time on the right (approx right-aligned)
-        const int time_x = std::max(6, width - 6 - 40);
+        const int time_x = max(6, width - 6 - 40);
         DrawText(c, fontSmall, time_x, y + fontSmall.baseline(), Color(0,0,0), nullptr, d.time.c_str());
 
         y += line_spacing;
     }
 }
 
-void DrawTicker(Canvas *c, const Font &fontSmall, const std::string &msg, int width, int height) {
+void DrawTicker(Canvas *c, const Font &fontSmall, const string &msg, int width, int height) {
     int y = height - fontSmall.height();
     // red strip
     for (int yy=y-2; yy<height; ++yy) for (int x=0;x<width;++x) c->SetPixel(x, yy, 200,0,0);
@@ -127,15 +159,15 @@ int main(int argc, char **argv) {
     int height = c->height();
 
     // Sample data (UI content is fixed here; matrix options load from config.json)
-    std::vector<Departure> list = {
+    vector<Departure> list = {
         {"1", "S5", "Paderborn Hbf", "Technischer Defekt am Zug", "10:27", "Bielefeld Hbf, Lage, Detmold, Bad Salzuflen", "10:44"},
         {"3", "S5", "Hannover Flughafen", "", "10:44", "Bielefeld Hbf, Lage, Detmold, Bad Salzuflen, Herford, Bünde, Löhne, Minden, Wunstorf", ""},
         {"2", "S5", "Paderborn", "Zug fällt aus", "11:44", "Bielefeld Hbf, Lage, Detmold, Bad Salzuflen", "11:59"},
         {"4", "RE 78", "Kassel-Wilhelmshöhe", "", "12:04", "Gütersloh Hbf, Verl, Rheda-Wiedenbrück, Langenberg, Harsewinkel, Sende, Warendorf, Münster Hbf", ""},
     };
 
-    std::string station = "Steinheim (Westf.)";
-    std::string ticker = "Ein Unwetter behindert den Bahnverkehr. Für weitere Informationen beachten Sie Durchsagen.";
+    string station = "Steinheim (Westf.)";
+    string ticker = "Ein Unwetter behindert den Bahnverkehr. Für weitere Informationen beachten Sie Durchsagen.";
     // Create persistent scrolling widgets for the main panel and the list/ticker.
     // Compute band positions used by DrawMain so scrollers align with layout.
     int band_y = bigFont.height() + 6;
@@ -147,43 +179,9 @@ int main(int argc, char **argv) {
     // Time width reserve (approx) to leave room on the right for time display
     int time_reserve = 60;
 
-    // Main destination (large) scroller
-    ScrollingTextBox mainDestScroller(c,
-                                     dest_x,
-                                     band_y,
-                                     std::max(20, width - dest_x - time_reserve),
-                                     bigFont.height(),
-                                     bigFont,
-                                     Color(0,0,0),
-                                     list[0].dest,
-                                     30.0f, 1.0f, 12);
-
-    // Main stops (small) scroller (below destination)
-    ScrollingTextBox mainStopsScroller(c,
-                                      12 + 8,
-                                      band_y + bigFont.height()/2,
-                                      std::max(20, width - (12 + 8) - time_reserve - 12),
-                                      smallFont.height(),
-                                      smallFont,
-                                      Color(0,0,0),
-                                      list[0].stops,
-                                      25.0f, 1.0f, 8);
-
-    // Note scroller (small) - shown only when note exists
-    int note_y = band_y + 26; // matches band_h used in DrawMain
-    ScrollingTextBox noteScroller(c,
-                                  6,
-                                  note_y + 2,
-                                  std::max(20, width - 12),
-                                  smallFont.height(),
-                                  smallFont,
-                                  Color(255,255,255),
-                                  list[0].note,
-                                  30.0f, 1.0f, 8);
-
     // Compose list content into multi-line string for vertical ScrollingBox
-    auto BuildListContent = [&](const std::vector<Departure> &items) {
-        std::string s;
+    auto BuildListContent = [&](const vector<Departure> &items) {
+        string s;
         for (const auto &d : items) {
             s += d.platform + " ";
             s += d.line + " ";
@@ -201,10 +199,10 @@ int main(int argc, char **argv) {
                          6,
                          list_start,
                          width - 12,
-                         std::max(10, height_left_for_list),
+                         max(10, height_left_for_list),
                          smallFont,
-                         Color(0,0,0),
-                         BuildListContent(std::vector<Departure>(list.begin()+1, list.end())),
+                         Color(255,255,255),
+                         BuildListContent(vector<Departure>(list.begin()+1, list.end())),
                          15.0f, 1.0f, 3);
 
     // Ticker scroller at bottom
@@ -219,36 +217,41 @@ int main(int argc, char **argv) {
                                     ticker,
                                     30.0f, 1.0f, 16);
 
+    // Central update event — widgets subscribe to this so a single call
+    // in the main loop updates all animated widgets.
+    UpdateEvent updateEvent;
+
+    // Subscribe scrollers to the update event so they all update when
+    // `updateEvent.Notify()` is called from the main loop.
+    auto sub_list = updateEvent.Subscribe([&]() { listBox.Update(); });
+    auto sub_ticker = updateEvent.Subscribe([&]() { tickerScroller.Update(); });
+
     // Main loop
     while (true) {
+        // blue background
+        for (int y=0;y<height;++y) for (int x=0;x<width;++x) c->SetPixel(x, y, 0,0,200);
+
         // draw static layout on offscreen
         DrawHeader(c, bigFont, station, width);
         DrawMain(c, bigFont, smallFont, list[0], width);
 
-        // draw ticker red strip background
-        int ty = height - smallFont.height();
-        for (int yy=ty-2; yy<height; ++yy) for (int x=0;x<width;++x) c->SetPixel(x, yy, 200,0,0);
-
-        // Update scrollers with current canvas, ensure they draw into the offscreen buffer
-        mainDestScroller.SetCanvas(c);
-        mainDestScroller.SetText(list[0].dest);
-        mainDestScroller.Update();
-
-        mainStopsScroller.SetCanvas(c);
-        mainStopsScroller.SetText(list[0].stops);
-        mainStopsScroller.Update();
-
-        noteScroller.SetCanvas(c);
-        noteScroller.SetText(list[0].note);
-        noteScroller.Update();
-
         listBox.SetCanvas(c);
-        listBox.SetContent(BuildListContent(std::vector<Departure>(list.begin()+1, list.end())));
-        listBox.Update();
+        const string listContent = BuildListContent(vector<Departure>(list.begin()+1, list.end()));
+        static string prev_list_content;
+        if (prev_list_content != listContent) {
+            listBox.SetContent(listContent);
+            prev_list_content = listContent;
+        }
 
         tickerScroller.SetCanvas(c);
-        tickerScroller.SetText(ticker);
-        tickerScroller.Update();
+        static string prev_ticker;
+        if (prev_ticker != ticker) {
+            tickerScroller.SetText(ticker);
+            prev_ticker = ticker;
+        }
+
+        // Single entry point to update all animated widgets.
+        updateEvent.Notify();
 
         // swap buffers
         off = matrix->SwapOnVSync(off);
